@@ -1,3 +1,3 @@
 # Toy-Project
 
-1. Web Crawling + Cloud
+Web Crawling + Cloud + Kubernetes + Istio
