@@ -1,0 +1,29 @@
+{
+  "name": "Record All My Memories Together(RA2MT)",
+  "version": "1.0.0",
+  "description": "나의 모든 추억들을 함께 기록하기 위한 웹 애플리케이션.",
+  "main": "index.js",
+  "dependencies": {
+    "@babel/core": "^7.16.7",
+    "@babel/node": "^7.16.8",
+    "@babel/preset-env": "^7.16.8",
+    "body-parser": "^1.19.1",
+    "cors": "^2.8.5",
+    "dotenv": "^11.0.0",
+    "express": "^4.17.2",
+    "express-session": "^1.17.2",
+    "lodash": "^4.17.21",
+    "method-override": "^3.0.0",
+    "mysql": "^2.18.1",
+    "nodemon": "^2.0.15",
+    "passport": "^0.5.2",
+    "passport-local": "^1.0.0"
+  },
+  "type": "module",
+  "scripts": {
+    "start": "nodemon --exec babel-node app.js --delay 2"
+  },
+  "compilerOptions": {
+    "target": "es6"
+  }
+}
