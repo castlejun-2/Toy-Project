@@ -9,14 +9,14 @@ class Router {
   }
   setRouter() {
     this.router.get('/login', userController.output.login);
-    this.router.post('/login', userController.process.login);
     this.router.post(
-      '/local-login',
+      '/login',
       passport.authenticate('local-login', {
         successRedirect: '/',
         failureRedirect: '/users/login',
       }),
     );
+    this.router.get('/signup', userController.output.signup);
   }
 }
 

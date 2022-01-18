@@ -9,7 +9,6 @@ class Router {
   setRouter() {
     //Main Page Routing
     this.router.get('/', function (req, res) {
-      console.log(req.user);
       res.send('Wellcome! ' + req.user.email + '님 어서오세요!');
     });
 
