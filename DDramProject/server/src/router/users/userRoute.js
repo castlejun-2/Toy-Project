@@ -1,6 +1,5 @@
 import express from 'express';
 import userController from './userController.js';
-import passport from 'passport';
 
 class Router {
   constructor() {
@@ -9,13 +8,8 @@ class Router {
   }
   setRouter() {
     this.router.get('/login', userController.output.login);
-    this.router.post(
-      '/login',
-      passport.authenticate('local-login', {
-        successRedirect: '/',
-        failureRedirect: '/users/login',
-      }),
-    );
+    this.router.post('/login', userController.process.login);
+    this.router.post('/logout', userController.process.logout);
     this.router.get('/signup', userController.output.signup);
   }
 }

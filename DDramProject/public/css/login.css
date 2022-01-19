@@ -8,18 +8,37 @@ div {
 li {
   list-style: none;
 }
+body {
+  background-color: whitesmoke;
+  font-family: 'Open Sans';
+}
 
 h1 {
-  margin-top: 60px;
+  margin-top: 20px;
+  margin-left: 130px;
+  margin-right: 130px;
   text-align: center;
   font-family: monospace;
   font-weight: 100;
+  letter-spacing: 1px;
+  padding: 5px;
+  text-decoration: underline;
+  text-underline-position: under;
 }
 
+a {
+  text-decoration: none;
+  color: black;
+}
+a:hover {
+  text-decoration: none;
+  color: rgb(12, 79, 146);
+}
 .header {
-  margin: 30px;
+  background-color: white;
   overflow: auto;
   text-align: center;
+  border-bottom: 2px solid rgba(51, 51, 51, 0.3);
 }
 
 header > div {
@@ -31,10 +50,14 @@ section.content {
   margin: 30px;
 }
 .form-box {
-  width: 350px;
+  width: 420px;
+  height: 250px;
   overflow: auto;
-  margin: 30px auto;
+  margin: 60px auto 45px auto;
   text-align: center;
+  border: 1px solid rgb(216, 219, 223);
+  background-color: white;
+  box-shadow: 2.5px 2.5px 2.5px;
 }
 
 form span {
@@ -42,20 +65,41 @@ form span {
   width: 80px;
 }
 
-.email {
-  margin-bottom: 4px;
+.passwd {
+  margin-top: 20px;
 }
 
 .input-box {
+  color: #73879c;
+  text-align: center;
+  width: 300px;
   float: left;
+  margin-top: 20px;
+  margin-left: 5px;
+  margin-bottom: 20px;
+}
+
+.message-box {
+  height: 25px;
+  color: red;
+  font-weight: bold;
+}
+input {
+  width: 150px;
+  height: 24px;
 }
 
 .send-btn {
   float: left;
-  margin-left: 20px;
+  margin-top: 25px;
   width: 80px;
-  height: 40px;
-  background-color: slategray;
+  border: 1px solid rgb(216, 219, 223);
+  background-color: rgb(193, 197, 201);
   color: #fff;
-  height: 64px;
+  height: 70px;
+}
+
+.signup {
+  font-weight: bold;
+  text-align: center;
 }

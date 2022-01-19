@@ -12,6 +12,9 @@
     <link rel="icon" type="image/png" href="https://ufwo.s3.ap-northeast-2.amazonaws.com/logo.jpeg" />
   </head>
   <body>
-    Join!
+    Welcome! <%= email%>님 환영합니다!
+    <form action="/users/logout" method="post">
+      <input class="send-btn" type="submit" value="Logout" />
+    </form>
   </body>
 </html>

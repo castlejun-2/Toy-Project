@@ -21,12 +21,12 @@ class Passport {
           passReqToCallback: true,
         },
         async function (req, email, passwd, done) {
-          const rows = await UserStorage.verifiedLogIn(email, passwd);
-          if (rows.length) {
-            return done(null, { email: email, id: rows[0].id });
-          } else {
-            return done(null, false, { message: 'Login Failure' });
-          }
+          const idRows = await UserStorage.verfiedEmail(email);
+          if (idRows.length) {
+            const verifiedRows = await UserStorage.verifiedLogIn(email, passwd);
+            if (verifiedRows.length) return done(null, { email: email, id: idRows[0].id });
+            else return done(null, false, { success: false, message: verifiedRows.message });
+          } else return done(null, false, { success: false, message: idRows.message });
         },
       ),
     );
@@ -35,11 +35,8 @@ class Passport {
     });
     passport.deserializeUser(async function (id, done) {
       const rows = await UserStorage.getUserInfo(id);
-      if (rows.length) {
-        return done(null, { email: rows[0].email, id: rows[0].id });
-      } else {
-        return done(null, false, { message: 'Login Failure' });
-      }
+      if (rows.length) done(null, { email: rows[0].email, id: rows[0].id });
+      else done(null, false);
     });
   }
 }
