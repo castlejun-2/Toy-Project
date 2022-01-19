@@ -14,16 +14,16 @@ body {
 }
 
 h1 {
+  width: 130px;
   margin-top: 20px;
   margin-left: 130px;
   margin-right: 130px;
   text-align: center;
-  font-family: monospace;
+  font-family: 'Open Sans';
   font-weight: 100;
   letter-spacing: 1px;
   padding: 5px;
-  text-decoration: underline;
-  text-underline-position: under;
+  border-bottom: 2px solid black;
 }
 
 a {
@@ -49,9 +49,10 @@ header > div {
 section.content {
   margin: 30px;
 }
+
 .form-box {
   width: 420px;
-  height: 250px;
+  height: 270px;
   overflow: auto;
   margin: 60px auto 45px auto;
   text-align: center;
@@ -74,9 +75,7 @@ form span {
   text-align: center;
   width: 300px;
   float: left;
-  margin-top: 20px;
-  margin-left: 5px;
-  margin-bottom: 20px;
+  margin: 15px 0px 30px 10px;
 }
 
 .message-box {
@@ -91,11 +90,11 @@ input {
 
 .send-btn {
   float: left;
-  margin-top: 25px;
+  margin-top: 20px;
   width: 80px;
   border: 1px solid rgb(216, 219, 223);
-  background-color: rgb(193, 197, 201);
-  color: #fff;
+  background-color: rgb(215, 218, 221);
+  color: #73879c;
   height: 70px;
 }
 

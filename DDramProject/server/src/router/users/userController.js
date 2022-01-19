@@ -25,6 +25,9 @@ class Controller {
     },
     logout: async (req, res) => {
       req.logout();
+      req.session.destroy(() => {
+        req.session;
+      });
       res.redirect('login');
     },
   };
