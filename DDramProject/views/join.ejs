@@ -18,25 +18,25 @@
         <img class="logo" src="https://ufwo.s3.ap-northeast-2.amazonaws.com/logo.jpeg" onclick="window.location.href='/';" />
       </div>
       <div class="form-box">
-        <h1><b>Sign In</b></h1>
+        <h1><b>Sign Up</b></h1>
         <div class="message-box hidden"></div>
         <div class="email-box">
           <div class="login-box">
-            <form method="post">
+            <form method="post" onsubmit="">
               <label class="user-form"> Email <input class="input-box" type="text" name="email" required autofocus /></label>
+              <label class="user-form"> Name <input class="input-box" type="text" name="name" required /></label>
               <label class="user-form"> Password <input class="input-box" type="password" name="passwd" required /> </label>
+              <label class="user-form"> Password Confirm <input class="input-box" type="password" name="passwdConfirm" required /> </label>
+              <label class="user-form"> University <input class="input-box" type="text" name="university" required /></label>
               <div style="width: 100%; text-align: center; margin-bottom: 10px">
-                <input type="submit" class="send-btn" value="LogIn" />
+                <input type="submit" class="send-btn" value="Submit" />
               </div>
-              <label style="width: 100%; text-align: center; color: darkgray" class="find-password"
-                ><a href="/users/password-reset">비밀번호 찾기</a></label
-              >
+              <label style="width: 100%; text-align: center; color: darkgray"><a href="/users/login">Sign In</a></label>
             </form>
           </div>
         </div>
       </div>
     </div>
-    <div class="signup"><a href="/users/join">Sign Up</a></div>
 
     <script>
       document.querySelector('.send-btn').addEventListener('click', function (e) {

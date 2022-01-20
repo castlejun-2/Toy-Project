@@ -1,20 +1,17 @@
-ul,
-li,
-section,
+* {
+  box-sizing: border-box;
+}
 div {
-  padding: 0;
-  margin: 0;
+  display: block;
 }
-li {
-  list-style: none;
-}
+
 body {
   background-color: whitesmoke;
   font-family: 'Open Sans';
 }
 
 h1 {
-  width: 130px;
+  width: 40%;
   margin-top: 20px;
   margin-left: 130px;
   margin-right: 130px;
@@ -30,10 +27,16 @@ a {
   text-decoration: none;
   color: black;
 }
+
 a:hover {
   text-decoration: none;
   color: rgb(12, 79, 146);
 }
+
+form {
+  display: block;
+}
+
 .header {
   background-color: white;
   overflow: auto;
@@ -41,61 +44,66 @@ a:hover {
   border-bottom: 2px solid rgba(51, 51, 51, 0.3);
 }
 
-header > div {
-  float: left;
-  margin-right: 20px;
-}
-
-section.content {
-  margin: 30px;
+label {
+  display: inline-block;
+  max-width: 100%;
+  margin-bottom: 5px;
+  font-weight: 700;
 }
 
 .form-box {
-  width: 420px;
-  height: 270px;
-  overflow: auto;
-  margin: 60px auto 45px auto;
-  text-align: center;
+  max-width: 450px;
+  width: 100%;
+  min-height: 260px;
+  margin: 50px auto 50px auto;
   border: 1px solid rgb(216, 219, 223);
-  background-color: white;
   box-shadow: 2.5px 2.5px 2.5px;
+  padding: 20px;
+  background-color: white;
 }
 
-form span {
-  display: inline-block;
-  width: 80px;
-}
-
-.passwd {
-  margin-top: 20px;
+.login-box {
+  width: 90%;
+  margin: 0 auto;
 }
 
 .input-box {
-  color: #73879c;
-  text-align: center;
-  width: 300px;
-  float: left;
-  margin: 15px 0px 30px 10px;
+  display: block;
+  width: 100%;
+  height: 30px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.45;
+  color: black;
+  border: 1px solid slategray;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+.user-form {
+  width: 100%;
+  font-weight: 700;
+  color: slategray;
 }
 
 .message-box {
   height: 25px;
   color: red;
-  font-weight: bold;
-}
-input {
-  width: 150px;
-  height: 24px;
+  font-weight: 500;
+  text-align: center;
+  margin-bottom: 5px;
 }
 
 .send-btn {
-  float: left;
-  margin-top: 20px;
-  width: 80px;
+  width: 30%;
+  padding: 6px 12px;
+  font-size: 14px;
   border: 1px solid rgb(216, 219, 223);
-  background-color: rgb(215, 218, 221);
-  color: #73879c;
-  height: 70px;
+  background-color: rgb(74, 76, 78);
+  margin-bottom: 5px;
+  color: #dae0e4;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 .signup {

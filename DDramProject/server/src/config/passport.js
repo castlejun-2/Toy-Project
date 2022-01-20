@@ -2,6 +2,7 @@ import express from 'express';
 import passport from 'passport';
 import passportLocal from 'passport-local';
 import UserStorage from '../models/users/userStorage.js';
+import baseResponse from './responseStatus.js';
 
 const app = express();
 const LocalStrategy = passportLocal.Strategy;
@@ -25,8 +26,8 @@ class Passport {
           if (idRows.length) {
             const verifiedRows = await UserStorage.verifiedLogIn(email, passwd);
             if (verifiedRows.length) return done(null, { email: email, id: idRows[0].id });
-            else return done(null, false, { success: false, message: verifiedRows.message });
-          } else return done(null, false, { success: false, message: idRows.message });
+            else return done(null, false, baseResponse.PASSWORD_IS_WRONG);
+          } else return done(null, false, baseResponse.EMAIL_NOT_EXIST);
         },
       ),
     );

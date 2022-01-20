@@ -10,7 +10,7 @@ class Router {
     this.router.get('/login', userController.output.login);
     this.router.post('/login', userController.process.login);
     this.router.post('/logout', userController.process.logout);
-    this.router.get('/signup', userController.output.signup);
+    this.router.get('/join', userController.output.join);
   }
 }
 
