@@ -1,7 +1,7 @@
 {
-  "name": "Record All My Memories Together(RA2MT)",
+  "name": "University Offline Matching Game Project(UOMG)",
   "version": "1.0.0",
-  "description": "나의 모든 추억들을 함께 기록하기 위한 웹 애플리케이션.",
+  "description": "대학에서의 만남을 위한 웹 프로젝트.",
   "main": "index.js",
   "dependencies": {
     "@babel/core": "^7.16.7",
