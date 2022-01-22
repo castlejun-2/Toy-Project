@@ -23,11 +23,15 @@
         <div class="email-box">
           <div class="login-box">
             <form method="post" onsubmit="">
-              <label class="user-form"> Email <input class="input-box" type="text" name="email" required autofocus /></label>
+              <label class="user-form"> Email <input class="input-box" type="email" name="email" required autofocus /></label>
               <label class="user-form"> Name <input class="input-box" type="text" name="name" required /></label>
               <label class="user-form"> Password <input class="input-box" type="password" name="passwd" required /> </label>
               <label class="user-form"> Password Confirm <input class="input-box" type="password" name="passwdConfirm" required /> </label>
               <label class="user-form"> University <input class="input-box" type="text" name="university" required /></label>
+              <label class="user-form">
+                Phone Number
+                <input class="input-box" type="text" onKeyup="hypenNumber(this);" name="phonenumber" maxlength="13" required
+              /></label>
               <div style="width: 100%; text-align: center; margin-bottom: 10px">
                 <input type="submit" class="send-btn" value="Submit" />
               </div>
@@ -41,11 +45,23 @@
     <script>
       document.querySelector('.send-btn').addEventListener('click', function (e) {
         const email = document.getElementsByName('email')[0].value;
+        const name = document.getElementsByName('name')[0].value;
         const passwd = document.getElementsByName('passwd')[0].value;
-        sendAjax('/users/login', { email: email, passwd: passwd });
+        const passwdConfirm = document.getElementsByName('passwdConfirm')[0].value;
+        const university = document.getElementsByName('university')[0].value;
+        const phonenumber = document.getElementsByName('phonenumber')[0].value;
+        const url = '/users/join';
+        sendSubmitAjax(url, {
+          email: email,
+          name: name,
+          passwd: passwd,
+          passwdConfirm: passwdConfirm,
+          university: university,
+          phonenumber: phonenumber,
+        });
         e.preventDefault();
       });
-      function sendAjax(url, data) {
+      function sendSubmitAjax(url, data) {
         let jsondata = JSON.stringify(data);
         const xhr = new XMLHttpRequest();
         xhr.open('POST', url);
@@ -62,6 +78,31 @@
             resultDiv.removeAttribute('hidden');
           }
         });
+      }
+
+      function hypenNumber(obj) {
+        let number = obj.value.replace(/[^0-9]/g, '');
+        let phone = '';
+        if (number.length < 4) {
+          return number;
+        } else if (number.length < 7) {
+          phone += number.substr(0, 3);
+          phone += '-';
+          phone += number.substr(3);
+        } else if (number.length < 11) {
+          phone += number.substr(0, 3);
+          phone += '-';
+          phone += number.substr(3, 3);
+          phone += '-';
+          phone += number.substr(6);
+        } else {
+          phone += number.substr(0, 3);
+          phone += '-';
+          phone += number.substr(3, 4);
+          phone += '-';
+          phone += number.substr(7);
+        }
+        obj.value = phone;
       }
     </script>
   </body>

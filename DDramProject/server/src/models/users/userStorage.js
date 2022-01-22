@@ -7,7 +7,7 @@ class UserStorage {
         if (err) reject(`${err}`);
         else {
           const query = 'Select id From User Where email = ?';
-          conn.query(query, [email], function (err, rows) {
+          conn.query(query, email, function (err, rows) {
             if (err) reject(`${err}`);
             else resolve(rows);
           });
@@ -16,13 +16,28 @@ class UserStorage {
       });
     });
   }
-  static verifiedLogIn(email, password) {
+  static verifiedLogIn(account) {
     return new Promise((resolve, reject) => {
       pool.getConnection(async function (err, conn) {
         if (err) reject(`${err}`);
         else {
-          const query = 'Select id From User Where email = ? and passwd = ?';
-          conn.query(query, [email, password], function (err, rows) {
+          const query = 'Select id From User Where id = ? and passwd = ?';
+          conn.query(query, account, function (err, rows) {
+            if (err) reject(`${err}`);
+            else resolve(rows);
+          });
+        }
+        conn.release();
+      });
+    });
+  }
+  static createAccount(accountInfo) {
+    return new Promise((resolve, reject) => {
+      pool.getConnection(async function (err, conn) {
+        if (err) reject(`${err}`);
+        else {
+          const query = 'Insert into User(email, name, passwd, university, phonenumber) VALUES(?,?,?,?,?)';
+          conn.query(query, accountInfo, function (err, rows) {
             if (err) reject(`${err}`);
             else resolve(rows);
           });
@@ -36,11 +51,10 @@ class UserStorage {
       pool.getConnection(async function (err, conn) {
         if (err) reject(`${err}`);
         else {
-          const query = 'Select id,email From User Where id=?';
-          conn.query(query, [id], function (err, rows) {
+          const query = 'Select email, name, university, phonenumber, createdAt From User Where id = ?';
+          conn.query(query, id, function (err, rows) {
             if (err) reject(`${err}`);
-            if (rows.length) resolve(rows);
-            else resolve({ message: 'Login Failure' });
+            else resolve(rows);
           });
         }
         conn.release();

@@ -1,8 +1,8 @@
 import express from 'express';
 import passport from 'passport';
 import passportLocal from 'passport-local';
+import User from '../models/users/user.js';
 import UserStorage from '../models/users/userStorage.js';
-import baseResponse from './responseStatus.js';
 
 const app = express();
 const LocalStrategy = passportLocal.Strategy;
@@ -22,12 +22,11 @@ class Passport {
           passReqToCallback: true,
         },
         async function (req, email, passwd, done) {
-          const idRows = await UserStorage.verfiedEmail(email);
-          if (idRows.length) {
-            const verifiedRows = await UserStorage.verifiedLogIn(email, passwd);
-            if (verifiedRows.length) return done(null, { email: email, id: idRows[0].id });
-            else return done(null, false, baseResponse.PASSWORD_IS_WRONG);
-          } else return done(null, false, baseResponse.EMAIL_NOT_EXIST);
+          const account = { email: email, passwd: passwd };
+          const user = new User(account);
+          const userLogin = await user.checkLogin();
+          if (userLogin.length) return done(null, { email: email, id: userLogin[0].id });
+          return done(null, false, userLogin);
         },
       ),
     );
