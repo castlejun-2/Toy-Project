@@ -1,5 +1,5 @@
-# DDramProject (Devide Memory(=Dram) Project)
+# UOMGProject (University Offline Matching Game Project)
 
-## **추억을 공유하기 위한 공간**
+## **대학에서의 만남을 위한 웹 프로젝트**
 
 ### Web Crawling + Cloud + Kubernetes + Istio
