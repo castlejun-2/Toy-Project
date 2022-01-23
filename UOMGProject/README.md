@@ -1,4 +1,4 @@
-# OMGProject (Offline Matching Game Project)
+# OMGProject (Offline Meeting Gathering Project)
 
 ## **다양한 만남을 위한 웹 프로젝트**
 
