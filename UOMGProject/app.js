@@ -31,6 +31,7 @@ class App {
     );
     this.app.use(passport.initialize());
     this.app.use(passport.session());
+    this.app.set('views', './views');
     this.app.set('view engine', 'ejs');
 
     this.app.use(cors());

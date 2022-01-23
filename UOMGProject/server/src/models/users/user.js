@@ -23,7 +23,7 @@ class User {
     if (duplcationEmail.length) return baseResponse.EMAIL_IS_EXIST;
     else {
       const hashedPassword = crypto.createHash('sha512').update(this.body.passwd).digest('hex');
-      const account = [this.body.email, this.body.name, hashedPassword, this.body.university, this.body.phonenumber];
+      const account = [this.body.email, this.body.name, hashedPassword, this.body.school, this.body.phonenumber];
       const joinResult = await UserStorage.createAccount(account);
       if (joinResult.insertId) return baseResponse.SUCCESS;
       else return baseResponse.DB_ERROR;

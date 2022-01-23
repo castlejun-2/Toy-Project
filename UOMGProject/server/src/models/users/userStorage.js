@@ -36,7 +36,7 @@ class UserStorage {
       pool.getConnection(async function (err, conn) {
         if (err) reject(`${err}`);
         else {
-          const query = 'Insert into User(email, name, passwd, university, phonenumber) VALUES(?,?,?,?,?)';
+          const query = 'Insert into User(email, name, passwd, school, phonenumber) VALUES(?,?,?,?,?)';
           conn.query(query, accountInfo, function (err, rows) {
             if (err) reject(`${err}`);
             else resolve(rows);
@@ -51,7 +51,7 @@ class UserStorage {
       pool.getConnection(async function (err, conn) {
         if (err) reject(`${err}`);
         else {
-          const query = 'Select email, name, university, phonenumber, createdAt From User Where id = ?';
+          const query = 'Select email, name, school, phonenumber, createdAt From User Where id = ?';
           conn.query(query, id, function (err, rows) {
             if (err) reject(`${err}`);
             else resolve(rows);
