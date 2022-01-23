@@ -25,26 +25,30 @@
             <form method="post">
               <label class="user-form"> 이메일 <input class="input-box" type="email" name="email" required autofocus /></label>
               <label class="user-form"> 비밀번호 <input class="input-box" type="password" name="passwd" required /> </label>
+              <label style="width: 100%; margin-left: 5px; margin-bottom: 10px; text-align: right; float: right; display: block">
+                <input type="checkbox" name="keep_logIn" id="keep_cbx" required /> 자동 로그인<br />
+              </label>
               <div style="width: 100%; text-align: center; margin-bottom: 10px">
                 <input type="submit" class="send-btn" value="로그인" />
               </div>
               <label style="width: 100%; text-align: center; color: darkgray" class="find-password"
-                ><a href="/users/password-reset">비밀번호 찾기</a></label
+                ><a href="/users/password-reset">비밀번호 찾기</a><span> | </span><a href="/users/join">회원가입</a></label
               >
             </form>
           </div>
         </div>
       </div>
     </div>
-    <div class="signup"><a href="/users/join">회원가입</a></div>
 
     <script>
       document.querySelector('.send-btn').addEventListener('click', function (e) {
         const email = document.getElementsByName('email')[0].value;
         const passwd = document.getElementsByName('passwd')[0].value;
-        sendAjax('/users/login', { email: email, passwd: passwd });
+        const keepLogIn = document.getElementById('keep_cbx').checked;
+        sendAjax('/users/login', { email: email, passwd: passwd, keepLogIn: keepLogIn });
         e.preventDefault();
       });
+
       function sendAjax(url, data) {
         let jsondata = JSON.stringify(data);
         const xhr = new XMLHttpRequest();
@@ -63,6 +67,8 @@
           }
         });
       }
+
+      $(document).ready(function () {});
     </script>
   </body>
 </html>

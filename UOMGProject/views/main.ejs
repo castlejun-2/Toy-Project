@@ -10,6 +10,7 @@
     <meta http-equiv="pragma" content="no-cache" />
     <title>University Friends with Offline(UFO) | 대팅</title>
     <link rel="icon" type="image/png" href="https://ufwo.s3.ap-northeast-2.amazonaws.com/logo.jpeg" />
+    <link rel="stylesheet" href="/css/main.css" />
   </head>
   <body>
     <header id="header">
@@ -21,27 +22,37 @@
           <div id="nav-list-btn"></div>
           <ul id="header-nav">
             <li>
-              <a class="header-nav-home-btn" href="/"><span>Home</span></a>
+              <a class="header-nav-btn home" href="/"><span>Home</span></a>
             </li>
             <li>
-              <a class="header-nav-sports-btn" href="/sports"><span>Sports Matching</span></a>
+              <a class="header-nav-btn" href="/sports"><span>Sports Matching</span></a>
             </li>
             <li>
-              <a class="header-nav-study-btn" href="/study"><span>Study Matching</span></a>
+              <a class="header-nav-btn" href="/study"><span>Study Matching</span></a>
             </li>
             <li>
-              <a class="header-nav-game-btn" href="/game"><span>Game Matching</span></a>
+              <a class="header-nav-btn" href="/game"><span>Game Matching</span></a>
             </li>
             <li>
-              <a class="header=nav-meeting btn" href="/metting"><span>Meeting Matching</span></a>
+              <a class="header-nav-btn" href="/metting"><span>Meeting Matching</span></a>
+            </li>
+          </ul>
+          <ul id="header-user-box">
+            <li>
+              <a class="header-nav-btn" href="/users/logout"><span>로그아웃</span></a>
+            </li>
+            <li>
+              <a class="header-nav-btn" href="/users/my-page"><span>마이 페이지</span></a>
             </li>
           </ul>
         </nav>
       </div>
     </header>
-    Welcome! <%= email%>님 환영합니다!
-    <form action="/users/logout" method="post">
-      <input class="send-btn" type="submit" value="Logout" />
-    </form>
+    <div class="body-container">
+      Welcome! <%= email%>님 환영합니다!
+      <form action="/users/logout" method="post">
+        <input class="send-btn" type="submit" value="Logout" />
+      </form>
+    </div>
   </body>
 </html>

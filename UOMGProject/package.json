@@ -1,7 +1,7 @@
 {
-  "name": "University Offline Matching Game Project(UOMG)",
+  "name": "Offline Matching Game Project(OMG)",
   "version": "1.0.0",
-  "description": "대학에서의 만남을 위한 웹 프로젝트.",
+  "description": "다양한 오프라인 만남을 위한 웹 프로젝트.",
   "main": "index.js",
   "dependencies": {
     "@babel/core": "^7.16.7",

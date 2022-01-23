@@ -5,11 +5,25 @@ import User from '../../models/users/user.js';
 class Controller {
   output = {
     login: async (req, res) => {
-      if (req.user) req.logout();
-      else res.render('login.ejs');
+      if (req.user) {
+        req.logout();
+        req.session.destroy(() => {
+          req.session;
+        });
+      }
+      res.render('login.ejs');
     },
     join: async (req, res) => res.render('join.ejs'),
     welcome: async (req, res) => res.render('welcome.ejs'),
+    logout: async (req, res) => {
+      if (req.user) {
+        req.logout();
+        req.session.destroy(() => {
+          req.session;
+        });
+      }
+      res.render('login.ejs');
+    },
   };
 
   process = {
@@ -19,6 +33,7 @@ class Controller {
       else if (!req.body.passwd) return res.send(baseResponse.PASSWD_EMPTY);
       else if (!regexEmail.test(req.body.email)) return res.send(baseResponse.EMAIL_FORM_IS_WRONG);
       else {
+        //To do: req.body.keepLogIn 처리
         passport.authenticate('local-login', (err, user, message) => {
           if (!user) return res.send(message);
           return req.login(user, loginError => {
@@ -27,13 +42,6 @@ class Controller {
           });
         })(req, res, next);
       }
-    },
-    logout: async (req, res) => {
-      req.logout();
-      req.session.destroy(() => {
-        req.session;
-      });
-      res.redirect('login');
     },
     join: async (req, res) => {
       const regexEmail = /^([\w_\.\-\+])+\@([\w\-]+\.)+([\w]{2,10})+$/;
