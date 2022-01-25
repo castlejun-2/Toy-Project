@@ -8,11 +8,8 @@ class Router {
     this.setRouter();
   }
   setRouter() {
-    //Main Page Routing
-    this.router.get('/', main);
-
-    //User Page Routing
-    this.router.use('/users', user);
+    this.router.get('/', main); //Main Page Routing
+    this.router.use('/users', user); //User Page Routing
   }
 }
 export default new Router().router;
