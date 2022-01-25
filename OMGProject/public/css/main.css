@@ -1,13 +1,14 @@
 #header {
-  padding-right: 50px;
-  padding-left: 50px;
+  padding-top: 20px;
+  padding-right: 140px;
+  padding-left: 140px;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 101;
   min-width: 320px;
-  height: 198px;
+  height: 175px;
   background-color: white;
   color: #222;
   font-size: 20px;
@@ -15,17 +16,12 @@
 }
 
 .body-container {
-  width: 970px;
-  padding-right: 30px;
-  padding-left: 30px;
-  margin-top: 200px;
+  width: 1150px;
+  padding-right: 20px;
+  padding-left: 20px;
   margin-right: auto;
   margin-left: auto;
   min-height: 900px !important;
-}
-
-.header-top {
-  height: 198px;
 }
 
 .header-wrap {
@@ -36,7 +32,7 @@
 }
 
 #header-nav {
-  margin: 80px 0;
+  margin: 50px 0;
   float: left;
   overflow: hidden;
 }
@@ -51,7 +47,7 @@
 
 #header-user-box {
   margin-right: 30px;
-  margin-top: 80px;
+  margin-top: 50px;
   float: right;
   overflow: hidden;
 }
@@ -63,12 +59,13 @@
   padding: 0;
   margin: 0;
 }
+
 #header-logo {
   position: relative;
   float: left;
-  width: 210px;
-  height: 198px;
-  line-height: 198px;
+  width: 249px;
+  height: 122px;
+  line-height: 122px;
 }
 
 ul {
@@ -77,7 +74,7 @@ ul {
   margin-block-end: 1em;
   margin-inline-start: 0px;
   margin-inline-end: 0px;
-  padding-inline-start: 40px;
+  padding-inline-start: 60px;
   list-style: none;
   margin-bottom: 10px;
 }
@@ -103,14 +100,52 @@ a:hover {
 
 .header-nav-btn {
   display: block;
-  padding: 0 13px;
-  line-height: 20px;
-  font-size: 0.85em;
-  font-weight: 600;
+  padding: 0 20px;
+  line-height: 30px;
+  font-size: 0.9em;
+  font-weight: 700;
   color: rgba(0, 0, 0, 0.55) !important;
   text-transform: uppercase;
 }
 
-* {
+.body-container:before {
+  display: table;
+  content: ' ';
+  box-sizing: border-box;
+}
+
+.board {
+  padding-top: 198px;
+  margin-right: -15px;
+  margin-left: -15px;
+  display: block;
+}
+
+.event-banner {
+  width: 100%;
+  text-align: center;
+  margin: 20px 0 0 0;
+}
+
+.evnet-banner img {
+  width: 100%;
+  vertical-align: middle;
+}
+
+.footer {
+  background-color: #f0f0f0;
+  height: 60px;
+}
+
+div.footer > p {
+  text-align: center;
+  padding-top: 20px;
+  font-size: 14px;
+  margin: 0 0 10px;
+}
+
+*,
+*:before,
+*:after {
   box-sizing: border-box;
 }

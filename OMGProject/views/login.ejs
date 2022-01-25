@@ -9,13 +9,17 @@
     <meta http-equiv="pragma" content="no-cache" />
     <title>Offline Meeting Gathering(OMG) | 오마이갓</title>
     <link rel="stylesheet" href="/css/login.css" />
-    <link rel="icon" type="image/png" href="https://ufwo.s3.ap-northeast-2.amazonaws.com/logo.jpeg" />
+    <link rel="icon" type="image/png" href="https://s3.ap-northeast-2.amazonaws.com/img.castlejun-2.shop/UOMG_LOGO.png" />
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&amp;lang=en" />
   </head>
   <body>
     <div class="content">
       <div class="header">
-        <img class="logo" src="https://ufwo.s3.ap-northeast-2.amazonaws.com/logo.jpeg" onclick="window.location.href='/';" />
+        <img
+          class="logo"
+          src="https://s3.ap-northeast-2.amazonaws.com/img.castlejun-2.shop/UOMG_LOGO.png"
+          onclick="window.location.href='/';"
+        />
       </div>
       <div class="form-box">
         <h1><b>로그인</b></h1>
@@ -26,10 +30,10 @@
               <label class="user-form"> 이메일 <input class="input-box" type="email" name="email" required autofocus /></label>
               <label class="user-form"> 비밀번호 <input class="input-box" type="password" name="passwd" required /> </label>
               <label style="width: 100%; margin-left: 5px; margin-bottom: 10px; text-align: right; float: right; display: block">
-                <input type="checkbox" name="keep_logIn" id="keep_cbx" required /> 자동 로그인<br />
+                <input name="keep_logIn" type="checkbox" id="keep_cbx" required /> 자동 로그인<br />
               </label>
               <div style="width: 100%; text-align: center; margin-bottom: 10px">
-                <input type="submit" class="send-btn" value="로그인" />
+                <input class="send-btn" type="submit" value="로그인" />
               </div>
               <label style="width: 100%; text-align: center; color: darkgray" class="find-password"
                 ><a href="/users/password-reset">비밀번호 찾기</a><span> | </span><a href="/users/join">회원가입</a></label

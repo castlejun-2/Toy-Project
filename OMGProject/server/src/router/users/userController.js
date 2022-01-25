@@ -10,8 +10,7 @@ class Controller {
         req.session.destroy(() => {
           req.session;
         });
-      }
-      res.render('login.ejs');
+      } else res.render('login.ejs');
     },
     join: async (req, res) => res.render('join.ejs'),
     welcome: async (req, res) => res.render('welcome.ejs'),
@@ -21,8 +20,7 @@ class Controller {
         req.session.destroy(() => {
           req.session;
         });
-      }
-      res.render('login.ejs');
+      } else res.redirect('login');
     },
   };
 
