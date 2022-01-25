@@ -124,12 +124,10 @@ a:hover {
 .event-banner {
   width: 100%;
   text-align: center;
-  margin: 20px 0 0 0;
 }
 
-.evnet-banner img {
-  width: 100%;
-  vertical-align: middle;
+.banner-img {
+  width: 1100px;
 }
 
 .footer {

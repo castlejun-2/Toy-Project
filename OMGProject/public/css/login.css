@@ -44,6 +44,10 @@ form {
   border-bottom: 2px solid rgba(51, 51, 51, 0.3);
 }
 
+.content {
+  min-height: 920px !important;
+}
+
 label {
   display: inline-block;
   max-width: 100%;
@@ -131,4 +135,16 @@ label {
 .signup {
   font-weight: bold;
   text-align: center;
+}
+
+.footer {
+  background-color: #f0f0f0;
+  height: 60px;
+}
+
+div.footer > p {
+  text-align: center;
+  padding-top: 20px;
+  font-size: 14px;
+  margin: 0 0 10px;
 }
