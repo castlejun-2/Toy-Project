@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css" />
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <script type="text/javascript" src="http://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
   </head>
   <body>
     <header id="header">
@@ -61,8 +62,8 @@
         <div role="main">
           <div class="board" id="content">
             <div class="main-content">
-              <article id="top-banner">
-                <div class="event-banner" id="main-banner">
+              <div class="banner">
+                <div class="event-banner" style="text-align: center" id="main-banner">
                   <% for (let i = 0; i < event.length; i++) { %>
                   <div>
                     <a class="event-display" target="_blank" href="<%= event[i].p_url %>">
@@ -71,7 +72,28 @@
                   </div>
                   <% } %>
                 </div>
-              </article>
+              </div>
+              <div id="dateNav" class="sub-header" style="padding-bottom: 10px">
+                <div class="tabWrap">
+                  <div class="swipe-tabs">
+                    <ul class="swipe-tab slick-initialized slick-slider">
+                      <button
+                        class="slick-prev slick-arrow slick-disabled"
+                        aria-label="Previous"
+                        type="button"
+                        aria-disabled="true"
+                        style=""
+                      >
+                        Previous
+                      </button>
+                      <div class="slick-list draggable">
+                        <div class="slick-track" style="opacity: 1; width: 1932px; transform: translate3d(0px, 0px, 0px)"></div>
+                      </div>
+                      <button class="slick-next slick-arrow" aria-label="Next" type="button" style="" aria-disabled="false">Next</button>
+                    </ul>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -92,7 +114,83 @@
           autoplaySpeed: 3000,
           pauseOnHover: true,
           dotsClass: 'slick-dots',
+          arrows: false,
         });
+      });
+
+      $('.slick-track').ready(function () {
+        const date = new Date();
+        const week = ['일', '월', '화', '수', '목', '금', '토'];
+        for (let i = 0; i < 14; i++) {
+          const today = moment();
+          let todayDate = today.add(i, 'days');
+          if (i < 7) {
+            if (date.getDay() + i == 6) {
+              $('.slick-track').append(
+                '<li id="datewrap" class="dateWrap slick-slide isSat" data-slick-index="' +
+                  i +
+                  '" aria-hidden="true" tablindex="0" style="width: 132px"><p>' +
+                  todayDate.format('D') +
+                  '</p><span>' +
+                  week[(date.getDay() + i) % 7] +
+                  '</span></li>',
+              );
+            } else if (date.getDay() + i == 7) {
+              $('.slick-track').append(
+                '<li id="datewrap" class="dateWrap slick-slide isSun" data-slick-index="' +
+                  i +
+                  '" aria-hidden="true" tablindex="0" style="width: 132px"><p>' +
+                  todayDate.format('D') +
+                  '</p><span>' +
+                  week[(date.getDay() + i) % 7] +
+                  '</span></li>',
+              );
+            } else {
+              $('.slick-track').append(
+                '<li id="datewrap" class="dateWrap slick-slide" data-slick-index="' +
+                  i +
+                  '" aria-hidden="true" tablindex="0" style="width: 132px"><p>' +
+                  todayDate.format('D') +
+                  '</p><span>' +
+                  week[(date.getDay() + i) % 7] +
+                  '</span></li>',
+              );
+            }
+          } else {
+            if (date.getDay() + i == 6) {
+              $('.slick-track').append(
+                '<li id="datewrap" class="dateWrap slick-slide isSat" data-slick-index="' +
+                  i +
+                  '" aria-hidden="true" tablindex="-1" style="width: 132px"><p>' +
+                  todayDate.format('D') +
+                  '</p><span>' +
+                  week[(date.getDay() + i) % 7] +
+                  '</span></li>',
+              );
+            } else if (date.getDay() + i == 7) {
+              $('.slick-track').append(
+                '<li id="datewrap" class="dateWrap slick-slide isSun" data-slick-index="' +
+                  i +
+                  '" aria-hidden="true" tablindex="-1" style="width: 132px"><p>' +
+                  todayDate.format('D') +
+                  '</p><span>' +
+                  week[(date.getDay() + i) % 7] +
+                  '</span></li>',
+              );
+            } else {
+              $('.slick-track').append(
+                '<li id="datewrap" class="dateWrap slick-slide" data-slick-index="' +
+                  i +
+                  '" aria-hidden="true" tablindex="-1" style="width: 132px"><p>' +
+                  todayDate.format('D') +
+                  '</p><span>' +
+                  week[(date.getDay() + i) % 7] +
+                  '</span></li>',
+              );
+            }
+          }
+        }
+        $('li[data-slick-index=0]').addClass('isActive');
       });
     </script>
   </body>

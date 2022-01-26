@@ -1,7 +1,7 @@
 #header {
   padding-top: 20px;
-  padding-right: 140px;
-  padding-left: 140px;
+  padding-right: 160px;
+  padding-left: 160px;
   position: fixed;
   top: 0;
   left: 0;
@@ -15,13 +15,18 @@
   box-shadow: 0 1px 8px rgb(0 0 0 / 10%), 0 1px 8px rgb(0 0 0 / 3%);
 }
 
+body {
+  font-family: 'Apple SD Gothic Neo', 'Noto Sans CJK KR', 'Malgun Gothic', 'dotum', 'gulim', sans-serif;
+  margin: 0;
+}
+
 .body-container {
-  width: 1150px;
+  width: 1140px;
   padding-right: 20px;
   padding-left: 20px;
   margin-right: auto;
   margin-left: auto;
-  min-height: 900px !important;
+  min-height: 920px !important;
 }
 
 .header-wrap {
@@ -74,7 +79,7 @@ ul {
   margin-block-end: 1em;
   margin-inline-start: 0px;
   margin-inline-end: 0px;
-  padding-inline-start: 60px;
+  padding-left: 0;
   list-style: none;
   margin-bottom: 10px;
 }
@@ -121,13 +126,18 @@ a:hover {
   display: block;
 }
 
+.banner {
+  margin: 0 auto;
+  text-align: center;
+}
+
 .event-banner {
   width: 100%;
   text-align: center;
 }
 
 .banner-img {
-  width: 1100px;
+  width: 1140px;
 }
 
 .footer {
@@ -140,6 +150,183 @@ div.footer > p {
   padding-top: 20px;
   font-size: 14px;
   margin: 0 0 10px;
+}
+
+#dateNav {
+  padding: 20px 0;
+  display: inherit;
+  background-color: white;
+  z-index: 2;
+  left: 0;
+  position: sticky;
+  top: 0;
+}
+
+#dateNav .tabWrap {
+  padding: 10px 30px;
+  max-width: 1024px;
+  margin: 0 auto;
+}
+
+#dateNav .tabWrap .slick-prev:before {
+  color: rgba(0, 0, 0, 1);
+  opacity: 0.25;
+}
+
+#dateNav .tabWrap .slick-prev:after {
+  color: rgba(0, 0, 0, 1);
+  opacity: 0.25;
+}
+
+#dateNav .tabWrap .slick-next:before {
+  color: rgba(0, 0, 0, 1);
+}
+
+.dateWrap.isSat {
+  color: blue !important;
+}
+
+.dateWrap.isSun {
+  color: Red !important;
+}
+
+.slick-slider {
+  position: relative;
+  display: block;
+  box-sizing: border-box;
+  user-select: none;
+  touch-action: pan-y;
+}
+
+.swipe-tab {
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.5s;
+}
+
+.slick-prev {
+  left: -25px;
+  font-size: 0;
+  position: absolute;
+  top: 50%;
+  display: block;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  transform: translate(0, -50%);
+  cursor: pointer;
+  color: transparent;
+  border: none;
+  outline: none;
+  background: transparent;
+}
+
+.slick-next {
+  right: -25px;
+  font-size: 0;
+  line-height: 0;
+  position: absolute;
+  top: 50%;
+  display: block;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  transform: translate(0, -50%);
+  cursor: pointer;
+  color: transparent;
+  border: none;
+  outline: 0;
+  background: 0 0;
+}
+
+.slick-next:before {
+  content: '→';
+  font-family: slick;
+  font-size: 20px;
+  line-height: 1;
+  opacity: 0.75;
+  color: #fff;
+}
+
+.slick-list {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  transform: translate3d(0, 0, 0);
+}
+
+.slick-track {
+  position: relative;
+  top: 0;
+  left: 0;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.slick-track:before {
+  display: table;
+  content: '';
+}
+
+.dateWrap.isActive {
+  background-color: skyblue;
+  color: white;
+}
+
+.swipe-tab .dateWrap {
+  border-radius: 40px;
+  padding: 13px 0;
+  margin: 0 3px;
+}
+
+.slick-slide {
+  float: left;
+  height: 100%;
+  min-height: 1px;
+}
+
+.swipe-tab .dateWrap p {
+  font-size: 18px;
+  line-height: 14px;
+  padding-top: 8px;
+  font-weight: 400;
+}
+
+.swipe-tab.slick-initialized .dateWrap {
+  display: block;
+}
+
+p {
+  margin: 0;
+  padding: 0;
+  word-break: break-all;
+}
+
+button {
+  appearance: auto;
+  -webkit-writing-mode: horizontal-tb !important;
+  text-rendering: auto;
+  letter-spacing: normal;
+  word-spacing: normal;
+  text-transform: none;
+  text-indent: none;
+  text-shadow: none;
+  text-align: center;
+  align-items: flex-start;
+}
+
+.swipe-tab .dateWrap span {
+  font: 'Open Sans';
+  font-weight: 600;
+  font-size: 13px;
 }
 
 *,
