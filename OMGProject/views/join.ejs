@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="/css/login.css" />
     <link rel="icon" type="image/png" href="https://s3.ap-northeast-2.amazonaws.com/img.castlejun-2.shop/UOMG_LOGO.png" />
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&amp;lang=en" />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
   </head>
   <body>
     <div class="content">
@@ -54,69 +55,71 @@
     </div>
 
     <script>
-      document.querySelector('.send-btn').addEventListener('click', function (e) {
-        const email = document.getElementsByName('email')[0].value;
-        const name = document.getElementsByName('name')[0].value;
-        const passwd = document.getElementsByName('passwd')[0].value;
-        const passwdConfirm = document.getElementsByName('passwdConfirm')[0].value;
-        const school = document.getElementsByName('school')[0].value;
-        const phonenumber = document.getElementsByName('phonenumber')[0].value;
-        const agree = document.getElementById('agree_cbx').checked;
-        const url = '/users/join';
-        sendSubmitAjax(url, {
-          email: email,
-          name: name,
-          passwd: passwd,
-          passwdConfirm: passwdConfirm,
-          school: school,
-          phonenumber: phonenumber,
-          agree: agree,
+      $(function () {
+        $('.send-btn').clikc(function (e) {
+          const email = document.getElementsByName('email')[0].value;
+          const name = document.getElementsByName('name')[0].value;
+          const passwd = document.getElementsByName('passwd')[0].value;
+          const passwdConfirm = document.getElementsByName('passwdConfirm')[0].value;
+          const school = document.getElementsByName('school')[0].value;
+          const phonenumber = document.getElementsByName('phonenumber')[0].value;
+          const agree = document.getElementById('agree_cbx').checked;
+          const url = '/users/join';
+          sendSubmitAjax(url, {
+            email: email,
+            name: name,
+            passwd: passwd,
+            passwdConfirm: passwdConfirm,
+            school: school,
+            phonenumber: phonenumber,
+            agree: agree,
+          });
+          e.preventDefault();
         });
-        e.preventDefault();
-      });
-      function sendSubmitAjax(url, data) {
-        let jsondata = JSON.stringify(data);
-        const xhr = new XMLHttpRequest();
-        xhr.open('POST', url);
-        xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.send(jsondata);
+        function sendSubmitAjax(url, data) {
+          let jsondata = JSON.stringify(data);
+          const xhr = new XMLHttpRequest();
+          xhr.open('POST', url);
+          xhr.setRequestHeader('Content-Type', 'application/json');
+          xhr.send(jsondata);
 
-        xhr.addEventListener('load', function () {
-          const message = JSON.parse(xhr.responseText);
-          if (message.success) window.location.href = '/users/join/welcome';
-          else {
-            console.log(xhr.responseText);
-            const resultDiv = document.querySelector('.message-box');
-            resultDiv.innerHTML = message.message;
-            resultDiv.removeAttribute('hidden');
-          }
-        });
-      }
-
-      function hypenNumber(obj) {
-        let number = obj.value.replace(/[^0-9]/g, '');
-        let phone = '';
-        if (number.length < 4) {
-          return number;
-        } else if (number.length < 7) {
-          phone += number.substr(0, 3);
-          phone += '-';
-          phone += number.substr(3);
-        } else if (number.length < 11) {
-          phone += number.substr(0, 3);
-          phone += '-';
-          phone += number.substr(3, 3);
-          phone += '-';
-          phone += number.substr(6);
-        } else {
-          phone += number.substr(0, 3);
-          phone += '-';
-          phone += number.substr(3, 4);
-          phone += '-';
-          phone += number.substr(7);
+          xhr.addEventListener('load', function () {
+            const message = JSON.parse(xhr.responseText);
+            if (message.success) window.location.href = '/users/join/welcome';
+            else {
+              console.log(xhr.responseText);
+              const resultDiv = document.querySelector('.message-box');
+              resultDiv.innerHTML = message.message;
+              resultDiv.removeAttribute('hidden');
+            }
+          });
         }
-        obj.value = phone;
-      }
+
+        function hypenNumber(obj) {
+          let number = obj.value.replace(/[^0-9]/g, '');
+          let phone = '';
+          if (number.length < 4) {
+            return number;
+          } else if (number.length < 7) {
+            phone += number.substr(0, 3);
+            phone += '-';
+            phone += number.substr(3);
+          } else if (number.length < 11) {
+            phone += number.substr(0, 3);
+            phone += '-';
+            phone += number.substr(3, 3);
+            phone += '-';
+            phone += number.substr(6);
+          } else {
+            phone += number.substr(0, 3);
+            phone += '-';
+            phone += number.substr(3, 4);
+            phone += '-';
+            phone += number.substr(7);
+          }
+          obj.value = phone;
+        }
+      });
     </script>
   </body>
 </html>
