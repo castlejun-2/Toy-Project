@@ -9,7 +9,6 @@ class Controller {
     main: async (req, res) => {
       const meetingResult = await MainStorage.getMeetingInfo();
       const eventResult = await MainStorage.getEventInfo();
-      console.log(meetingResult);
       if (req.user) res.render('main.ejs', { event: eventResult, meeting: meetingResult, user: req.user });
       else res.redirect('/users/login');
     },
