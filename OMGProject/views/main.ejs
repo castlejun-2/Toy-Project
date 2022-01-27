@@ -33,22 +33,26 @@
               onclick="window.location.href='/';"
             />
           </div>
+          <div id="header-show-btn"></div>
           <div id="nav-list-btn"></div>
           <ul id="header-nav">
             <li>
               <a class="header-nav-btn home" href="/"><span>홈</span></a>
             </li>
             <li>
-              <a class="header-nav-btn" href="/game"><span>게임</span></a>
+              <a class="header-nav-btn" href="/meetings/game"><span>게임</span></a>
             </li>
             <li>
-              <a class="header-nav-btn" href="/metting"><span>미팅</span></a>
+              <a class="header-nav-btn" href="/meetings/meeting"><span>소개팅</span></a>
             </li>
             <li>
-              <a class="header-nav-btn" href="/sports"><span>스포츠</span></a>
+              <a class="header-nav-btn" href="/meetings/sports"><span>스포츠</span></a>
             </li>
             <li>
-              <a class="header-nav-btn" href="/study"><span>스터디</span></a>
+              <a class="header-nav-btn" href="/meetings/study"><span>스터디</span></a>
+            </li>
+            <li>
+              <a class="header-nav-btn" href="/meetings/hobby"><span>취미</span></a>
             </li>
           </ul>
           <ul id="header-user-box">
@@ -62,6 +66,43 @@
         </nav>
       </div>
     </header>
+    <div id="side-mask" style="display: none">
+      <div id="side-menuBar" style="right: -300px">
+        <div id="side-top">
+          <div class="side-top-user-box">
+            <span id="side-user-name" onclick="window.location.href='/users/my-page'" style="cursor: pointer">
+              <b style="font-weight: 700"><%= user.email %></b>
+            </span>
+          </div>
+        </div>
+        <ul id="side-nav">
+          <li>
+            <a class="side-nav-btn home" href="/"><span>홈</span></a>
+          </li>
+          <li>
+            <a class="side-nav-btn" href="/meetings/game"><span>게임</span></a>
+          </li>
+          <li>
+            <a class="side-nav-btn" href="/meetings/meeting"><span>소개팅</span></a>
+          </li>
+          <li>
+            <a class="side-nav-btn" href="/meetings/sports"><span>스포츠</span></a>
+          </li>
+          <li>
+            <a class="side-nav-btn" href="/meetings/study"><span>스터디</span></a>
+          </li>
+          <li>
+            <a class="side-nav-btn" href="/meetings/hobby"><span>취미</span></a>
+          </li>
+          <li>
+            <a class="side-nav-btn" href="/users/my-page"><span>마이 페이지</span></a>
+          </li>
+          <li>
+            <a class="side-nav-btn" href="/users/logout"><span>로그아웃</span></a>
+          </li>
+        </ul>
+      </div>
+    </div>
     <div class="body-container">
       <div class="main-container">
         <div role="main">
@@ -99,6 +140,25 @@
                   </div>
                 </div>
               </div>
+              <div class="title-list">
+                <ul>
+                  <% for (let i = 0; i < meeting.length; i++) { %>
+                  <li class="meeting-content">
+                    <a>
+                      <div class="meeting-time"><p><%= meeting[i].time %></p></div>
+                      <div class="meeting-type"><p><%= meeting[i].type %></p></div>
+                      <div class="meeting-info">
+                        <div class=""><%= meeting[i].title %></div>
+                        <div class="meeting-place"><%= meeting[i].place %></div>
+                      </div>
+                      <div style="width: 10%">
+                        <div class="meeting-status"><%= meeting[i].status %></div>
+                      </div>
+                    </a>
+                  </li>
+                  <% } %>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
@@ -121,115 +181,127 @@
           dotsClass: 'slick-dots',
           arrows: false,
         });
-      });
 
-      $('.slick-track').ready(function () {
-        const date = new Date();
-        const week = ['일', '월', '화', '수', '목', '금', '토'];
-        for (let i = 0; i < 14; i++) {
-          const today = moment();
-          let todayDate = today.add(i, 'days');
-          if (i < 7) {
-            if ((date.getDay() + i) % 7 == 6) {
-              $('.slick-track').append(
-                '<li id="datewrap" class="dateWrap slick-slide isSat" data-slick-index="' +
-                  i +
-                  '" aria-hidden="false" tabindex="0" style="width: 132px"><p>' +
-                  todayDate.format('D') +
-                  '</p><span>' +
-                  week[(date.getDay() + i) % 7] +
-                  '</span></li>',
-              );
-            } else if ((date.getDay() + i) % 7 == 0) {
-              $('.slick-track').append(
-                '<li id="datewrap" class="dateWrap slick-slide isSun" data-slick-index="' +
-                  i +
-                  '" aria-hidden="false" tabindex="0" style="width: 132px"><p>' +
-                  todayDate.format('D') +
-                  '</p><span>' +
-                  week[(date.getDay() + i) % 7] +
-                  '</span></li>',
-              );
+        $('.slick-track').ready(function () {
+          const date = new Date();
+          const week = ['일', '월', '화', '수', '목', '금', '토'];
+          for (let i = 0; i < 14; i++) {
+            const today = moment();
+            let todayDate = today.add(i, 'days');
+            if (i < 7) {
+              if ((date.getDay() + i) % 7 == 6) {
+                $('.slick-track').append(
+                  '<li id="datewrap" class="dateWrap slick-slide isSat" data-slick-index="' +
+                    i +
+                    '" aria-hidden="false" tabindex="0" style="width: 132px"><p>' +
+                    todayDate.format('D') +
+                    '</p><span>' +
+                    week[(date.getDay() + i) % 7] +
+                    '</span></li>',
+                );
+              } else if ((date.getDay() + i) % 7 == 0) {
+                $('.slick-track').append(
+                  '<li id="datewrap" class="dateWrap slick-slide isSun" data-slick-index="' +
+                    i +
+                    '" aria-hidden="false" tabindex="0" style="width: 132px"><p>' +
+                    todayDate.format('D') +
+                    '</p><span>' +
+                    week[(date.getDay() + i) % 7] +
+                    '</span></li>',
+                );
+              } else {
+                $('.slick-track').append(
+                  '<li id="datewrap" class="dateWrap slick-slide" data-slick-index="' +
+                    i +
+                    '" aria-hidden="false" tabindex="0" style="width: 132px"><p>' +
+                    todayDate.format('D') +
+                    '</p><span>' +
+                    week[(date.getDay() + i) % 7] +
+                    '</span></li>',
+                );
+              }
             } else {
-              $('.slick-track').append(
-                '<li id="datewrap" class="dateWrap slick-slide" data-slick-index="' +
-                  i +
-                  '" aria-hidden="false" tabindex="0" style="width: 132px"><p>' +
-                  todayDate.format('D') +
-                  '</p><span>' +
-                  week[(date.getDay() + i) % 7] +
-                  '</span></li>',
-              );
-            }
-          } else {
-            if ((date.getDay() + i) % 7 == 6) {
-              $('.slick-track').append(
-                '<li id="datewrap" class="dateWrap slick-slide isSat" data-slick-index="' +
-                  i +
-                  '" aria-hidden="true" tabindex="-1" style="width: 132px"><p>' +
-                  todayDate.format('D') +
-                  '</p><span>' +
-                  week[(date.getDay() + i) % 7] +
-                  '</span></li>',
-              );
-            } else if ((date.getDay() + i) % 7 == 0) {
-              $('.slick-track').append(
-                '<li id="datewrap" class="dateWrap slick-slide isSun" data-slick-index="' +
-                  i +
-                  '" aria-hidden="true" tabindex="-1" style="width: 132px"><p>' +
-                  todayDate.format('D') +
-                  '</p><span>' +
-                  week[(date.getDay() + i) % 7] +
-                  '</span></li>',
-              );
-            } else {
-              $('.slick-track').append(
-                '<li id="datewrap" class="dateWrap slick-slide" data-slick-index="' +
-                  i +
-                  '" aria-hidden="true" tabindex="-1" style="width: 132px"><p>' +
-                  todayDate.format('D') +
-                  '</p><span>' +
-                  week[(date.getDay() + i) % 7] +
-                  '</span></li>',
-              );
+              if ((date.getDay() + i) % 7 == 6) {
+                $('.slick-track').append(
+                  '<li id="datewrap" class="dateWrap slick-slide isSat" data-slick-index="' +
+                    i +
+                    '" aria-hidden="true" tabindex="-1" style="width: 132px"><p>' +
+                    todayDate.format('D') +
+                    '</p><span>' +
+                    week[(date.getDay() + i) % 7] +
+                    '</span></li>',
+                );
+              } else if ((date.getDay() + i) % 7 == 0) {
+                $('.slick-track').append(
+                  '<li id="datewrap" class="dateWrap slick-slide isSun" data-slick-index="' +
+                    i +
+                    '" aria-hidden="true" tabindex="-1" style="width: 132px"><p>' +
+                    todayDate.format('D') +
+                    '</p><span>' +
+                    week[(date.getDay() + i) % 7] +
+                    '</span></li>',
+                );
+              } else {
+                $('.slick-track').append(
+                  '<li id="datewrap" class="dateWrap slick-slide" data-slick-index="' +
+                    i +
+                    '" aria-hidden="true" tabindex="-1" style="width: 132px"><p>' +
+                    todayDate.format('D') +
+                    '</p><span>' +
+                    week[(date.getDay() + i) % 7] +
+                    '</span></li>',
+                );
+              }
             }
           }
-        }
-        $('li[data-slick-index=0]').addClass('isActive');
-        $('.dateWrap').click(function () {
-          $('li[class*=isActive]').removeClass('isActive');
-          const index = $(this).attr('data-slick-index');
-          $('li[data-slick-index=' + index + ']').addClass('isActive');
+          $('li[data-slick-index=0]').addClass('isActive');
+          $('.dateWrap').click(function () {
+            $('li[class*=isActive]').removeClass('isActive');
+            const index = $(this).attr('data-slick-index');
+            $('li[data-slick-index=' + index + ']').addClass('isActive');
+          });
+          $('.slick-next').click(function () {
+            const nvalue = $('li[tabindex="0"]').attr('data-slick-index');
+            if (nvalue < 7) {
+              $('li[data-slick-index=' + nvalue + ']').attr('tabindex', '-1');
+              $('li[data-slick-index=' + nvalue + ']').attr('aria-hidden', 'true');
+              $('li[data-slick-index=' + nvalue + ']').css('display', 'none');
+              $('li[data-slick-index=' + (parseInt(nvalue) + 7) + ']').attr('tabindex', '0');
+              $('li[data-slick-index=' + (parseInt(nvalue) + 7) + ']').attr('aria-hidden', 'false');
+              $('li[data-slick-index=' + (parseInt(nvalue) + 7) + ']').css('display', 'block');
+              if ($('li[tabindex="0"]').attr('data-slick-index') == 7) $('.slick-next').css('opacity', '0.25');
+              else $('.slick-next').css('opacity', '1');
+              $('.slick-prev').css('opacity', '1');
+            }
+          });
+          $('.slick-prev').click(function () {
+            const pvalue = $('li[tabindex="0"]').attr('data-slick-index');
+            if (pvalue > 0) {
+              $('li[data-slick-index=' + (parseInt(pvalue) - 1) + ']').attr('tabindex', '0');
+              $('li[data-slick-index=' + (parseInt(pvalue) - 1) + ']').attr('aria-hidden', 'false');
+              $('li[data-slick-index=' + (parseInt(pvalue) - 1) + ']').css('display', 'block');
+              $('li[data-slick-index=' + (parseInt(pvalue) + 6) + ']').attr('tabindex', '-1');
+              $('li[data-slick-index=' + (parseInt(pvalue) + 6) + ']').attr('aria-hidden', 'true');
+              $('li[data-slick-index=' + (parseInt(pvalue) + 6) + ']').css('display', 'none');
+              if ($('li[tabindex="0"]').attr('data-slick-index') == 0) $('.slick-prev').css('opacity', '0.25');
+              else $('.slick-prev').css('opacity', '1');
+              $('.slick-next').css('opacity', '1');
+            }
+          });
+          if ($('li[tabindex="0"]').attr('data-slick-index') == 0) $('.slick-prev').css('opacity', '0.25');
+          $('#header-show-btn').click(function () {
+            $('#side-mask').css('display', 'block');
+            $('#side-menuBar').css('right', '0px');
+            $('#side-menuBar').addClass('visible');
+            $('#header').css('right', '16px');
+          });
+          $('#side-mask').click(function () {
+            $('#side-mask').css('display', 'none');
+            $('#side-menuBar').css('right', '-300px');
+            $('#side-menuBar').removeClass('visible');
+            $('#header').css('right', '0');
+          });
         });
-        $('.slick-next').click(function () {
-          const nvalue = $('li[tabindex="0"]').attr('data-slick-index');
-          if (nvalue < 7) {
-            $('li[data-slick-index=' + nvalue + ']').attr('tabindex', '-1');
-            $('li[data-slick-index=' + nvalue + ']').attr('aria-hidden', 'true');
-            $('li[data-slick-index=' + nvalue + ']').css('display', 'none');
-            $('li[data-slick-index=' + (parseInt(nvalue) + 7) + ']').attr('tabindex', '0');
-            $('li[data-slick-index=' + (parseInt(nvalue) + 7) + ']').attr('aria-hidden', 'false');
-            $('li[data-slick-index=' + (parseInt(nvalue) + 7) + ']').css('display', 'block');
-            if ($('li[tabindex="0"]').attr('data-slick-index') == 0) $('.slick-prev').css('opacity', '0.25');
-            else $('.slick-prev').css('opacity', '1');
-            if ($('li[tabindex="0"]').attr('data-slick-index') == 7) $('.slick-next').css('opacity', '0.25');
-            else $('.slick-next').css('opacity', '1');
-          }
-        });
-        $('.slick-prev').click(function () {
-          const pvalue = $('li[tabindex="0"]').attr('data-slick-index');
-          if (pvalue > 0) {
-            $('li[data-slick-index=' + (parseInt(pvalue) - 1) + ']').attr('tabindex', '0');
-            $('li[data-slick-index=' + (parseInt(pvalue) - 1) + ']').attr('aria-hidden', 'false');
-            $('li[data-slick-index=' + (parseInt(pvalue) - 1) + ']').css('display', 'block');
-            $('li[data-slick-index=' + (parseInt(pvalue) + 6) + ']').attr('tabindex', '-1');
-            $('li[data-slick-index=' + (parseInt(pvalue) + 6) + ']').attr('aria-hidden', 'true');
-            $('li[data-slick-index=' + (parseInt(pvalue) + 6) + ']').css('display', 'none');
-            if ($('li[tabindex="0"]').attr('data-slick-index') == 0) $('.slick-prev').css('opacity', '0.25');
-            else $('.slick-prev').css('opacity', '1');
-          }
-        });
-        if ($('li[tabindex="0"]').attr('data-slick-index') == 0) $('.slick-prev').css('opacity', '0.25');
       });
     </script>
   </body>

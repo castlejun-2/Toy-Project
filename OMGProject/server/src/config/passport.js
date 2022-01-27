@@ -1,8 +1,8 @@
 import express from 'express';
 import passport from 'passport';
 import passportLocal from 'passport-local';
-import User from '../models/users/user.js';
-import UserStorage from '../models/users/userStorage.js';
+import User from '../models/user/user.js';
+import UserStorage from '../models/user/userStorage.js';
 
 const app = express();
 const LocalStrategy = passportLocal.Strategy;
