@@ -7,6 +7,12 @@ import MeetingStorage from '../../models/meeting/meetingStorage.js';
 class Controller {
   output = {};
 
-  process = {};
+  process = {
+    getSchedule: async (req, res) => {
+      const diffDate = req.body.diff_date;
+      const scheduleResult = await MeetingStorage.getMeetingInfo(diffDate);
+      return res.send({ meeting: scheduleResult });
+    },
+  };
 }
 export default new Controller();

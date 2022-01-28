@@ -119,51 +119,61 @@
                   <% } %>
                 </div>
               </div>
-              <div id="dateNav" class="sub-header" style="padding-bottom: 10px">
-                <div class="tabWrap">
-                  <div class="swipe-tabs">
-                    <ul class="swipe-tab slick-initialized slick-slider">
-                      <button
-                        class="slick-prev slick-arrow slick-disabled"
-                        aria-label="Previous"
-                        type="button"
-                        aria-disabled="true"
-                        style=""
-                      >
-                        Previous
-                      </button>
-                      <div class="slick-list draggable">
-                        <div class="slick-track" style="opacity: 1; width: 1932px; transform: translate3d(0px, 0px, 0px)"></div>
-                      </div>
-                      <button class="slick-next slick-arrow" aria-label="Next" type="button" style="" aria-disabled="false">Next</button>
-                    </ul>
+              <div class="body-content">
+                <div class="side-bar">
+                  <ul>
+                    <li><a href="/competitions">진행 중인 대회</a></li>
+                    <li><a href="/notices">공지사항</a></li>
+                    <li><a href="/questions">1:1 문의</a></li>
+                  </ul>
+                </div>
+                <div id="dateNav" class="sub-header" style="padding-bottom: 10px">
+                  <div class="tabWrap">
+                    <div class="swipe-tabs">
+                      <ul class="swipe-tab slick-initialized slick-slider">
+                        <button
+                          class="slick-prev slick-arrow slick-disabled"
+                          aria-label="Previous"
+                          type="button"
+                          aria-disabled="true"
+                          style=""
+                        >
+                          Previous
+                        </button>
+                        <div class="slick-list draggable">
+                          <div class="slick-track" style="opacity: 1; width: 1932px; transform: translate3d(0px, 0px, 0px)"></div>
+                        </div>
+                        <button class="slick-next slick-arrow" aria-label="Next" type="button" style="" aria-disabled="false">Next</button>
+                      </ul>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="title-list">
-                <ul>
-                  <% for (let i = 0; i < meeting.length; i++) { %>
-                  <li class="meeting-content">
-                    <a>
-                      <div class="meeting-time"><p><%= meeting[i].time %></p></div>
-                      <div class="meeting-type"><p><%= meeting[i].type %></p></div>
-                      <div class="meeting-info">
-                        <div class=""><%= meeting[i].title %></div>
-                        <div class="meeting-place"><%= meeting[i].place %></div>
-                      </div>
-                      <div style="width: 10%">
-                        <div class="meeting-status"><%= meeting[i].status %></div>
-                      </div>
-                    </a>
-                  </li>
-                  <% } %>
-                </ul>
+                <div class="title-list">
+                  <ul class="schedule-list">
+                    <% for (let i = 0; i < meeting.length; i++) { %>
+                    <li class="meeting-content" style="">
+                      <a>
+                        <div class="meeting-time"><p><%= meeting[i].time %></p></div>
+                        <div class="meeting-type"><p><%= meeting[i].type %></p></div>
+                        <div class="meeting-info">
+                          <div class=""><%= meeting[i].title %></div>
+                          <div class="meeting-place"><%= meeting[i].place %></div>
+                        </div>
+                        <div style="width: 10%">
+                          <div class="meeting-status"><%= meeting[i].status %></div>
+                        </div>
+                      </a>
+                    </li>
+                    <% } %>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+
     <div class="footer omg-footer">
       <p>© 2022. OMG ALL RIGHTS RESERVED.</p>
     </div>
@@ -259,6 +269,45 @@
             $('li[class*=isActive]').removeClass('isActive');
             const index = $(this).attr('data-slick-index');
             $('li[data-slick-index=' + index + ']').addClass('isActive');
+            $('.meeting-content').css('display', 'none');
+            $.ajax({
+              url: '/meetings',
+              method: 'POST',
+              data: { diff_date: index },
+              dataType: 'json',
+              success: function (response) {
+                let meeting = response.meeting;
+                let html = ``;
+                for (let i = 0; i < meeting.length; i++) {
+                  html +=
+                    `
+                  <li class="meeting-content">
+                    <a>
+                      <div class="meeting-time"><p>` +
+                    meeting[i].time +
+                    `</p></div>
+                      <div class="meeting-type"><p>` +
+                    meeting[i].type +
+                    `</p></div>
+                      <div class="meeting-info">
+                        <div class="">` +
+                    meeting[i].title +
+                    `</div>
+                        <div class="meeting-place">` +
+                    meeting[i].place +
+                    `</div>
+                      </div>
+                      <div style="width: 10%">
+                        <div class="meeting-status">` +
+                    meeting[i].status +
+                    `</div>
+                      </div>
+                    </a>
+                  </li>`;
+                }
+                $('.schedule-list').html(html);
+              },
+            });
           });
           $('.slick-next').click(function () {
             const nvalue = $('li[tabindex="0"]').attr('data-slick-index');

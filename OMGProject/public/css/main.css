@@ -159,7 +159,37 @@ body {
   padding: 8px 0 8px 20px;
   color: rgba(0, 0, 0, 0.55) !important;
 }
+
+.side-bar {
+  position: relative;
+  width: 250px;
+  height: 300px;
+  margin-top: 150px;
+  margin-left: 100px;
+  padding: 20px 20px;
+  float: left;
+  text-align: center;
+  border-radius: 5px;
+  border: 1px dotted rgb(185, 184, 184);
+  background-color: #fafafa;
+}
+
+.side-bar > ul {
+  line-height: 30px;
+}
+
+.side-bar > ul > li {
+  margin-left: 40px;
+  margin-right: 40px;
+  padding-top: 20px;
+  padding-bottom: 3px;
+  border-bottom: 1px dotted rgb(201, 199, 199);
+}
+
 @media screen and (max-width: 2000px) {
+  .side-bar {
+    display: none;
+  }
   .banner {
     width: 100%;
     height: 100% !important;
@@ -173,7 +203,7 @@ body {
   }
 }
 
-@media screen and (max-width: 1300px) {
+@media screen and (max-width: 1400px) {
   .header-top {
     height: 70px;
   }
@@ -227,7 +257,6 @@ body {
     background: url(https://s3.ap-northeast-2.amazonaws.com/img.castlejun-2.shop/m-botton.png) no-repeat center;
     color: black;
     margin: 10px 15px;
-    content: '≡';
   }
 }
 

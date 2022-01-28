@@ -8,8 +8,7 @@ class Router {
   }
   setRouter() {
     //Paging Router
-    this.router.get('/', mainController.output.main);
-
+    this.router.get('/', mainController.output.getMain);
     //Processing Router
   }
 }

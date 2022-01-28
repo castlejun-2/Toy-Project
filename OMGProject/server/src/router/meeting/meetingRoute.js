@@ -6,7 +6,9 @@ class Router {
     this.router = express.Router();
     this.setRouter();
   }
-  setRouter() {}
+  setRouter() {
+    this.router.post('/', meetingController.process.getSchedule);
+  }
 }
 
 export default new Router().router;
