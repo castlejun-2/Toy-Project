@@ -8,6 +8,7 @@ class Router {
   }
   setRouter() {
     this.router.post('/', meetingController.process.getSchedule);
+    this.router.get('/:typeName/:scheduleId', meetingController.output.getScheduleDetail);
   }
 }
 

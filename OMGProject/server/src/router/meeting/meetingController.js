@@ -5,7 +5,14 @@ import Main from '../../models/main/main.js';
 import MeetingStorage from '../../models/meeting/meetingStorage.js';
 
 class Controller {
-  output = {};
+  output = {
+    getScheduleDetail: async (req, res) => {
+      const typeCode = req.params.typeName;
+      const meetingId = req.params.scheduleId;
+      const scheduleDetailResult = await MeetingStorage.getMeedtingDetail(meetingId);
+      res.send(scheduleDetailResult);
+    },
+  };
 
   process = {
     getSchedule: async (req, res) => {

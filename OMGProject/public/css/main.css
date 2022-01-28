@@ -170,11 +170,12 @@ body {
   float: left;
   text-align: center;
   border-radius: 5px;
-  border: 1px dotted rgb(185, 184, 184);
+  border: 1px solid rgb(238, 238, 238);
   background-color: #fafafa;
 }
 
 .side-bar > ul {
+  height: 100%;
   line-height: 30px;
 }
 

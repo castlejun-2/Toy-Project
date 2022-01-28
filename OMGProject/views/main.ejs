@@ -122,6 +122,7 @@
               <div class="body-content">
                 <div class="side-bar">
                   <ul>
+                    <b style="margin-bottom: 10px">UOMG</b>
                     <li><a href="/competitions">진행 중인 대회</a></li>
                     <li><a href="/notices">공지사항</a></li>
                     <li><a href="/questions">1:1 문의</a></li>
@@ -152,9 +153,10 @@
                   <ul class="schedule-list">
                     <% for (let i = 0; i < meeting.length; i++) { %>
                     <li class="meeting-content" style="">
-                      <a>
+                      <a href="/meetings/<%= meeting[i].mainName %>/<%= meeting[i].id %>">
+                        <div class="meeting-time" style="display: none"><p><%= meeting[i].typeCode %></p></div>
                         <div class="meeting-time"><p><%= meeting[i].time %></p></div>
-                        <div class="meeting-type"><p><%= meeting[i].type %></p></div>
+                        <div class="meeting-type"><p><%= meeting[i].subject %></p></div>
                         <div class="meeting-info">
                           <div class=""><%= meeting[i].title %></div>
                           <div class="meeting-place"><%= meeting[i].place %></div>
@@ -283,11 +285,14 @@
                     `
                   <li class="meeting-content">
                     <a>
+                      <div class="meeting-time" style="display:none"><p>` +
+                    meeting[i].mainName +
+                    `</p></div>
                       <div class="meeting-time"><p>` +
                     meeting[i].time +
                     `</p></div>
                       <div class="meeting-type"><p>` +
-                    meeting[i].type +
+                    meeting[i].subject +
                     `</p></div>
                       <div class="meeting-info">
                         <div class="">` +

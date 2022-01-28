@@ -6,7 +6,10 @@ class MainStorage {
       pool.getConnection(async function (err, conn) {
         if (err) reject(`${err}`);
         else {
-          const query = 'Select id, bannerUrl as b_url, posterUrl as p_url From Event Where status = 1';
+          const query = `
+            Select id, bannerUrl as b_url, posterUrl as p_url
+            From Event
+            Where status = 1`;
           conn.query(query, function (err, rows) {
             if (err) reject(`${err}`);
             else resolve(rows);
