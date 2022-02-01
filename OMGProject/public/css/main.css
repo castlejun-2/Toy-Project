@@ -17,6 +17,7 @@
 
 body {
   position: relative;
+  overflow-y: scroll;
   font-family: 'Apple SD Gothic Neo', 'Noto Sans CJK KR', 'Malgun Gothic', 'dotum', 'gulim', sans-serif;
   margin: 0;
 }
@@ -161,7 +162,7 @@ body {
 }
 
 .side-bar {
-  position: relative;
+  position: absolute;
   width: 250px;
   height: 300px;
   margin-top: 150px;
@@ -576,6 +577,78 @@ button {
   padding: 8px 5px;
   border-radius: 8px;
   font-size: 14px;
+}
+
+.paging-wrap::before {
+  content: ' ';
+  display: table;
+}
+
+.paging-wrap {
+  position: relative;
+  width: 100%;
+  height: auto;
+  margin: 15px auto;
+}
+
+.paging-box {
+  width: auto;
+  height: auto;
+  line-height: normal;
+  text-align: center;
+  margin-right: 0;
+}
+
+.paging-box:before {
+  content: ' ';
+  display: table;
+}
+
+.paging-list {
+  margin-right: -1px;
+  display: inline-block;
+}
+
+.paging-list::after {
+  clear: both;
+}
+
+.paging-btn.prev::before {
+  content: '<<';
+}
+
+.paging-btn.next::before {
+  content: '>>';
+}
+
+.paging-btn {
+  background-color: #f3f3f3;
+  height: 34px;
+  min-width: 40px;
+  padding: 0 2px;
+  float: left;
+  text-align: center;
+  font-weight: bold;
+  line-height: 34px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border: 1px solid #ddd;
+  border-left: none;
+}
+
+.paging-btn:first-child {
+  border-left: 1px solid #ddd;
+}
+
+.paging-btn.prev,
+.paging-btn.next {
+  background-color: #fff !important;
+  color: #000;
+}
+
+.paging-btn.active,
+.paging-btn:hover {
+  background-color: #fff !important;
 }
 
 *,
