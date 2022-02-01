@@ -37,7 +37,7 @@
           <div id="nav-list-btn"></div>
           <ul id="header-nav">
             <li>
-              <a class="header-nav-btn home" href="/"><span>홈</span></a>
+              <a class="header-nav-btn" href="/"><span>홈</span></a>
             </li>
             <li>
               <a class="header-nav-btn" href="/meetings/game"><span>게임</span></a>
@@ -52,7 +52,7 @@
               <a class="header-nav-btn" href="/meetings/study"><span>스터디</span></a>
             </li>
             <li>
-              <a class="header-nav-btn" href="/meetings/hobby"><span>취미</span></a>
+              <a class="header-nav-btn home" href="/meetings/hobby"><span>취미</span></a>
             </li>
           </ul>
           <ul id="header-user-box">
@@ -77,7 +77,7 @@
         </div>
         <ul id="side-nav">
           <li>
-            <a class="side-nav-btn home" href="/"><span>홈</span></a>
+            <a class="side-nav-btn" href="/"><span>홈</span></a>
           </li>
           <li>
             <a class="side-nav-btn" href="/meetings/game"><span>게임</span></a>
@@ -92,7 +92,7 @@
             <a class="side-nav-btn" href="/meetings/study"><span>스터디</span></a>
           </li>
           <li>
-            <a class="side-nav-btn" href="/meetings/hobby"><span>취미</span></a>
+            <a class="side-nav-btn home" href="/meetings/hobby"><span>취미</span></a>
           </li>
           <li>
             <a class="side-nav-btn" href="/users/my-page"><span>마이 페이지</span></a>
@@ -109,14 +109,12 @@
           <div class="board" id="content">
             <div class="main-content">
               <div class="banner">
-                <div class="event-banner" style="text-align: center" id="main-banner">
-                  <% for (let i = 0; i < event.length; i++) { %>
+                <div class="subject-banner" style="text-align: center" id="main-banner">
                   <div>
-                    <a class="event-display" target="_blank" href="<%= event[i].p_url %>">
-                      <img class="banner-img" src="<%= event[i].b_url %>" onclick />
+                    <a class="event-display" target="_blank" href="meetings/game">
+                      <img class="banner-img" src="https://s3.ap-northeast-2.amazonaws.com/img.castlejun-2.shop/game_banner.png" onclick />
                     </a>
                   </div>
-                  <% } %>
                 </div>
               </div>
               <div class="body-content">
@@ -193,19 +191,6 @@
     </div>
     <script type="text/javascript">
       $(function () {
-        $('#main-banner').slick({
-          slide: 'div',
-          infinite: true,
-          slidesToShow: 1,
-          speed: 100,
-          dots: true,
-          autoplay: true,
-          autoplaySpeed: 4500,
-          pauseOnHover: true,
-          dotsClass: 'slick-dots',
-          arrows: false,
-        });
-
         $('.slick-track').ready(function () {
           const date = new Date();
           const week = ['일', '월', '화', '수', '목', '금', '토'];
@@ -287,7 +272,7 @@
             $.ajax({
               url: '/meetings',
               method: 'GET',
-              data: { diff_date: index, type: 'main' },
+              data: { diff_date: index, type: 'hobby' },
               dataType: 'json',
               success: function (response) {
                 let meeting = response.meeting;
@@ -295,32 +280,32 @@
                 for (let i = 0; i < meeting.length; i++) {
                   html +=
                     `
-                  <li class="meeting-content">
-                    <a>
-                      <div class="meeting-time" style="display:none"><p>` +
+                    <li class="meeting-content">
+                      <a>
+                        <div class="meeting-time" style="display:none"><p>` +
                     meeting[i].mainName +
                     `</p></div>
-                      <div class="meeting-time"><p>` +
+                        <div class="meeting-time"><p>` +
                     meeting[i].time +
                     `</p></div>
-                      <div class="meeting-type"><p>` +
+                        <div class="meeting-type"><p>` +
                     meeting[i].subject +
                     `</p></div>
-                      <div class="meeting-info">
-                        <div class="">` +
+                        <div class="meeting-info">
+                          <div class="">` +
                     meeting[i].title +
                     `</div>
-                        <div class="meeting-place">` +
+                          <div class="meeting-place">` +
                     meeting[i].place +
                     `</div>
-                      </div>
-                      <div style="width: 10%">
-                        <div class="meeting-status">` +
+                        </div>
+                        <div style="width: 10%">
+                          <div class="meeting-status">` +
                     meeting[i].status +
                     `</div>
-                      </div>
-                    </a>
-                  </li>`;
+                        </div>
+                      </a>
+                    </li>`;
                 }
                 $('.schedule-list').html(html);
               },

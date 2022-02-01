@@ -7,7 +7,15 @@ class Router {
     this.setRouter();
   }
   setRouter() {
-    this.router.post('/', meetingController.process.getSchedule);
+    //Response JSON Data
+    this.router.get('/', meetingController.output.getDateSchedule);
+
+    //Paging Router
+    this.router.get('/game', meetingController.output.getGameSchedule);
+    this.router.get('/dating', meetingController.output.getDatingSchedule);
+    this.router.get('/sports', meetingController.output.getSportsSchedule);
+    this.router.get('/study', meetingController.output.getStudySchedule);
+    this.router.get('/hobby', meetingController.output.getHobbySchedule);
     this.router.get('/:typeName/:scheduleId', meetingController.output.getScheduleDetail);
   }
 }
