@@ -8,10 +8,9 @@ import MeetingStorage from '../../models/meeting/meetingStorage.js';
 class Controller {
   output = {
     getScheduleDetail: async (req, res) => {
-      const typeCode = req.params.typeName;
       const meetingId = req.params.scheduleId;
       const scheduleDetailResult = await MeetingStorage.getMeedtingDetail(meetingId);
-      res.send(scheduleDetailResult);
+      res.render('meeting.ejs', { meeting: scheduleDetailResult, user: req.user });
     },
     getDateSchedule: async (req, res) => {
       let params = [];

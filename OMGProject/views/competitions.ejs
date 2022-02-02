@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!--모바일 브라우저 뷰 포인트-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0" />
+    <meta http-equiv="imagetoolbar" content="no" />
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="pragma" content="no-cache" />
+    <title>Offline Meeting Gathering(OMG) | 오마이갓</title>
+    <link rel="icon" type="image/png" href="https://s3.ap-northeast-2.amazonaws.com/img.castlejun-2.shop/UOMG_LOGO.png" />
+    <link rel="stylesheet" href="/css/main.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css" />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script type="text/javascript" src="http://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+  </head>
+  <body>
+    <header id="header">
+      <div class="header-top">
+        <nav id="header-wrap" class="header-box">
+          <div id="header-logo">
+            <img
+              src="https://s3.ap-northeast-2.amazonaws.com/img.castlejun-2.shop/UOMG_LOGO.png"
+              id="header-logo-img"
+              onclick="window.location.href='/';"
+            />
+            <img
+              src="https://s3.ap-northeast-2.amazonaws.com/img.castlejun-2.shop/UOMG_LOGO.png"
+              id="header-logo-m-img"
+              onclick="window.location.href='/';"
+            />
+          </div>
+          <div id="header-show-btn"></div>
+          <div id="nav-list-btn"></div>
+          <ul id="header-nav">
+            <li>
+              <a class="header-nav-btn" href="/"><span>홈</span></a>
+            </li>
+            <li>
+              <a class="header-nav-btn" href="/meetings/game"><span>게임</span></a>
+            </li>
+            <li>
+              <a class="header-nav-btn" href="/meetings/dating"><span>소개팅</span></a>
+            </li>
+            <li>
+              <a class="header-nav-btn" href="/meetings/sports"><span>스포츠</span></a>
+            </li>
+            <li>
+              <a class="header-nav-btn" href="/meetings/study"><span>스터디</span></a>
+            </li>
+            <li>
+              <a class="header-nav-btn" href="/meetings/hobby"><span>취미</span></a>
+            </li>
+          </ul>
+          <ul id="header-user-box">
+            <li>
+              <a class="header-nav-btn" href="/users/logout"><span>로그아웃</span></a>
+            </li>
+            <li>
+              <a class="header-nav-btn" href="/users/my-page"><span>마이 페이지</span></a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <div id="side-mask" style="display: none">
+      <div id="side-menuBar" style="right: -300px">
+        <div id="side-top">
+          <div class="side-top-user-box">
+            <span id="side-user-name" onclick="window.location.href='/users/my-page'" style="cursor: pointer">
+              <b style="font-weight: 700"><%= user.email %></b>
+            </span>
+          </div>
+        </div>
+        <ul id="side-nav">
+          <li>
+            <a class="side-nav-btn" href="/"><span>홈</span></a>
+          </li>
+          <li>
+            <a class="side-nav-btn" href="/meetings/game"><span>게임</span></a>
+          </li>
+          <li>
+            <a class="side-nav-btn" href="/meetings/dating"><span>소개팅</span></a>
+          </li>
+          <li>
+            <a class="side-nav-btn" href="/meetings/sports"><span>스포츠</span></a>
+          </li>
+          <li>
+            <a class="side-nav-btn" href="/meetings/study"><span>스터디</span></a>
+          </li>
+          <li>
+            <a class="side-nav-btn" href="/meetings/hobby"><span>취미</span></a>
+          </li>
+          <li>
+            <a class="side-nav-btn" href="/users/my-page"><span>마이 페이지</span></a>
+          </li>
+          <li>
+            <a class="side-nav-btn" href="/users/logout"><span>로그아웃</span></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="body-container">
+      <div class="main-container">
+        <div role="main">
+          <div class="board" id="content">
+            <div class="main-content">
+              <div class="body-content">
+                <div class="side-bar">
+                  <ul>
+                    <b style="margin-bottom: 10px">UOMG INFORMATION</b>
+                    <li style="font-weight: bold"><a href="/competitions">진행 중인 대회</a></li>
+                    <li><a href="/notices">공지사항</a></li>
+                    <li><a href="/questions">1:1 문의</a></li>
+                  </ul>
+                </div>
+                <div class="title-list">
+                  <ul class="schedule-list">
+                    <li class="competiton-content" style="">
+                      <div class="notice-li" style="font-weight: bold"><p>번호</p></div>
+                      <div class="notice-type" style="font-weight: bold"><p>주최</p></div>
+                      <div style="font-weight: bold; text-align: center" class="notice-title">제목</div>
+                      <div style="width: 15%; font-weight: bold; text-align: center" class="notice-status">작성일</div>
+                    </li>
+                    <% for (let i = 0; i < competition.length; i++) { %>
+                    <li class="notice-content" style="">
+                      <a href="/competition/<%= competition[i].id %>">
+                        <div class="notice-li"><p><%= competition[i].id %></p></div>
+                        <div class="notice-type"><p><%= competition[i].organizer %></p></div>
+                        <div class="notice-title"><%= competition[i].title %></div>
+                        <div style="width: 15%" class="notice-status"><%= competition[i].createdAt %></div>
+                      </a>
+                    </li>
+                    <% } %>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="paging-wrap">
+              <div class="paging-box">
+                <div class="paging-list">
+                  <a href="" class="paging-btn prev"></a>
+                  <a href="" class="paging-btn active">1</a>
+                  <a href="" class="paging-btn">2</a>
+                  <a href="" class="paging-btn">3</a>
+                  <a href="" class="paging-btn">4</a>
+                  <a href="" class="paging-btn">5</a>
+                  <a href="" class="paging-btn next"></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer omg-footer">
+      <p>© 2022. OMG ALL RIGHTS RESERVED.</p>
+    </div>
+    <script type="text/javascript">
+      $(function () {});
+    </script>
+  </body>
+</html>

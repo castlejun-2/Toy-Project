@@ -162,7 +162,7 @@
                           <div class="meeting-place"><%= meeting[i].place %></div>
                         </div>
                         <div style="width: 10%">
-                          <div class="meeting-status"><%= meeting[i].status %></div>
+                          <div class="meeting-status <%= meeting[i].status_c %>"><%= meeting[i].status %></div>
                         </div>
                       </a>
                     </li>
@@ -296,7 +296,11 @@
                   html +=
                     `
                   <li class="meeting-content">
-                    <a>
+                    <a href="/meetings/` +
+                    meeting[i].mainName +
+                    `/` +
+                    meeting[i].id +
+                    `">
                       <div class="meeting-time" style="display:none"><p>` +
                     meeting[i].mainName +
                     `</p></div>
@@ -314,8 +318,10 @@
                     meeting[i].place +
                     `</div>
                       </div>
-                      <div style="width: 10%">
-                        <div class="meeting-status">` +
+                      <div style="width: 10%">` +
+                    `<div class="meeting-status ` +
+                    meeting[i].status_c +
+                    `">` +
                     meeting[i].status +
                     `</div>
                       </div>
@@ -323,9 +329,13 @@
                   </li>`;
                 }
                 $('.schedule-list').html(html);
+                $('.schedule-list').load(function () {
+                  $("div:contains('모집완료')").css('color', 'black');
+                });
               },
             });
           });
+
           $('.slick-next').click(function () {
             const nvalue = $('li[tabindex="0"]').attr('data-slick-index');
             if (nvalue < 7) {

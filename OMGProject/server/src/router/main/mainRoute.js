@@ -9,6 +9,8 @@ class Router {
   setRouter() {
     //Paging Router
     this.router.get('/', mainController.output.getMain);
+    this.router.get('/competitions', mainController.output.getCompetition);
+    this.router.get('/notices', mainController.output.getNotice);
     //Processing Router
   }
 }

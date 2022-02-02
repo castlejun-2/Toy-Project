@@ -7,7 +7,7 @@ class MeetingStorage {
         if (err) reject(`${err}`);
         else {
           const query = `
-            Select id, title, mainName as mainName, subName as subject, date_format(time,"%H:%i") as time, place, case when status=0 then "신청가능" else "모집완료" end as status
+            Select id, title, mainName as mainName, subName as subject, date_format(time,"%H:%i") as time, place, case when status=0 then "신청가능" else "모집완료" end as status, case when status=0 then 'isPossible' else 'isDone' end as status_c
             From Meeting
             Where DATE(Meeting.time) = (DATE(NOW()) + ?) and if (?, mainName=?, mainName is not null)
             Order By time ASC`;
@@ -26,7 +26,7 @@ class MeetingStorage {
         if (err) reject(`${err}`);
         else {
           const query = `
-            Select id, title, mainName as mainName, subName as subject, date_format(time,"%H:%i") as time, place, case when status=0 then "신청가능" else "모집완료" end as status
+            Select id, title, mainName, subName as subject, date_format(time,"%H:%i") as time, place, case when status=0 then "신청가능" else "모집완료" end as status
             From Meeting
             Where DATE(Meeting.time) = (DATE(NOW()) + ?) and mainName = "game"
             Order By time ASC`;
@@ -45,7 +45,7 @@ class MeetingStorage {
         if (err) reject(`${err}`);
         else {
           const query = `
-            Select title, mainName, subName, content, time, place, contact, status, date_format(createdAt,"%Y-%M-%D-%H-%i")
+            Select id, title, mainName, subName as subject, date_format(time,"%H:%i") as time, place, placeUrl as p_url, case when status=0 then "신청가능" else "모집완료" end as status
             From Meeting
             Where id = ?
           `;

@@ -16,6 +16,16 @@ class Controller {
       if (req.user) res.render('main.ejs', { event: eventResult, meeting: meetingResult, user: req.user });
       else res.redirect('/users/login');
     },
+    getCompetition: async (req, res) => {
+      const competitionResult = await MainStorage.getCompetitionInfo();
+      if (req.user) res.render('competitions.ejs', { competition: competitionResult, user: req.user });
+      else res.redirect('/users/login');
+    },
+    getNotice: async (req, res) => {
+      const noticeResult = await MainStorage.getNoticeInfo();
+      if (req.user) res.render('notice.ejs', { notice: noticeResult, user: req.user });
+      else res.redirect('/users/login');
+    },
   };
 
   process = {};

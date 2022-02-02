@@ -165,7 +165,7 @@ body {
   position: absolute;
   width: 250px;
   height: 300px;
-  margin-top: 150px;
+  margin-top: 140px;
   margin-left: 100px;
   padding: 20px 20px;
   float: left;
@@ -173,6 +173,7 @@ body {
   border-radius: 5px;
   border: 1px solid rgb(238, 238, 238);
   background-color: #fafafa;
+  z-index: 1;
 }
 
 .side-bar > ul {
@@ -288,16 +289,25 @@ a:hover {
   color: black;
 }
 
+img:hover {
+  cursor: pointer;
+}
+
 .header-nav-btn.home {
   color: rgba(0, 0, 0, 1) !important;
+  border-bottom: 5px solid black;
 }
 
 .header-nav-btn {
   display: block;
-  padding: 0 20px;
-  font-size: 0.9em;
+  margin-left: 13px;
+  margin-right: 13px;
+  padding-bottom: 4px;
+  padding-right: 10px;
+  padding-left: 10px;
+  font-size: 0.95em;
   font-weight: 700;
-  color: rgba(0, 0, 0, 0.55) !important;
+  color: rgba(0, 0, 0, 0.35) !important;
   text-transform: uppercase;
 }
 
@@ -313,6 +323,26 @@ a:hover {
   text-align: center;
   background-color: #fafafa;
   border-bottom: 1px solid rgb(238, 238, 238);
+}
+
+.meeting-banner {
+  height: 100%;
+  text-align: center;
+  background-color: #fafafa;
+  border-bottom: 1px solid rgb(238, 238, 238);
+}
+
+.meeting-banner-img {
+  width: auto;
+  height: 500px;
+}
+
+.meeting-main-banner {
+  padding-top: 20px;
+  padding-bottom: 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
 }
 
 .event-banner {
@@ -539,6 +569,53 @@ button {
   margin: 0 auto;
 }
 
+.competiton-content {
+  font-size: 18px;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  padding: 15px;
+}
+
+.notice-content a {
+  font-size: 18px;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  padding: 15px;
+}
+
+.notice-li {
+  width: 6%;
+  text-align: center;
+  font-weight: 600;
+  font-size: 19px;
+}
+
+.notice-type {
+  width: 14%;
+  text-align: center;
+  font-weight: 700;
+  font-size: 17px;
+}
+
+.notice-title {
+  margin-left: 40px;
+  width: 80%;
+}
+
+.notice-status {
+  color: black;
+  width: 100%;
+  text-align: center;
+  padding: 10px 5px;
+  font-size: 17px;
+}
+
 .meeting-content a {
   font-size: 18px;
   border-bottom: 1px solid #ddd;
@@ -553,11 +630,11 @@ button {
   width: 10%;
   text-align: center;
   font-weight: 600;
-  font-size: 17px;
+  font-size: 19px;
 }
 
 .meeting-type {
-  width: 18%;
+  width: 15%;
   text-align: center;
   font-weight: 700;
   font-size: 17px;
@@ -583,9 +660,24 @@ button {
   background-color: skyblue;
   width: 100%;
   text-align: center;
-  padding: 8px 5px;
+  padding: 10px 5px;
   border-radius: 8px;
-  font-size: 14px;
+  font-size: 15px;
+}
+
+.meeting-status.isDone {
+  color: #ccc;
+  background-color: #eeeeee;
+}
+
+.competition-status {
+  color: white;
+  background-color: skyblue;
+  width: 100%;
+  text-align: center;
+  padding: 10px 5px;
+  border-radius: 8px;
+  font-size: 15px;
 }
 
 .paging-wrap::before {
