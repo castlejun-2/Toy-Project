@@ -37,22 +37,42 @@
           <div id="nav-list-btn"></div>
           <ul id="header-nav">
             <li>
-              <a class="header-nav-btn home" href="/"><span>홈</span></a>
+              <a class="header-nav-btn" href="/"><span>홈</span></a>
             </li>
             <li>
+              <% if (meeting[0].mainName == "game") { %>
+              <a class="header-nav-btn home" href="/meetings/game"><span>게임</span></a>
+              <% } else { %>
               <a class="header-nav-btn" href="/meetings/game"><span>게임</span></a>
+              <% } %>
             </li>
             <li>
+              <% if (meeting[0].mainName == "dating") { %>
+              <a class="header-nav-btn home" href="/meetings/dating"><span>소개팅</span></a>
+              <% } else { %>
               <a class="header-nav-btn" href="/meetings/dating"><span>소개팅</span></a>
+              <% } %>
             </li>
             <li>
+              <% if (meeting[0].mainName == "sports") { %>
+              <a class="header-nav-btn home" href="/meetings/sports"><span>스포츠</span></a>
+              <% } else { %>
               <a class="header-nav-btn" href="/meetings/sports"><span>스포츠</span></a>
+              <% } %>
             </li>
             <li>
+              <% if (meeting[0].mainName == "study") { %>
+              <a class="header-nav-btn home" href="/meetings/study"><span>스터디</span></a>
+              <% } else { %>
               <a class="header-nav-btn" href="/meetings/study"><span>스터디</span></a>
+              <% } %>
             </li>
             <li>
+              <% if (meeting[0].mainName == "hobby") { %>
+              <a class="header-nav-btn home" href="/meetings/hobby"><span>취미</span></a>
+              <% } else { %>
               <a class="header-nav-btn" href="/meetings/hobby"><span>취미</span></a>
+              <% } %>
             </li>
           </ul>
           <ul id="header-user-box">
@@ -77,22 +97,42 @@
         </div>
         <ul id="side-nav">
           <li>
-            <a class="side-nav-btn home" href="/"><span>홈</span></a>
+            <a class="side-nav-btn" href="/"><span>홈</span></a>
           </li>
           <li>
+            <% if (meeting[0].mainName == "game") { %>
+            <a class="side-nav-btn home" href="/meetings/game"><span>게임</span></a>
+            <% } else { %>
             <a class="side-nav-btn" href="/meetings/game"><span>게임</span></a>
+            <% } %>
           </li>
           <li>
+            <% if (meeting[0].mainName == "dating") { %>
+            <a class="side-nav-btn home" href="/meetings/dating"><span>소개팅</span></a>
+            <% } else { %>
             <a class="side-nav-btn" href="/meetings/dating"><span>소개팅</span></a>
+            <% } %>
           </li>
           <li>
+            <% if (meeting[0].mainName == "sports") { %>
+            <a class="side-nav-btn home" href="/meetings/sports"><span>스포츠</span></a>
+            <% } else { %>
             <a class="side-nav-btn" href="/meetings/sports"><span>스포츠</span></a>
+            <% } %>
           </li>
           <li>
+            <% if (meeting[0].mainName == "study") { %>
+            <a class="side-nav-btn home" href="/meetings/study"><span>스터디</span></a>
+            <% } else { %>
             <a class="side-nav-btn" href="/meetings/study"><span>스터디</span></a>
+            <% } %>
           </li>
           <li>
+            <% if (meeting[0].mainName == "hobby") { %>
+            <a class="side-nav-btn home" href="/meetings/hobby"><span>취미</span></a>
+            <% } else { %>
             <a class="side-nav-btn" href="/meetings/hobby"><span>취미</span></a>
+            <% } %>
           </li>
           <li>
             <a class="side-nav-btn" href="/users/my-page"><span>마이 페이지</span></a>
