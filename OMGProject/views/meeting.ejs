@@ -9,10 +9,10 @@
     <meta http-equiv="cache-control" content="no-cache" />
     <meta http-equiv="pragma" content="no-cache" />
     <title>Offline Meeting Gathering(OMG) | 오마이갓</title>
-    <script type="text/javascript" scr="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=pi5wn9ck5w"></script>
     <link rel="icon" type="image/png" href="https://s3.ap-northeast-2.amazonaws.com/img.castlejun-2.shop/UOMG_LOGO.png" />
     <link rel="stylesheet" href="/css/main.css" />
-    <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script> -->
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=947e2d31c30c1e5bb19a2aea46d9b87a"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
   </head>
   <body>
     <header id="header">
@@ -146,30 +146,34 @@
           <div class="board" id="content">
             <div class="main-content">
               <div class="meeting-banner">
-                <div class="meeting-main-banner slick-slider slick-dotted" style="text-align: center" id="main-banner">
-                  <div id="map" style="width: 100%; height: 500px"></div>
+                <div class="meeting-main-banner" style="text-align: center" id="main-banner">
+                  <div id="kakao-map" style="margin: 0 auto; width: 80%; height: 500px"></div>
                 </div>
               </div>
               <div class="body-content">
-                <div class="title-list">
-                  <ul class="schedule-list">
-                    <li class="meeting-content" style="">
-                      <a href="/meetings/<%= meeting.mainName %>/<%= meeting.id %>">
-                        <div class="meeting-placeLA" style="display: none"><p><%= meeting[0].placeLA %></p></div>
-                        <div class="meeting-placeLO" style="display: none"><p><%= meeting[0].placeLO %></p></div>
-                        <div class="meeting-time" style="display: none"><p><%= meeting[0].typeCode %></p></div>
-                        <div class="meeting-time"><p><%= meeting[0].time %></p></div>
-                        <div class="meeting-type"><p><%= meeting[0].subject %></p></div>
-                        <div class="meeting-info">
-                          <div class=""><%= meeting[0].title %></div>
-                          <div class="meeting-place"><%= meeting[0].place %></div>
+                <div class="body-content-wrap">
+                  <section class="section-title">
+                    <div class="meeting-title">
+                      <span style="padding-bottom: 10px; border-bottom: 5px solid black"><%= meeting[0].title %></span>
+                    </div>
+                  </section>
+                  <section class="section-pc" style="border-bottom: 10px solid rgb(238, 238, 238)">
+                    <div class="meeting_time"><p style="font-size: 20px; font-weight: 700"><%= meeting[0].time %></p></div>
+                    <div class="meeting_place">
+                      <div class="meeting-placeLA" style="display: none"><p><%= meeting[0].placeLA %></p></div>
+                      <div class="meeting-placeLO" style="display: none"><p><%= meeting[0].placeLO %></p></div>
+                      <h1 style="margin: 10px 0 3px; font-size: 26px; font-weight: 700">
+                        <a style="color: #3540a5"><%= meeting[0].place %></a>
+                      </h1>
+                      <div class="meeting-place-detail">
+                        <span><%= meeting[0].placeAddress %></span>
+                        <div style="padding-left: 5px; display: inline-block">
+                          <span style="font-size: 18px">| <%= meeting[0].fee %></span>
+                          <span>/<%= meeting[0].perHour %></span>
                         </div>
-                        <div style="width: 10%">
-                          <div class="meeting-status <%= meeting[0].status_c %>"><%= meeting[0].status %></div>
-                        </div>
-                      </a>
-                    </li>
-                  </ul>
+                      </div>
+                    </div>
+                  </section>
                 </div>
               </div>
             </div>
@@ -181,19 +185,22 @@
       <p>© 2022. OMG ALL RIGHTS RESERVED.</p>
     </div>
     <script type="text/javascript">
-      //const placeLA = $('.meeting-placeLA').text();
-      //const placeLO = $('.meeting-placeLO').text();
-      let placeLocation = new naver.maps.LatLng(37.5011629, 126.9151097);
-      let map = new naver.maps.Map('map', {
-        center: placeLocation,
-        scaleControl: true,
-        mapDataControl: false,
-        zoom: 20,
+      const container = $('#kakao-map')[0];
+      const placeLA = parseFloat($('.meeting-placeLA').text());
+      const placeLO = parseFloat($('.meeting-placeLO').text());
+      let markerLocation = new kakao.maps.LatLng(placeLA, placeLO);
+
+      let mapOptions = {
+        center: markerLocation,
+        level: 3,
+      };
+      let map = new kakao.maps.Map(container, mapOptions);
+
+      let marker = new kakao.maps.Marker({
+        position: markerLocation,
       });
-      let marker = new naver.maps.Marker({
-        position: placeLocation,
-        map: map,
-      });
+
+      marker.setMap(map);
     </script>
   </body>
 </html>
