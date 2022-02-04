@@ -45,7 +45,7 @@ class MeetingStorage {
         if (err) reject(`${err}`);
         else {
           const query = `
-            Select id, title, mainName, subName as subject, date_format(time,"%H:%i") as time, place, placeUrl as p_url, case when status=0 then "신청가능" else "모집완료" end as status
+            Select id, title, mainName, subName as subject, date_format(time,"%H:%i") as time, place, placeUrl as p_url, placeLA, placeLO, case when status=0 then "신청가능" else "모집완료" end as status
             From Meeting
             Where id = ?
           `;

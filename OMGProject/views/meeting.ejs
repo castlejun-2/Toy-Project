@@ -9,13 +9,10 @@
     <meta http-equiv="cache-control" content="no-cache" />
     <meta http-equiv="pragma" content="no-cache" />
     <title>Offline Meeting Gathering(OMG) | 오마이갓</title>
+    <script type="text/javascript" scr="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=pi5wn9ck5w"></script>
     <link rel="icon" type="image/png" href="https://s3.ap-northeast-2.amazonaws.com/img.castlejun-2.shop/UOMG_LOGO.png" />
     <link rel="stylesheet" href="/css/main.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css" />
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-    <script type="text/javascript" src="http://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script> -->
   </head>
   <body>
     <header id="header">
@@ -150,16 +147,7 @@
             <div class="main-content">
               <div class="meeting-banner">
                 <div class="meeting-main-banner slick-slider slick-dotted" style="text-align: center" id="main-banner">
-                  <div>
-                    <a class="event-display" target="_blank" href="<%= meeting[0].p_url %>">
-                      <img class="meeting-banner-img" src="<%= meeting[0].p_url %>" onclick />
-                    </a>
-                  </div>
-                  <div>
-                    <a class="event-display" target="_blank" href="<%= meeting[0].p_url %>">
-                      <img class="meeting-banner-img" src="<%= meeting[0].p_url %>" onclick />
-                    </a>
-                  </div>
+                  <div id="map" style="width: 100%; height: 500px"></div>
                 </div>
               </div>
               <div class="body-content">
@@ -167,6 +155,8 @@
                   <ul class="schedule-list">
                     <li class="meeting-content" style="">
                       <a href="/meetings/<%= meeting.mainName %>/<%= meeting.id %>">
+                        <div class="meeting-placeLA" style="display: none"><p><%= meeting[0].placeLA %></p></div>
+                        <div class="meeting-placeLO" style="display: none"><p><%= meeting[0].placeLO %></p></div>
                         <div class="meeting-time" style="display: none"><p><%= meeting[0].typeCode %></p></div>
                         <div class="meeting-time"><p><%= meeting[0].time %></p></div>
                         <div class="meeting-type"><p><%= meeting[0].subject %></p></div>
@@ -191,19 +181,18 @@
       <p>© 2022. OMG ALL RIGHTS RESERVED.</p>
     </div>
     <script type="text/javascript">
-      $(function () {
-        $('#main-banner').slick({
-          slide: 'div',
-          infinite: true,
-          slidesToShow: 1,
-          speed: 100,
-          dots: true,
-          autoplay: true,
-          autoplaySpeed: 4500,
-          pauseOnHover: true,
-          dotsClass: 'slick-dots',
-          arrows: false,
-        });
+      //const placeLA = $('.meeting-placeLA').text();
+      //const placeLO = $('.meeting-placeLO').text();
+      let placeLocation = new naver.maps.LatLng(37.5011629, 126.9151097);
+      let map = new naver.maps.Map('map', {
+        center: placeLocation,
+        scaleControl: true,
+        mapDataControl: false,
+        zoom: 20,
+      });
+      let marker = new naver.maps.Marker({
+        position: placeLocation,
+        map: map,
       });
     </script>
   </body>
