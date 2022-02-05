@@ -244,7 +244,7 @@
                     </div>
                     <div class="info-user-content">
                       <div class="profile-photo">
-                        <img style="width: 60px; height: 60px; border-radius: 100px" src="<%= meeting[0].imageUrl %>" />
+                        <img src="<%= meeting[0].imageUrl %>" />
                       </div>
                       <div class="profile-id">
                         <p><%= meeting[0].userName %></p>
@@ -301,6 +301,18 @@
       });
 
       marker.setMap(map);
+      $('#header-show-btn').click(function () {
+        $('#side-mask').css('display', 'block');
+        $('#side-menuBar').css('right', '0px');
+        $('#side-menuBar').addClass('visible');
+        $('#header').css('right', '16px');
+      });
+      $('#side-mask').click(function () {
+        $('#side-mask').css('display', 'none');
+        $('#side-menuBar').css('right', '-300px');
+        $('#side-menuBar').removeClass('visible');
+        $('#header').css('right', '0');
+      });
     </script>
   </body>
 </html>

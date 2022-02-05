@@ -687,6 +687,13 @@ button {
   vertical-align: middle;
 }
 
+.profile-photo > img {
+  width: 64px;
+  height: 64px;
+  border-radius: 100px;
+  vertical-align: middle;
+}
+
 .profile-id {
   padding-left: 10px;
   display: table-cell;
@@ -695,11 +702,11 @@ button {
 
 .profile-id > span {
   color: #999;
-  font-size: 14px;
+  font-size: 17px;
 }
 
 .profile-id > p {
-  font-size: 20px;
+  font-size: 22px;
 }
 
 .meeting-info {
@@ -769,8 +776,8 @@ button {
 }
 
 .info-content {
-  font-size: 17px;
-  font-weight: 700;
+  font-size: 19px;
+  font-weight: 600;
 }
 
 .section-info,
