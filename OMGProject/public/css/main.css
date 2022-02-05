@@ -23,9 +23,17 @@ body {
 }
 
 .body-content-wrap {
-  background-color: #fafafa;
-  max-width: 1024px;
-  margin: 0 auto;
+  margin-top: 20px;
+  background-color: white;
+  max-width: 1200px;
+}
+
+.right-body-wrap {
+  height: fit-content;
+  margin-top: 20px;
+  margin-left: 10px;
+  width: 55%;
+  background-color: white;
 }
 
 .body-container {
@@ -248,6 +256,14 @@ body {
 }
 
 @media screen and (max-width: 970px) {
+  .right-body-wrap {
+    display: none !important;
+  }
+
+  .right-body-m {
+    display: block !important;
+  }
+
   #header-nav {
     display: none;
   }
@@ -647,13 +663,54 @@ button {
   font-size: 17px;
 }
 
+.info-title > p > span {
+  padding-bottom: 5px;
+  font-weight: 700;
+  font-size: 24px;
+}
+
+.info-content {
+  margin: 5px 50px;
+  padding: 20px;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  background-color: #ddd;
+}
+
+.info-user-content {
+  margin: 0 50px;
+  padding: 20px;
+}
+
+.profile-photo {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.profile-id {
+  padding-left: 10px;
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.profile-id > span {
+  color: #999;
+  font-size: 14px;
+}
+
+.profile-id > p {
+  font-size: 20px;
+}
+
 .meeting-info {
   margin-left: 20px;
   width: 80%;
 }
 
 .meeting-title {
-  padding-top: 20px;
+  text-align: center;
+  margin-bottom: 30px !important;
+  margin: 0px auto;
   font-weight: 700;
   font-size: 35px;
   color: black;
@@ -684,16 +741,46 @@ button {
   background-color: #eeeeee;
 }
 
-.section-title {
-  width: 50%;
-  text-align: center;
-  margin: 5px auto;
+.nav-item {
+  display: flex;
+  padding: 10px 20px;
+  border-bottom: 1px solid #ddd;
+  z-index: 4;
+  margin: 0;
+}
+
+.nav-list {
+  padding: 20px 15px;
+  display: block;
+  font-weight: 700;
+  font-size: 20px;
 }
 
 .section-pc {
   text-align: center;
-  margin: 0 auto;
+  margin: 5px 10px;
   padding: 30px 20px;
+}
+
+.section-m {
+  text-align: center;
+  margin: 5px 10px;
+  padding: 30px 20px;
+}
+
+.info-content {
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.section-info,
+.section-notice,
+.section-time,
+.section-people,
+.section-user {
+  padding: 40px 0;
+  margin: 0 40px;
+  border-bottom: 1px solid #ddd;
 }
 
 .competition-status {

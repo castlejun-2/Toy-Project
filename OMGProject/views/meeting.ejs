@@ -144,19 +144,116 @@
       <div class="main-container">
         <div role="main">
           <div class="board" id="content">
-            <div class="main-content">
+            <div class="main-content" style="background-color: #fafafa; margin: 0 auto">
               <div class="meeting-banner">
                 <div class="meeting-main-banner" style="text-align: center" id="main-banner">
-                  <div id="kakao-map" style="margin: 0 auto; width: 80%; height: 500px"></div>
+                  <div id="kakao-map" style="margin: 0 auto; width: 100%; height: 600px"></div>
                 </div>
               </div>
-              <div class="body-content">
-                <div class="body-content-wrap">
-                  <section class="section-title">
+              <div class="body-content" style="display: flex; margin: 0 auto; max-width: 1400px">
+                <div class="body-content-wrap" style="width: 100%">
+                  <div class="right-body-m" style="display: none">
+                    <section class="section-m" style="border-bottom: 10px solid rgb(238, 238, 238)">
+                      <div class="meeting_time"><p style="font-size: 20px; font-weight: 700"><%= meeting[0].time %></p></div>
+                      <div class="meeting_place">
+                        <div class="meeting-placeLA" style="display: none"><p><%= meeting[0].placeLA %></p></div>
+                        <div class="meeting-placeLO" style="display: none"><p><%= meeting[0].placeLO %></p></div>
+                        <h1 style="margin: 10px 0 3px; font-size: 26px; font-weight: 700">
+                          <a style="color: #3540a5"><%= meeting[0].place %></a>
+                        </h1>
+                        <div class="meeting-place-detail">
+                          <span><%= meeting[0].placeAddress %></span>
+                          <div style="padding-left: 5px; display: inline-block">
+                            <span style="font-size: 18px">| <%= meeting[0].fee %></span>
+                            <span>/<%= meeting[0].perHour %></span>
+                          </div>
+                        </div>
+                      </div>
+                    </section>
+                    <section class="section-status" style="width: 60%; margin: 20px auto">
+                      <div class="meeting-status <%= meeting[0].status_c %>"><%= meeting[0].status %></div>
+                    </section>
+                  </div>
+                  <nav id="meeting-nav">
+                    <ul class="nav-item">
+                      <li>
+                        <a href="#infoTitle" class="nav-list">만남 정보</a>
+                      </li>
+                      <li>
+                        <a href="#infoNotice" class="nav-list">주의 사항</a>
+                      </li>
+                      <li>
+                        <a href="#infoTime" class="nav-list">만남 시간</a>
+                      </li>
+                      <li>
+                        <a href="#infoPeople" class="nav-list">모집 인원</a>
+                      </li>
+                      <li>
+                        <a href="#infoReservation" class="nav-list">예약자 정보</a>
+                      </li>
+                    </ul>
+                  </nav>
+                  <section class="section-info">
                     <div class="meeting-title">
-                      <span style="padding-bottom: 10px; border-bottom: 5px solid black"><%= meeting[0].title %></span>
+                      <span><%= meeting[0].title %></span>
+                    </div>
+                    <div id="infoTitle" class="info-title" style="padding-top: 0 !important; padding: 20px 50px">
+                      <p>
+                        <span>만남 정보</span>
+                      </p>
+                    </div>
+                    <div class="info-content">
+                      <span><%= meeting[0].content %></span>
                     </div>
                   </section>
+                  <section class="section-notice">
+                    <div id="infoNotice" class="info-title" style="padding-top: 0 !important; padding: 20px 50px">
+                      <p>
+                        <span>주의 사항</span>
+                      </p>
+                    </div>
+                    <div class="info-content">
+                      <span><%= meeting[0].notice %></span>
+                    </div>
+                  </section>
+                  <section class="section-time">
+                    <div id="infoTime" class="info-title" style="padding-top: 0 !important; padding: 20px 50px">
+                      <p>
+                        <span>만남 시간</span>
+                      </p>
+                    </div>
+                    <div class="info-content">
+                      <span><%= meeting[0].time %>-<%= meeting[0].finishTime %></span>
+                    </div>
+                  </section>
+                  <section class="section-people">
+                    <div id="infoPeople" class="info-title" style="padding-top: 0 !important; padding: 20px 50px">
+                      <p>
+                        <span>모집 인원</span>
+                      </p>
+                    </div>
+                    <div class="info-content">
+                      <span><%= meeting[0].people %></span>
+                    </div>
+                  </section>
+                  <section class="section-user">
+                    <div id="infoReservation" class="info-title" style="padding-top: 0 !important; padding: 20px 50px">
+                      <p>
+                        <span>예약자 정보</span>
+                      </p>
+                    </div>
+                    <div class="info-user-content">
+                      <div class="profile-photo">
+                        <img style="width: 60px; height: 60px; border-radius: 100px" src="<%= meeting[0].imageUrl %>" />
+                      </div>
+                      <div class="profile-id">
+                        <p><%= meeting[0].userName %></p>
+                        <span><%= meeting[0].phone %></span>
+                      </div>
+                    </div>
+                  </section>
+                </div>
+                <div class="right-body-wrap" style="position: sticky">
                   <section class="section-pc" style="border-bottom: 10px solid rgb(238, 238, 238)">
                     <div class="meeting_time"><p style="font-size: 20px; font-weight: 700"><%= meeting[0].time %></p></div>
                     <div class="meeting_place">
@@ -173,6 +270,9 @@
                         </div>
                       </div>
                     </div>
+                  </section>
+                  <section class="section-status" style="width: 60%; margin: 20px auto">
+                    <div class="meeting-status <%= meeting[0].status_c %>"><%= meeting[0].status %></div>
                   </section>
                 </div>
               </div>
