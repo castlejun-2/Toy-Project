@@ -24,31 +24,37 @@ class Controller {
       const params = [0, 1, 'game'];
       const meeting = new Meeting(params);
       const scheduleResult = await meeting.getScheduleInfo();
-      res.render('game.ejs', { meeting: scheduleResult, user: req.user });
+      res.render('game.ejs', { type: 'game', meeting: scheduleResult, user: req.user });
     },
     getDatingSchedule: async (req, res) => {
       const params = [0, 1, 'dating'];
       const meeting = new Meeting(params);
       const scheduleResult = await meeting.getScheduleInfo();
-      res.render('dating.ejs', { meeting: scheduleResult, user: req.user });
+      res.render('dating.ejs', { type: 'dating', meeting: scheduleResult, user: req.user });
     },
     getSportsSchedule: async (req, res) => {
       const params = [0, 1, 'sports'];
       const meeting = new Meeting(params);
       const scheduleResult = await meeting.getScheduleInfo();
-      res.render('sports.ejs', { meeting: scheduleResult, user: req.user });
+      res.render('sports.ejs', { type: 'sports', meeting: scheduleResult, user: req.user });
     },
     getStudySchedule: async (req, res) => {
       const params = [0, 1, 'study'];
       const meeting = new Meeting(params);
       const scheduleResult = await meeting.getScheduleInfo();
-      res.render('study.ejs', { meeting: scheduleResult, user: req.user });
+      res.render('study.ejs', { type: 'study', meeting: scheduleResult, user: req.user });
     },
     getHobbySchedule: async (req, res) => {
       const params = [0, 1, 'hobby'];
       const meeting = new Meeting(params);
       const scheduleResult = await meeting.getScheduleInfo();
-      res.render('hobby.ejs', { meeting: scheduleResult, user: req.user });
+      res.render('hobby.ejs', { type: 'hobby', meeting: scheduleResult, user: req.user });
+    },
+    getWritingPage: async (req, res) => {
+      if (req.user) {
+        const type = req.query.type;
+        res.render('writing.ejs', { type: type, user: req.user });
+      } else res.render('login.ejs');
     },
   };
 
