@@ -1,12 +1,155 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
   <head>
-    <meta charset="UTF-8" />
+    <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <!--모바일 브라우저 뷰 포인트-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0" />
+    <meta http-equiv="imagetoolbar" content="no" />
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="pragma" content="no-cache" />
+    <title>Offline Meeting Gathering(OMG) | 오마이갓</title>
+    <link rel="icon" type="image/png" href="https://s3.ap-northeast-2.amazonaws.com/img.castlejun-2.shop/UOMG_LOGO.png" />
+    <link rel="stylesheet" href="/css/main.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css" />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script type="text/javascript" src="http://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
   </head>
   <body>
-    <hi>writing <%= type %></hi>
+    <header id="header">
+      <div class="header-top">
+        <nav id="header-wrap" class="header-box">
+          <div id="header-logo">
+            <img
+              src="https://s3.ap-northeast-2.amazonaws.com/img.castlejun-2.shop/UOMG_LOGO.png"
+              id="header-logo-img"
+              onclick="window.location.href='/';"
+            />
+            <img
+              src="https://s3.ap-northeast-2.amazonaws.com/img.castlejun-2.shop/UOMG_LOGO.png"
+              id="header-logo-m-img"
+              onclick="window.location.href='/';"
+            />
+          </div>
+          <div id="header-show-btn"></div>
+          <div id="nav-list-btn"></div>
+          <ul id="header-nav">
+            <li>
+              <a class="header-nav-btn" href="/"><span>홈</span></a>
+            </li>
+            <li>
+              <a class="header-nav-btn" href="/meetings/game"><span>게임</span></a>
+            </li>
+            <li>
+              <a class="header-nav-btn" href="/meetings/dating"><span>소개팅</span></a>
+            </li>
+            <li>
+              <a class="header-nav-btn" href="/meetings/sports"><span>스포츠</span></a>
+            </li>
+            <li>
+              <a class="header-nav-btn" href="/meetings/study"><span>스터디</span></a>
+            </li>
+            <li>
+              <a class="header-nav-btn" href="/meetings/hobby"><span>취미</span></a>
+            </li>
+          </ul>
+          <ul id="header-user-box">
+            <li>
+              <a class="header-nav-btn" href="/users/logout"><span>로그아웃</span></a>
+            </li>
+            <li>
+              <a class="header-nav-btn" href="/users/my-page"><span>마이 페이지</span></a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <div id="side-mask" style="display: none">
+      <div id="side-menuBar" style="right: -300px">
+        <div id="side-top">
+          <div class="side-top-user-box">
+            <span id="side-user-name" onclick="window.location.href='/users/my-page'" style="cursor: pointer">
+              <b style="font-weight: 700"><%= user.email %></b>
+            </span>
+          </div>
+        </div>
+        <ul id="side-nav">
+          <li>
+            <a class="side-nav-btn" href="/"><span>홈</span></a>
+          </li>
+          <li>
+            <a class="side-nav-btn" href="/meetings/game"><span>게임</span></a>
+          </li>
+          <li>
+            <a class="side-nav-btn" href="/meetings/dating"><span>소개팅</span></a>
+          </li>
+          <li>
+            <a class="side-nav-btn" href="/meetings/sports"><span>스포츠</span></a>
+          </li>
+          <li>
+            <a class="side-nav-btn" href="/meetings/study"><span>스터디</span></a>
+          </li>
+          <li>
+            <a class="side-nav-btn" href="/meetings/hobby"><span>취미</span></a>
+          </li>
+          <li>
+            <a class="side-nav-btn" href="/users/my-page"><span>마이 페이지</span></a>
+          </li>
+          <li>
+            <a class="side-nav-btn" href="/users/logout"><span>로그아웃</span></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="body-container">
+      <div class="main-container">
+        <div role="main">
+          <div class="board" id="content">
+            <div class="main-content">
+              <div class="body-content">
+                <div class="writing-wrap">
+                  <div class="writing-header">
+                    <h2>글쓰기</h2>
+                    <div class="writing-post-btn">
+                      <input class="writing-btn" type="submit" value="등록" />
+                    </div>
+                  </div>
+                  <div class="writing-content">
+                    <div class="row">
+                      <div class="title-area">
+                        <textarea class="title-input" placeholder="제목을 입력해 주세요."></textarea>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="type-area">
+                        <div class="type-hidden" style="display: none"><%= type %></div>
+                        <select id="writing_type" name="writing-type">
+                          <option value="sports">스포츠</option>
+                          <option value="study">스터디</option>
+                          <option value="game">게임</option>
+                          <option value="hobby">취미</option>
+                          <option value="dating">소개팅</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer omg-footer">
+      <p>© 2022. OMG ALL RIGHTS RESERVED.</p>
+    </div>
+    <script type="text/javascript">
+      $(function () {
+        type = $('.type-hidden').text();
+        $('#writing_type option[value=' + type + ']').attr('selected', true);
+      });
+    </script>
   </body>
 </html>

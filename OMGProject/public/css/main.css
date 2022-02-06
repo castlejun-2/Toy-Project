@@ -691,6 +691,83 @@ button {
   font-size: 17px;
 }
 
+.writing-wrap {
+  margin: 10px 400px;
+}
+
+.writing-header {
+  position: relative;
+  margin-top: 20px;
+  border-bottom: 1px solid #ddd;
+}
+
+.writing-header > h2 {
+  margin-bottom: 16px;
+  font-size: 22px;
+  color: black;
+}
+
+.writing-post-btn {
+  position: absolute;
+  bottom: 12px;
+  right: 0;
+}
+
+.writing-btn {
+  min-width: 60px;
+  height: 36px;
+  padding: 0 12px;
+  font-size: 14px;
+  line-height: 36px;
+  background-color: skyblue;
+  color: white;
+  border: 1px solid white;
+  display: inline-block;
+  border-radius: 6px;
+  box-sizing: border-box;
+  font-weight: 700;
+  text-align: center;
+  vertical-align: top;
+}
+
+.row {
+  margin-top: 12px;
+}
+
+.title-input {
+  height: 55px;
+  width: 100%;
+  display: block;
+  min-height: 55px;
+  padding: 18px 12px 10px;
+  border: 1px solid #ebecef;
+  box-sizing: border-box;
+  overflow: hidden;
+  resize: none;
+  word-break: break-all;
+  font-size: 18px;
+  letter-spacing: -0.23px;
+  line-height: 17px;
+  outline: none;
+}
+
+#writing_type {
+  height: 55px;
+  width: 300px;
+  display: block;
+  min-height: 55px;
+  padding: 10px 12px 10px;
+  border: 1px solid #ebecef;
+  box-sizing: border-box;
+  overflow: hidden;
+  resize: none;
+  word-break: break-all;
+  font-size: 18px;
+  letter-spacing: -0.23px;
+  line-height: 17px;
+  outline: none;
+}
+
 .meeting-content a {
   font-size: 18px;
   border-bottom: 1px solid #ddd;
