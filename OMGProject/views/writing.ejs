@@ -119,19 +119,52 @@
                   <div class="writing-content">
                     <div class="row">
                       <div class="title-area">
-                        <textarea class="title-input" placeholder="제목을 입력해 주세요."></textarea>
+                        <textarea id="writing-title" style="min-width: 670px" placeholder="제목을 입력해 주세요."></textarea>
                       </div>
                     </div>
                     <div class="row">
                       <div class="type-area">
                         <div class="type-hidden" style="display: none"><%= type %></div>
-                        <select id="writing_type" name="writing-type">
+                        <select id="writing-type" style="min-width: 230px; width: 35%; float: left">
                           <option value="sports">스포츠</option>
                           <option value="study">스터디</option>
                           <option value="game">게임</option>
                           <option value="hobby">취미</option>
                           <option value="dating">소개팅</option>
                         </select>
+                        <input
+                          id="writing-subtype"
+                          style="min-width: 440px; width: 65%"
+                          placeholder="ex) 풋살, 농구, 수영, 독서 스터디, 프로그래밍 스터디"
+                          type="text"
+                          required
+                        />
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="writing-datetime" style="display: inline-block; width: 50%">
+                        <input id="writing-date" style="min-width: 240px; display: inline-block" type="date" required />
+                        <input id="writing-date" style="min-width: 240px; display: inline-block" type="time" required />
+                      </div>
+                      <div class="writing-feePerHour" style="display: inline-block">
+                        <input id="writing-fee" style="min-width: 240px; display: inline-block" placeholder="요금" type="number" required />
+                        <input
+                          id="writing-fee"
+                          style="min-width: 240px; display: inline-block"
+                          placeholder="만남 시간"
+                          type="number"
+                          required
+                        />
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div>
+                        <textarea id="writing-content" style="height: 500px" placeholder="내용"></textarea>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div>
+                        <textarea id="writing-notice" style="height: 150px" placeholder="주의사항"></textarea>
                       </div>
                     </div>
                   </div>

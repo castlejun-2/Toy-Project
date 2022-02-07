@@ -239,6 +239,9 @@ body {
   #header-logo-img {
     display: none;
   }
+  .writing-wrap {
+    margin: 0 !important;
+  }
   .banner-img {
     width: 100% !important;
   }
@@ -734,13 +737,17 @@ button {
   margin-top: 12px;
 }
 
-.title-input {
-  height: 55px;
+#writing-title,
+#writing-type,
+#writing-subtype,
+#writing-content,
+#writing-notice {
+  height: 50px;
   width: 100%;
   display: block;
-  min-height: 55px;
-  padding: 18px 12px 10px;
-  border: 1px solid #ebecef;
+  min-height: 50px;
+  padding: 15px 12px 10px;
+  border: 1px solid #cbcbcc;
   box-sizing: border-box;
   overflow: hidden;
   resize: none;
@@ -751,13 +758,13 @@ button {
   outline: none;
 }
 
-#writing_type {
-  height: 55px;
-  width: 300px;
+#writing-date,
+#writing-fee {
+  height: 50px;
   display: block;
-  min-height: 55px;
-  padding: 10px 12px 10px;
-  border: 1px solid #ebecef;
+  min-height: 50px;
+  padding: 15px 12px 10px;
+  border: 1px solid #cbcbcc;
   box-sizing: border-box;
   overflow: hidden;
   resize: none;

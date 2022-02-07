@@ -45,7 +45,7 @@ class MeetingStorage {
         if (err) reject(`${err}`);
         else {
           const query = `
-            Select Meeting.id, User.name as userName, User.phoneNumber as phone, User.imageUrl as imageUrl, title, mainName, content, subName as subject, date_format(startTime,"%Y년 %m월 %d일 %a %H:%i") as time, date_format(finishTime,"%H:%i") as finishTime, place, placeAddress, placeUrl as p_url, placeLA, placeLO, notice, concat(people,"명") as people, concat(format(fee,0),'원') as fee, concat(perHour,'시간') as perHour, contact, case when status=0 then "신청가능" else "모집완료" end as status, case when status=0 then 'isPossible' else 'isDone' end as status_c
+            Select Meeting.id, User.name as userName, User.phoneNumber as phone, User.imageUrl as imageUrl, title, mainName, content, subName as subject, date_format(startTime,"%Y년 %m월 %d일 %a %H:%i") as time, date_format(date_add(startTime, INTERVAL perHour HOUR),"%H:%i") as finishTime, place, placeAddress, placeUrl as p_url, placeLA, placeLO, notice, concat(people,"명") as people, concat(format(fee,0),'원') as fee, concat(perHour,'시간') as perHour, contact, case when status=0 then "신청가능" else "모집완료" end as status, case when status=0 then 'isPossible' else 'isDone' end as status_c
             From Meeting Left Join User On User.id = Meeting.userId
             Where Meeting.id = ?
           `;
