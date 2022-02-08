@@ -10,5 +10,13 @@ class Meeting {
     const scheduleResult = await MeetingStorage.getMeetingInfo(this.body);
     return scheduleResult;
   }
+  async createMeeting() {
+    try {
+      await MeetingStorage.createMeetingSchedule(this.body);
+      return baseResponse.SUCCESS;
+    } catch (err) {
+      return baseResponse.DB_ERROR;
+    }
+  }
 }
 export default Meeting;

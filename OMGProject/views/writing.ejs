@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css" />
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-    <script type="text/javascript" src="http://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
   </head>
   <body>
@@ -123,9 +123,9 @@
                       </div>
                     </div>
                     <div class="row">
-                      <div class="type-area">
+                      <div class="type-area" style="width: 100%">
                         <div class="type-hidden" style="display: none"><%= type %></div>
-                        <select id="writing-type" style="min-width: 230px; width: 35%; float: left">
+                        <select id="writing-type" style="display: inline-block; min-width: 230px; width: 34%">
                           <option value="sports">스포츠</option>
                           <option value="study">스터디</option>
                           <option value="game">게임</option>
@@ -134,7 +134,7 @@
                         </select>
                         <input
                           id="writing-subtype"
-                          style="min-width: 440px; width: 65%"
+                          style="min-width: 440px; width: 65%; display: inline-block"
                           placeholder="ex) 풋살, 농구, 수영, 독서 스터디, 프로그래밍 스터디"
                           type="text"
                           required
@@ -142,18 +142,50 @@
                       </div>
                     </div>
                     <div class="row">
-                      <div class="writing-datetime" style="display: inline-block; width: 50%">
-                        <input id="writing-date" style="min-width: 240px; display: inline-block" type="date" required />
-                        <input id="writing-date" style="min-width: 240px; display: inline-block" type="time" required />
+                      <div class="writing-datetime" style="display: inline-block; width: 48%">
+                        <input id="writing-date" style="min-width: 240px; display: inline-block; width: 40%" type="date" required />
+                        <input id="writing-time" style="min-width: 240px; display: inline-block; width: 40%" type="time" required />
                       </div>
-                      <div class="writing-feePerHour" style="display: inline-block">
-                        <input id="writing-fee" style="min-width: 240px; display: inline-block" placeholder="요금" type="number" required />
+                      <div class="writing-feePerHour" style="display: inline-block; width: 48%">
                         <input
                           id="writing-fee"
-                          style="min-width: 240px; display: inline-block"
+                          style="min-width: 240px; display: inline-block; width: 40%"
+                          placeholder="요금"
+                          type="number"
+                          required
+                        />
+                        <input
+                          id="writing-hour"
+                          style="min-width: 240px; display: inline-block; width: 40%"
                           placeholder="만남 시간"
                           type="number"
                           required
+                        />
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="writing-address" style="width: 100%">
+                        <input
+                          id="writing-place"
+                          type="text"
+                          style="min-width: 240px; display: inline-block; width: 35%"
+                          placeholder="만남 장소"
+                          required
+                        />
+                        <input
+                          id="writing-people"
+                          type="text"
+                          style="min-width: 240px; display: inline-block; width: 15%"
+                          placeholder="모집 인원"
+                          required
+                        />
+                        <input
+                          id="writing-kakao-address"
+                          type="text"
+                          style="min-width: 240px; display: inline-block; width: 44%"
+                          placeholder="만남 주소"
+                          required
+                          readonly
                         />
                       </div>
                     </div>
@@ -181,7 +213,58 @@
     <script type="text/javascript">
       $(function () {
         type = $('.type-hidden').text();
-        $('#writing_type option[value=' + type + ']').attr('selected', true);
+        $('#writing-type option[value=' + type + ']').attr('selected', true);
+
+        $('#writing-kakao-address').click(function (e) {
+          console.log('hi');
+          new daum.Postcode({
+            oncomplete: function (data) {
+              $('#writing-kakao-address').val(data.address);
+            },
+          }).open();
+        });
+
+        $('.writing-btn').click(function (e) {
+          title = $('#writing-title').val();
+          mainType = $('#writing-type').val();
+          subType = $('#writing-subtype').val();
+          date = $('#writing-date').val();
+          time = $('#writing-time').val();
+          fee = $('#writing-fee').val();
+          hour = $('#writing-hour').val();
+          placeName = $('#writing-place').val();
+          people = $('#writing-people').val();
+          placeAddress = $('#writing-kakao-address').val();
+          content = $('#writing-content').val();
+          notice = $('#writing-notice').val();
+          $.ajax({
+            url: '/meetings',
+            method: 'POST',
+            data: {
+              title: title,
+              mainType: mainType,
+              subType: subType,
+              dateTime: date + ' ' + time,
+              fee: fee,
+              hour: hour,
+              placeName: placeName,
+              people: people,
+              placeAddress: placeAddress,
+              content: content,
+              notice: notice,
+            },
+            dataType: 'json',
+            success: function (response) {
+              if (response.success) {
+                alert('등록이 완료되었습니다.');
+                window.location.href = '/';
+              } else {
+                message = response.message;
+                alert(message);
+              }
+            },
+          });
+        });
       });
     </script>
   </body>

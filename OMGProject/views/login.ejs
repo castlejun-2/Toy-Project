@@ -68,7 +68,6 @@
             const message = JSON.parse(xhr.responseText);
             if (message.success) window.location.href = '/';
             else {
-              console.log(xhr.responseText);
               const resultDiv = document.querySelector('.message-box');
               resultDiv.innerHTML = message.message;
               resultDiv.removeAttribute('hidden');

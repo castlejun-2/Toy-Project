@@ -11,6 +11,8 @@ class Router {
     this.router.get('/', mainController.output.getMain);
     this.router.get('/competitions', mainController.output.getCompetition);
     this.router.get('/notices', mainController.output.getNotice);
+    this.router.get('/inquirys', mainController.output.getInquiry);
+    this.router.get('/questions', mainController.output.getQuestion);
     //Processing Router
   }
 }

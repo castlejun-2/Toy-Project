@@ -4,6 +4,7 @@ import User from '../../models/user/user.js';
 import Main from '../../models/main/main.js';
 import Meeting from '../../models/meeting/meeting.js';
 import MeetingStorage from '../../models/meeting/meetingStorage.js';
+import axios from 'axios';
 
 class Controller {
   output = {
@@ -58,6 +59,61 @@ class Controller {
     },
   };
 
-  process = {};
+  process = {
+    createMeetingSchedule: async (req, res) => {
+      if (req.user) {
+        if (!req.body.title) res.send(baseResponse.TITLE_EMPTY);
+        else if (!req.body.dateTime) res.send(baseResponse.DATETIME_EMPTY);
+        else if (!req.body.fee) res.send(baseResponse.FEE_EMPTY);
+        else if (!req.body.hour) res.send(baseResponse.MEETINGTIME_EMPTY);
+        else if (!req.body.placeName) res.send(baseResponse.PLACENAME_EMPTY);
+        else if (!req.body.placeAddress) res.send(baseResponse.PLACEADDRESS_EMPTY);
+        else if (!req.body.people) res.send(baseResponse.PEOPLE_EMPTY);
+        else {
+          const title = req.body.title;
+          const mainType = req.body.mainType;
+          const subType = req.body.subType;
+          const dateTime = req.body.dateTime;
+          const fee = req.body.fee;
+          const hour = req.body.hour;
+          const placeName = req.body.placeName;
+          const people = req.body.people;
+          const placeAddress = req.body.placeAddress;
+          const content = req.body.content;
+          const notice = req.body.notice;
+          const userId = req.user.id;
+          const url = 'https://dapi.kakao.com/v2/local/search/address.json?query=' + encodeURI(placeAddress);
+          const axiosResult = await axios({
+            url: url,
+            method: 'get',
+            headers: {
+              Authorization: 'KakaoAK 10b8818bed823e037e3d97d80377b236',
+            },
+          });
+          const placeLA = axiosResult.data.documents[0].address.y;
+          const placeLO = axiosResult.data.documents[0].address.x;
+          const params = [
+            userId,
+            title,
+            content,
+            mainType,
+            subType,
+            dateTime,
+            fee,
+            hour,
+            placeName,
+            people,
+            placeAddress,
+            placeLA,
+            placeLO,
+            notice,
+          ];
+          const meeting = new Meeting(params);
+          const createMeetingResult = await meeting.createMeeting();
+          res.send(createMeetingResult);
+        }
+      } else res.render('login.ejs');
+    },
+  };
 }
 export default new Controller();

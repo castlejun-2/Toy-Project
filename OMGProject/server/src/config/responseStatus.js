@@ -13,6 +13,13 @@ class response {
   EMAIL_IS_EXIST = { success: false, message: '이미 존재하는 이메일 입니다.' };
   AGREE_IS_EMPTY = { success: false, message: '<b>이용약관</b>에 동의해 주세요.' };
 
+  TITLE_EMPTY = { success: false, message: '제목을 입력해주세요.' };
+  DATETIME_EMPTY = { success: false, message: '만나는 날짜를 입력해주세요.' };
+  FEE_EMPTY = { success: false, message: '요금을 입력해주세요.' };
+  MEETINGTIME_EMPTY = { success: false, message: '만남 시간을 입력해주세요.' };
+  PLACENAME_EMPTY = { success: false, message: '만나는 장소의 이름을 입력해주세요.' };
+  PLACEADDRESS_EMPTY = { success: false, message: '만나는 장소의 주소를 입력해주세요.' };
+  PEOPLE_EMPTY = { success: false, message: '모집인원을 입력해주세요.' };
   DB_ERROR = { success: false, message: 'Database Server Connect Error' };
 }
 

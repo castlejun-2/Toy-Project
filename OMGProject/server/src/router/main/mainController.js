@@ -26,6 +26,16 @@ class Controller {
       if (req.user) res.render('notice.ejs', { notice: noticeResult, user: req.user });
       else res.redirect('/users/login');
     },
+    getInquiry: async (req, res) => {
+      const noticeResult = await MainStorage.getNoticeInfo();
+      if (req.user) res.render('inquiry.ejs', { notice: noticeResult, user: req.user });
+      else res.redirect('/users/login');
+    },
+    getQuestion: async (req, res) => {
+      const noticeResult = await MainStorage.getNoticeInfo();
+      if (req.user) res.render('question.ejs', { notice: noticeResult, user: req.user });
+      else res.redirect('/users/login');
+    },
   };
 
   process = {};

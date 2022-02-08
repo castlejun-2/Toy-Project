@@ -731,6 +731,7 @@ button {
   font-weight: 700;
   text-align: center;
   vertical-align: top;
+  cursor: pointer;
 }
 
 .row {
@@ -759,7 +760,12 @@ button {
 }
 
 #writing-date,
-#writing-fee {
+#writing-time,
+#writing-fee,
+#writing-hour,
+#writing-place,
+#writing-people,
+#writing-kakao-address {
   height: 50px;
   display: block;
   min-height: 50px;
@@ -852,8 +858,8 @@ button {
 
 .meeting-title {
   text-align: center;
-  margin-bottom: 30px !important;
-  margin: 0px auto;
+  margin-bottom: 60px !important;
+  margin: 10px auto;
   font-weight: 700;
   font-size: 35px;
   color: black;

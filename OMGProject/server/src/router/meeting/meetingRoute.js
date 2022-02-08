@@ -18,6 +18,9 @@ class Router {
     this.router.get('/hobby', meetingController.output.getHobbySchedule);
     this.router.get('/:typeName/:scheduleId', meetingController.output.getScheduleDetail);
     this.router.get('/writing', meetingController.output.getWritingPage);
+
+    //Post Request
+    this.router.post('/', meetingController.process.createMeetingSchedule);
   }
 }
 

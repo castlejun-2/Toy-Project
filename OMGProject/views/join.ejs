@@ -77,7 +77,6 @@
           e.preventDefault();
         });
         function sendSubmitAjax(url, data) {
-          console.log(data);
           let jsondata = JSON.stringify(data);
           const xhr = new XMLHttpRequest();
           xhr.open('POST', url);
@@ -88,7 +87,6 @@
             const message = JSON.parse(xhr.responseText);
             if (message.success) window.location.href = '/users/join/welcome';
             else {
-              console.log(xhr.responseText);
               const resultDiv = document.querySelector('.message-box');
               resultDiv.innerHTML = message.message;
               resultDiv.removeAttribute('hidden');
