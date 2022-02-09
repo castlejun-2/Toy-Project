@@ -162,8 +162,13 @@
       $(function () {
         $('.question-content').click(function (e) {
           index = $(this).children('div')[0].innerText;
-          $('#answer_' + index + '').css('display', 'inline-block');
+          if ($('#answer_' + index + '').css('display') === 'none') {
+            $('#answer_' + index + '').css('display', 'inline-block');
+          } else {
+            $('#answer_' + index + '').css('display', 'none');
+          }
         });
+
         $('.question-answer').click(function (e) {
           $(this).css('display', 'none');
         });

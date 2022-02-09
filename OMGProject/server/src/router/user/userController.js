@@ -24,6 +24,10 @@ class Controller {
         res.redirect('login');
       } else res.redirect('login');
     },
+    myPage: async (req, res) => {
+      if (req.user) res.render('myPage.ejs', { user: req.user });
+      else res.redirect('login');
+    },
   };
 
   process = {

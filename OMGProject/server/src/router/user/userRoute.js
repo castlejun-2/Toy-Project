@@ -12,6 +12,7 @@ class Router {
     this.router.get('/join', userController.output.join);
     this.router.get('/join/welcome', userController.output.welcome);
     this.router.get('/logout', userController.output.logout);
+    this.router.get('/my-page', userController.output.myPage);
 
     //Processing Router
     this.router.post('/login', userController.process.login);
