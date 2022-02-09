@@ -694,6 +694,38 @@ button {
   font-size: 17px;
 }
 
+.question-li {
+  font-weight: bold;
+  width: 10%;
+  text-align: center;
+  font-size: 18px;
+}
+
+.question-title {
+  font-weight: bold;
+  text-align: left;
+  width: 80%;
+}
+
+.question-content {
+  font-size: 18px;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  padding: 15px;
+  cursor: pointer;
+}
+
+.question-answer {
+  padding: 20px 10px;
+  width: 80%;
+  display: none;
+  font-size: 17px;
+  cursor: pointer;
+}
+
 .writing-wrap {
   margin: 10px 400px;
 }

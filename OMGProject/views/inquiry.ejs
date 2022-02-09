@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css" />
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-    <script type="text/javascript" src="http://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
   </head>
   <body>
@@ -109,45 +109,24 @@
           <div class="board" id="content">
             <div class="main-content">
               <div class="body-content">
-                <div class="side-bar">
-                  <ul>
-                    <b style="margin-bottom: 10px">UOMG INFORMATION</b>
-                    <li><a href="/competitions">진행 중인 대회</a></li>
-                    <li><a href="/notices">공지사항</a></li>
-                    <li style="font-weight: bold"><a href="/questions">자주 묻는 질문</a></li>
-                    <li><a href="/inquirys">1:1 문의</a></li>
-                  </ul>
-                </div>
-                <div class="title-list">
-                  <ul class="schedule-list">
-                    <li class="competiton-content" style="">
-                      <div class="question-li"><p>번호</p></div>
-                      <div class="question-title" style="text-align: center">제목</div>
-                    </li>
-                    <% for (let i = 0; i < question.length; i++) { %>
-                    <li class="question-content" style="">
-                      <div class="question-li"><p><%= question[i].id %></p></div>
-                      <div class="question-title"><%= question[i].title %></div>
-                    </li>
-                    <div class="question-answer-wrap" style="display: flex">
-                      <div style="width: 20%"></div>
-                      <div class="question-answer" id="answer_<%= question[i].id %>"><%= question[i].content %></div>
+                <div class="writing-wrap">
+                  <div class="writing-header">
+                    <h2>글쓰기</h2>
+                    <div class="writing-post-btn">
+                      <input class="writing-btn" type="submit" value="등록" />
                     </div>
-                    <% } %>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <div class="paging-wrap">
-              <div class="paging-box">
-                <div class="paging-list">
-                  <a href="" class="paging-btn prev"></a>
-                  <a href="" class="paging-btn active">1</a>
-                  <a href="" class="paging-btn">2</a>
-                  <a href="" class="paging-btn">3</a>
-                  <a href="" class="paging-btn">4</a>
-                  <a href="" class="paging-btn">5</a>
-                  <a href="" class="paging-btn next"></a>
+                  </div>
+                  <div class="writing-content">
+                    <div class="row">
+                      <div class="title-area">
+                        <textarea id="writing-title" style="min-width: 670px" placeholder="제목을 입력해 주세요."></textarea>
+                      </div>
+                    <div class="row">
+                      <div>
+                        <textarea id="writing-content" style="height: 600px" placeholder="내용"></textarea>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -160,12 +139,28 @@
     </div>
     <script type="text/javascript">
       $(function () {
-        $('.question-content').click(function (e) {
-          index = $(this).children('div')[0].innerText;
-          $('#answer_' + index + '').css('display', 'inline-block');
-        });
-        $('.question-answer').click(function (e) {
-          $(this).css('display', 'none');
+        $('.writing-btn').click(function (e) {
+          title = $('#writing-title').val();
+          content = $('#writing-content').val();
+          $.ajax({
+            url: '/inquirys',
+            method: 'POST',
+            data: {
+              title: title,
+              content: content,
+            },
+            dataType: 'json',
+            success: function (response) {
+              if (response.success) {
+                alert('등록이 완료되었습니다.');
+                window.location.href = '/';
+              } else {
+                message = response.message;
+                if (message = 'IS_NOT_CONNECTED') window.location.href = '/users/login';
+                else alert(message);
+              }
+            },
+          });
         });
       });
     </script>

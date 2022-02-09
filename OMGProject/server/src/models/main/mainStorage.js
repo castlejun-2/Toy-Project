@@ -37,6 +37,24 @@ class MainStorage {
       });
     });
   }
+  static getQuestionInfo() {
+    return new Promise((resolve, reject) => {
+      pool.getConnection(async function (err, conn) {
+        if (err) reject(`${err}`);
+        else {
+          const query = `
+            Select id, title, content
+            From Question
+            Where status = 0`;
+          conn.query(query, function (err, rows) {
+            if (err) reject(`${err}`);
+            else resolve(rows);
+          });
+        }
+        conn.release();
+      });
+    });
+  }
   static getCompetitionInfo() {
     return new Promise((resolve, reject) => {
       pool.getConnection(async function (err, conn) {
@@ -47,6 +65,22 @@ class MainStorage {
             From Competition
             Where status = 0`;
           conn.query(query, function (err, rows) {
+            if (err) reject(`${err}`);
+            else resolve(rows);
+          });
+        }
+        conn.release();
+      });
+    });
+  }
+  static createInquiry(params) {
+    return new Promise((resolve, reject) => {
+      pool.getConnection(async function (err, conn) {
+        if (err) reject(`${err}`);
+        else {
+          const query = `
+            Insert Into Inquiry(userId, title, content) Values(?,?,?)`;
+          conn.query(query, params, function (err, rows) {
             if (err) reject(`${err}`);
             else resolve(rows);
           });

@@ -27,17 +27,31 @@ class Controller {
       else res.redirect('/users/login');
     },
     getInquiry: async (req, res) => {
-      const noticeResult = await MainStorage.getNoticeInfo();
-      if (req.user) res.render('inquiry.ejs', { notice: noticeResult, user: req.user });
+      if (req.user) res.render('inquiry.ejs', { user: req.user });
       else res.redirect('/users/login');
     },
     getQuestion: async (req, res) => {
-      const noticeResult = await MainStorage.getNoticeInfo();
-      if (req.user) res.render('question.ejs', { notice: noticeResult, user: req.user });
+      const questionResult = await MainStorage.getQuestionInfo();
+      if (req.user) res.render('question.ejs', { question: questionResult, user: req.user });
       else res.redirect('/users/login');
     },
   };
 
-  process = {};
+  process = {
+    createInquiry: async (req, res) => {
+      if (req.user) {
+        if (!req.body.title) res.send(baseResponse.TITLE_EMPTY);
+        else {
+          const title = req.body.title;
+          const content = req.body.content;
+          const userId = req.user.id;
+          const params = [userId, title, content];
+          const main = new Main(params);
+          const inquiryResult = await main.createInquiry();
+          res.send(inquiryResult);
+        }
+      } else res.send(baseResponse.IS_NOT_CONNECTED);
+    },
+  };
 }
 export default new Controller();

@@ -20,6 +20,8 @@ class response {
   PLACENAME_EMPTY = { success: false, message: '만나는 장소의 이름을 입력해주세요.' };
   PLACEADDRESS_EMPTY = { success: false, message: '만나는 장소의 주소를 입력해주세요.' };
   PEOPLE_EMPTY = { success: false, message: '모집인원을 입력해주세요.' };
+
+  IS_NOT_CONNECTED = { success: false, message: 'IS_NOT_CONNECTED' };
   DB_ERROR = { success: false, message: 'Database Server Connect Error' };
 }
 

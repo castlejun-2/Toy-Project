@@ -13,7 +13,9 @@ class Router {
     this.router.get('/notices', mainController.output.getNotice);
     this.router.get('/inquirys', mainController.output.getInquiry);
     this.router.get('/questions', mainController.output.getQuestion);
+
     //Processing Router
+    this.router.post('/inquirys', mainController.process.createInquiry);
   }
 }
 
