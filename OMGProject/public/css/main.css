@@ -1046,6 +1046,229 @@ button {
   background-color: #fff !important;
 }
 
+.contents {
+  position: relative;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.width-max {
+  max-width: 100%;
+}
+
+.width-xl {
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 15px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.min-height-large {
+  min-height: 700px;
+}
+
+.content-title {
+  padding: 50px 0 0;
+}
+
+.content-title .mp {
+  max-width: 1170px;
+  margin: 0 auto;
+  font-size: 26px;
+  text-align: left;
+}
+
+.content-aside {
+  width: 220px;
+  margin-right: 45px;
+  margin-bottom: 20px;
+  float: left;
+}
+
+.content-aside .user-name {
+  position: relative;
+  margin-top: 20px;
+  padding: 20px 0;
+  font-size: 18px;
+  color: black;
+  border-top: 1px solid #e1e1e1;
+}
+
+.content-aside .user-name .user-profile > img,
+.content-aside .user-name .user-profile {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  line-height: 24px;
+  font-size: 17px;
+  text-align: center;
+}
+
+.content-aside.mypage .cal {
+  padding: 20px 0;
+  box-sizing: border-box;
+  border-top: 1px solid #dedfda;
+  margin-top: -1px;
+}
+
+.content-aside.mypage .cal-title {
+  color: #000;
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 24px;
+  margin: 0;
+}
+
+.content-aside.mypage .cal > a {
+  width: 100%;
+  padding: 8px 0 0 0;
+  font-size: 17px;
+  color: #2e2e2e;
+  font-weight: normal;
+  line-height: 24px;
+}
+
+.cal-btn {
+  display: inline-block;
+  margin: 0;
+  border: 0;
+  cursor: pointer;
+  height: auto;
+  outline: none;
+}
+
+.content-main {
+  float: left;
+  width: calc(100%, -200px);
+  margin-top: -30px;
+}
+
+.content-main .cal-title {
+  position: relative;
+  margin: 0 0 20px 0;
+  padding: 0;
+  border: 0;
+  width: 100%;
+}
+
+.user-meeting {
+  margin-bottom: 40px;
+}
+
+.content-main .cal-title > .meeting-label {
+  font-size: 23px;
+  color: #111111;
+  font-weight: bold;
+}
+
+.meeting-history:first-child {
+  margin-top: 0;
+}
+
+.meeting-history {
+  position: relative;
+  margin-top: 20px;
+  border: 1px solid #dedfda;
+}
+
+.meeting-history .header {
+  position: relative;
+  padding: 17px 20px;
+  background-color: #eeeeee;
+  color: #a5a5a5;
+  font-size: 18px;
+  max-width: 800px;
+}
+
+.meeting-history .header > *:first-child {
+  margin-left: 0;
+}
+
+.meeting-history .header > * {
+  display: inline-block;
+  margin-right: 20px;
+  float: left;
+  font-size: 16px;
+  color: #111;
+  font-weight: 400;
+}
+
+.meeting-history .header .title {
+  max-width: 650px;
+  max-height: 25px;
+  overflow: hidden;
+  width: 55%;
+  float: left;
+  font-size: 17px;
+  font-weight: bold;
+  color: #111;
+  margin-top: -1px;
+}
+
+.meeting-history .header:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+.meeting-history .header .history-detail-btn,
+.meeting-history .header .history-update-btn {
+  width: 10%;
+  float: right;
+  padding: 0;
+  font-size: 15px;
+  margin-right: 0px;
+  cursor: pointer;
+}
+
+.history-body {
+  max-width: 800px;
+  display: table;
+  width: 100%;
+  padding: 20px 0px;
+  border-top: 1px solid #dedfda;
+  box-sizing: border-box;
+}
+
+.history-body .subject-info {
+  width: 33%;
+  vertical-align: top;
+  display: inline-block;
+  text-align: center;
+}
+
+.history-body .place-info {
+  display: inline-block;
+  width: 33%;
+  vertical-align: top;
+  text-align: center;
+}
+
+.history-body .people-info {
+  display: inline-block;
+  width: 33%;
+  vertical-align: top;
+  text-align: center;
+}
+
+.history-body .subject-info > .subject:first-child,
+.history-body .place-info > .place:first-child,
+.history-body .people-info > .people:first-child {
+  padding-top: 0;
+}
+
+.history-body .subject-info > .subject,
+.history-body .place-info > .place,
+.history-body .people-info > .people {
+  display: inline-block;
+  width: 100%;
+  padding-top: 8px;
+  line-height: 18px;
+  font-size: 15px;
+}
+
 *,
 *:before,
 *:after {

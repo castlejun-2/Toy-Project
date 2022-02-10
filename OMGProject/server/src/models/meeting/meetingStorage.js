@@ -75,5 +75,25 @@ class MeetingStorage {
       });
     });
   }
+  static getMeetingInfoByUserId(params) {
+    return new Promise((resolve, reject) => {
+      pool.getConnection(async function (err, conn) {
+        if (err) reject(`${err}`);
+        else {
+          const query = `
+            Select id, title, mainName, subName, place, date_format(startTime, "%Y-%m-%d %H:%i") startTime, people, perHour, status, date_format(createdAt, "%Y-%m-%d") createdAt
+            From Meeting  
+            Where userId = ?
+            limit ?, ? ;
+          `;
+          conn.query(query, params, function (err, rows) {
+            if (err) reject(`${err}`);
+            else resolve(rows);
+          });
+        }
+        conn.release();
+      });
+    });
+  }
 }
 export default MeetingStorage;

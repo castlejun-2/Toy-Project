@@ -1,6 +1,7 @@
 import passport from 'passport';
 import baseResponse from '../../config/responseStatus.js';
 import User from '../../models/user/user.js';
+import Meeting from '../../models/meeting/meeting.js';
 
 class Controller {
   output = {
@@ -25,8 +26,15 @@ class Controller {
       } else res.redirect('login');
     },
     myPage: async (req, res) => {
-      if (req.user) res.render('myPage.ejs', { user: req.user });
-      else res.redirect('login');
+      if (req.user) {
+        const userId = req.user.id;
+        const curpage = 1;
+        const pageSize = 3;
+        const params = [userId, (curpage - 1) * pageSize, curpage * pageSize];
+        const meeting = new Meeting(params);
+        const meetingResult = await meeting.getMyMeetingInfo();
+        res.render('myPage.ejs', { user: req.user, meeting: meetingResult });
+      } else res.redirect('login');
     },
   };
 

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!--모바일 브라우저 뷰 포인트-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0" />
+    <meta http-equiv="imagetoolbar" content="no" />
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="pragma" content="no-cache" />
+    <title>Offline Meeting Gathering(OMG) | 오마이갓</title>
+    <link rel="icon" type="image/png" href="https://s3.ap-northeast-2.amazonaws.com/img.castlejun-2.shop/UOMG_LOGO.png" />
+    <link rel="stylesheet" href="/css/main.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css" />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script type="text/javascript" src="http://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+  </head>
+  <body>
+    <header id="header">
+      <div class="header-top">
+        <nav id="header-wrap" class="header-box">
+          <div id="header-logo">
+            <img
+              src="https://s3.ap-northeast-2.amazonaws.com/img.castlejun-2.shop/UOMG_LOGO.png"
+              id="header-logo-img"
+              onclick="window.location.href='/';"
+            />
+            <img
+              src="https://s3.ap-northeast-2.amazonaws.com/img.castlejun-2.shop/UOMG_LOGO.png"
+              id="header-logo-m-img"
+              onclick="window.location.href='/';"
+            />
+          </div>
+          <div id="header-show-btn"></div>
+          <div id="nav-list-btn"></div>
+          <ul id="header-nav">
+            <li>
+              <a class="header-nav-btn" href="/"><span>홈</span></a>
+            </li>
+            <li>
+              <a class="header-nav-btn" href="/meetings/game"><span>게임</span></a>
+            </li>
+            <li>
+              <a class="header-nav-btn" href="/meetings/dating"><span>소개팅</span></a>
+            </li>
+            <li>
+              <a class="header-nav-btn" href="/meetings/sports"><span>스포츠</span></a>
+            </li>
+            <li>
+              <a class="header-nav-btn" href="/meetings/study"><span>스터디</span></a>
+            </li>
+            <li>
+              <a class="header-nav-btn" href="/meetings/hobby"><span>취미</span></a>
+            </li>
+          </ul>
+          <ul id="header-user-box">
+            <li>
+              <a class="header-nav-btn" href="/users/logout"><span>로그아웃</span></a>
+            </li>
+            <li>
+              <a class="header-nav-btn home" href="/users/my-page"><span>마이 페이지</span></a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <div id="side-mask" style="display: none">
+      <div id="side-menuBar" style="right: -300px">
+        <div id="side-top">
+          <div class="side-top-user-box">
+            <span id="side-user-name" onclick="window.location.href='/users/my-page'" style="cursor: pointer">
+              <b style="font-weight: 700"><%= user.email %></b>
+            </span>
+          </div>
+        </div>
+        <ul id="side-nav">
+          <li>
+            <a class="side-nav-btn" href="/"><span>홈</span></a>
+          </li>
+          <li>
+            <a class="side-nav-btn" href="/meetings/game"><span>게임</span></a>
+          </li>
+          <li>
+            <a class="side-nav-btn" href="/meetings/dating"><span>소개팅</span></a>
+          </li>
+          <li>
+            <a class="side-nav-btn" href="/meetings/sports"><span>스포츠</span></a>
+          </li>
+          <li>
+            <a class="side-nav-btn" href="/meetings/study"><span>스터디</span></a>
+          </li>
+          <li>
+            <a class="side-nav-btn" href="/meetings/hobby"><span>취미</span></a>
+          </li>
+          <li>
+            <a class="side-nav-btn home" href="/users/my-page"><span>마이 페이지</span></a>
+          </li>
+          <li>
+            <a class="side-nav-btn" href="/users/logout"><span>로그아웃</span></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="body-container">
+      <div class="main-container">
+        <div role="main">
+          <div class="board" id="content">
+            <div class="main-content">
+              <div class="body-content">
+                <article class="contents width-max">
+                  <div class="content-title">
+                    <h2 class="mp">MY PAGE</h2>
+                  </div>
+                </article>
+                <article class="contents width-xl">
+                  <div class="content-wrapper min-height-large">
+                    <div class="content-aside mypage">
+                      <div class="user-name">
+                        <div class="" style="display: inline-block; margin: 0 auto; vertical-align: middle">
+                          <span class="user-profile"><img src="<%= user.profile_img %>" /></span>
+                        </div>
+                        <div class="" style="display: inline-block; margin: 0 auto">
+                          <span><%= user.name %></span>
+                        </div>
+                      </div>
+                      <div class="cal">
+                        <h2 class="cal-title">만남정보</h2>
+                        <a class="cal-btn">만남 관리</a>
+                        <a class="cal-btn">만남 문의</a>
+                        <a class="cal-btn">만남 요청</a>
+                      </div>
+                      <div class="cal">
+                        <h2 class="cal-title">나의정보</h2>
+                        <a class="cal-btn">프로필 관리</a>
+                        <a class="cal-btn">회원탈퇴</a>
+                      </div>
+                      <div class="cal" style="border-bottom: 1px solid #e1e1e1">
+                        <h2 class="cal-title">문의정보</h2>
+                        <a class="cal-btn">등록한 문의</a>
+                        <a class="cal-btn">1:1 문의</a>
+                      </div>
+                    </div>
+                    <div class="content-main mypage min-height-large show">
+                      <div class="user-meeting">
+                        <h2 class="cal-title">
+                          <span class="meeting-label">만남 관리</span>
+                        </h2>
+                        <div class="registed-meeting">
+                          <% for (let i = 0; i < meeting.length; i++) { %>
+                          <div class="meeting-history">
+                            <div class="header">
+                              <span class="title"><%= meeting[i].title %></span>
+                              <span class="date" style="width: 15%"><%= meeting[i].createdAt %></span>
+                              <a href="/meetings/<%= meeting[i].mainName %>/<%= meeting[i].id %>" class="history-detail-btn">상세 보기</a>
+                              <a href="" class="history-update-btn">수정</a>
+                            </div>
+                            <div class="history-body">
+                              <div class="subject-info">
+                                <span class="subject" style="font-weight: bold; font-size: 17px">CATEGORY</span>
+                                <span class="subject" style="text-transform: uppercase"><%= meeting[i].mainName %></span>
+                                <span class="subject"><%= meeting[i].subName %></span>
+                              </div>
+                              <div class="place-info">
+                                <span class="place" style="font-weight: bold; font-size: 17px">PLACE/MEETTIME</span>
+                                <span class="place"><%= meeting[i].place %></span>
+                                <span class="place"><%= meeting[i].startTime %></span>
+                              </div>
+                              <div class="people-info">
+                                <span class="place" style="font-weight: bold; font-size: 17px">PEOPLE/RUNTIME</span>
+                                <span class="people"><%= meeting[i].people %></span>
+                                <span class="people"><%= meeting[i].perHour %></span>
+                              </div>
+                            </div>
+                          </div>
+                          <% } %>
+                        </div>
+                      </div>
+                      <div class="paging-wrap">
+                        <div class="paging-box">
+                          <div class="paging-list">
+                            <a href="" class="paging-btn prev"></a>
+                            <a href="" class="paging-btn active">1</a>
+                            <a href="" class="paging-btn">2</a>
+                            <a href="" class="paging-btn">3</a>
+                            <a href="" class="paging-btn">4</a>
+                            <a href="" class="paging-btn">5</a>
+                            <a href="" class="paging-btn next"></a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer omg-footer">
+      <p>© 2022. OMG ALL RIGHTS RESERVED.</p>
+    </div>
+    <script type="text/javascript">
+      $(function () {
+        $('#header-show-btn').click(function () {
+          $('#side-mask').css('display', 'block');
+          $('#side-menuBar').css('right', '0px');
+          $('#side-menuBar').addClass('visible');
+          $('#header').css('right', '16px');
+        });
+        $('#side-mask').click(function () {
+          $('#side-mask').css('display', 'none');
+          $('#side-menuBar').css('right', '-300px');
+          $('#side-menuBar').removeClass('visible');
+          $('#header').css('right', '0');
+        });
+      });
+    </script>
+  </body>
+</html>

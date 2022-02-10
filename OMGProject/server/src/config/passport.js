@@ -35,7 +35,7 @@ class Passport {
     });
     passport.deserializeUser(async function (id, done) {
       const rows = await UserStorage.getUserInfo(id);
-      if (rows.length) done(null, { email: rows[0].email, id: rows[0].id });
+      if (rows.length) done(null, { email: rows[0].email, id: rows[0].id, name: rows[0].name, profile_img: rows[0].imageUrl });
       else done(null, false);
     });
   }

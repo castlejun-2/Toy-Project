@@ -18,5 +18,9 @@ class Meeting {
       return baseResponse.DB_ERROR;
     }
   }
+  async getMyMeetingInfo() {
+    const myMeetingResult = await MeetingStorage.getMeetingInfoByUserId(this.body);
+    return myMeetingResult;
+  }
 }
 export default Meeting;
