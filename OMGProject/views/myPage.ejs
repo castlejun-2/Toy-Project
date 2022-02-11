@@ -147,47 +147,11 @@
                         <h2 class="cal-title">
                           <span class="meeting-label">만남 관리</span>
                         </h2>
-                        <div class="registed-meeting">
-                          <% for (let i = 0; i < meeting.length; i++) { %>
-                          <div class="meeting-history">
-                            <div class="header">
-                              <span class="title"><%= meeting[i].title %></span>
-                              <span class="date" style="width: 15%"><%= meeting[i].createdAt %></span>
-                              <a href="/meetings/<%= meeting[i].mainName %>/<%= meeting[i].id %>" class="history-detail-btn">상세 보기</a>
-                              <a href="" class="history-update-btn">수정</a>
-                            </div>
-                            <div class="history-body">
-                              <div class="subject-info">
-                                <span class="subject" style="font-weight: bold; font-size: 17px">CATEGORY</span>
-                                <span class="subject" style="text-transform: uppercase"><%= meeting[i].mainName %></span>
-                                <span class="subject"><%= meeting[i].subName %></span>
-                              </div>
-                              <div class="place-info">
-                                <span class="place" style="font-weight: bold; font-size: 17px">PLACE/MEETTIME</span>
-                                <span class="place"><%= meeting[i].place %></span>
-                                <span class="place"><%= meeting[i].startTime %></span>
-                              </div>
-                              <div class="people-info">
-                                <span class="place" style="font-weight: bold; font-size: 17px">PEOPLE/RUNTIME</span>
-                                <span class="people"><%= meeting[i].people %></span>
-                                <span class="people"><%= meeting[i].perHour %></span>
-                              </div>
-                            </div>
-                          </div>
-                          <% } %>
-                        </div>
+                        <div class="registed-meeting"></div>
                       </div>
                       <div class="paging-wrap">
                         <div class="paging-box">
-                          <div class="paging-list">
-                            <a href="" class="paging-btn prev"></a>
-                            <a href="" class="paging-btn active">1</a>
-                            <a href="" class="paging-btn">2</a>
-                            <a href="" class="paging-btn">3</a>
-                            <a href="" class="paging-btn">4</a>
-                            <a href="" class="paging-btn">5</a>
-                            <a href="" class="paging-btn next"></a>
-                          </div>
+                          <div class="paging-list"></div>
                         </div>
                       </div>
                     </div>
@@ -203,7 +167,110 @@
       <p>© 2022. OMG ALL RIGHTS RESERVED.</p>
     </div>
     <script type="text/javascript">
+      const totalData = parseInt('<%= meeting.length %>');
+      const dataPerPage = parseInt(3);
+      const pageCount = 5;
+      let currentPage = 1;
+      function paging(totalData, dataPerPage, pageCount, currentPage) {
+        totalPage = Math.ceil(totalData / dataPerPage);
+        if (totalPage < pageCount) pageCount = totalPage;
+        let pageGroup = Math.ceil(currentPage / pageCount);
+        let last = pageGroup * pageCount;
+        if (last > totalPage) last = totalPage;
+        let first = last - (pageCount - 1);
+        let next = last + 1;
+        let prev = first - 1;
+        let pageHtml = '';
+        if (prev > 0) pageHtml += "<a href='#' class='paging-btn prev' id='prev'>이전</a>";
+        for (let i = first; i <= last; i++) {
+          if (currentPage == i) pageHtml += "<a href='#' class='paging-btn active' id = " + i + '>' + i + '</a>';
+          else pageHtml += "<a href='#' class='paging-btn' id=" + i + '>' + i + '</a>';
+        }
+        if (last < totalPage) pageHtml += "<a href='#' class='paging-btn next' id='next'>다음</a>";
+        $('.paging-list').html(pageHtml);
+        $('.paging-btn').click(function () {
+          $('.paging-btn').removeClass('active');
+          $(this).addClass('active');
+          const $id = $(this).attr('id');
+          selectedPage = $(this).text();
+
+          if ($id == 'next') selectedPage = next;
+          if ($id == 'prev') selectedPage = prev;
+
+          currentPage = selectedPage;
+          paging(totalData, dataPerPage, pageCount, selectedPage);
+
+          displayData(selectedPage, dataPerPage);
+        });
+      }
+      function displayData(currentPage, dataPerPage) {
+        let chartHtml = '';
+        currentPage = parseInt(currentPage);
+        dataPerPage = parseInt(dataPerPage);
+        $.ajax({
+          url: '/meetings/my-page/' + currentPage,
+          method: 'GET',
+          success: function (response) {
+            response = response.meeting;
+            for (let i = (currentPage - 1) * dataPerPage; i < Math.min(totalData, (currentPage - 1) * dataPerPage + dataPerPage); i++) {
+              chartHtml +=
+                "<div class='meeting-history'><div class='header'><span class='title'>" +
+                response[i].title +
+                '</span>' +
+                "<span class='date' style='width: 15%'>" +
+                response[i].createdAt +
+                '</span>' +
+                "<a href='/meetings/" +
+                response[i].mainName +
+                '/' +
+                response[i].id +
+                "' class='history-detail-btn'>상세 보기</a>" +
+                "<a href='/meetings/writing/update/" +
+                response[i].id +
+                "' style='width: 6%' class='history-update-btn'>수정</a>" +
+                "<span class='status_" +
+                response[i].status +
+                "' style='font-weight: bold; width: 10%; float: right; font-size: 15px'></span></div>" +
+                "<div class='history-body'><div class='subject-info'><span class='subject' style='font-weight: bold; font-size: 17px'>CATEGORY</span>" +
+                "<span class='subject' style='text-transform: uppercase'>" +
+                response[i].mainName +
+                '</span>' +
+                "<span class='subject'>" +
+                response[i].subName +
+                '</span></div>' +
+                "<div class='place-info'><span class='place' style='font-weight: bold; font-size: 17px'>PLACE/MEETTIME</span>" +
+                "<span class='place'>" +
+                response[i].place +
+                '</span>' +
+                "<span class='place'>" +
+                response[i].startTime +
+                '</span></div>' +
+                "<div class='people-info'><span class='place' style='font-weight: bold; font-size: 17px'>PEOPLE/RUNTIME</span>" +
+                "<span class='people'>" +
+                response[i].people +
+                '</span>' +
+                "<span class='people'>" +
+                response[i].perHour +
+                '시간</span></div></div></div>';
+            }
+            $('.meeting-history').css('display', 'none');
+            $('.registed-meeting').html(chartHtml);
+            $('.status_0').ready(function () {
+              $('.status_0').text('신청가능');
+            });
+            $('.status_1').ready(function () {
+              $('.status_1').text('모집완료');
+            });
+            $('.status_2').ready(function () {
+              $('.status_2').text('삭제완료');
+            });
+          },
+        });
+      }
       $(function () {
+        displayData(1, dataPerPage);
+        paging(totalData, dataPerPage, pageCount, 1);
+
         $('#header-show-btn').click(function () {
           $('#side-mask').css('display', 'block');
           $('#side-menuBar').css('right', '0px');

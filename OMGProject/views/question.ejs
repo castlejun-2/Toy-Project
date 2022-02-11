@@ -124,31 +124,13 @@
                       <div class="question-li"><p>번호</p></div>
                       <div class="question-title" style="text-align: center">제목</div>
                     </li>
-                    <% for (let i = 0; i < question.length; i++) { %>
-                    <li class="question-content" style="">
-                      <div class="question-li"><p><%= question[i].id %></p></div>
-                      <div class="question-title"><%= question[i].title %></div>
-                    </li>
-                    <div class="question-answer-wrap" style="display: flex">
-                      <div style="width: 20%"></div>
-                      <div class="question-answer" id="answer_<%= question[i].id %>"><%= question[i].content %></div>
-                    </div>
-                    <% } %>
                   </ul>
                 </div>
               </div>
             </div>
             <div class="paging-wrap">
               <div class="paging-box">
-                <div class="paging-list">
-                  <a href="" class="paging-btn prev"></a>
-                  <a href="" class="paging-btn active">1</a>
-                  <a href="" class="paging-btn">2</a>
-                  <a href="" class="paging-btn">3</a>
-                  <a href="" class="paging-btn">4</a>
-                  <a href="" class="paging-btn">5</a>
-                  <a href="" class="paging-btn next"></a>
-                </div>
+                <div class="paging-list"></div>
               </div>
             </div>
           </div>
@@ -159,19 +141,92 @@
       <p>© 2022. OMG ALL RIGHTS RESERVED.</p>
     </div>
     <script type="text/javascript">
-      $(function () {
-        $('.question-content').click(function (e) {
-          index = $(this).children('div')[0].innerText;
-          if ($('#answer_' + index + '').css('display') === 'none') {
-            $('#answer_' + index + '').css('display', 'inline-block');
-          } else {
-            $('#answer_' + index + '').css('display', 'none');
-          }
-        });
+      const totalData = parseInt('<%= question.length %>');
+      let diffTotalData;
+      const dataPerPage = parseInt(5);
+      const pageCount = 5;
+      let currentPage = 1;
+      let index;
 
-        $('.question-answer').click(function (e) {
-          $(this).css('display', 'none');
+      function paging(totalData, dataPerPage, pageCount, currentPage) {
+        totalPage = Math.ceil(totalData / dataPerPage);
+        if (totalPage < pageCount) pageCount = totalPage;
+        let pageGroup = Math.ceil(currentPage / pageCount);
+        let last = pageGroup * pageCount;
+        if (last > totalPage) last = totalPage;
+        let first = last - (pageCount - 1);
+        let next = last + 1;
+        let prev = first - 1;
+        let pageHtml = '';
+        if (prev > 0) pageHtml += "<a href='#' class='paging-btn prev' id='prev'>이전</a>";
+        for (let i = first; i <= last; i++) {
+          if (currentPage == i) pageHtml += "<a href='#' class='paging-btn active' id = " + i + '>' + i + '</a>';
+          else pageHtml += "<a href='#' class='paging-btn' id=" + i + '>' + i + '</a>';
+        }
+        if (last < totalPage) pageHtml += "<a href='#' class='paging-btn next' id='next'>다음</a>";
+        $('.paging-list').html(pageHtml);
+        $('.paging-btn').click(function () {
+          $('.paging-btn').removeClass('active');
+          $(this).addClass('active');
+          const $id = $(this).attr('id');
+          selectedPage = $(this).text();
+
+          if ($id == 'next') selectedPage = next;
+          if ($id == 'prev') selectedPage = prev;
+
+          currentPage = selectedPage;
+          paging(totalData, dataPerPage, pageCount, selectedPage);
+          displayData(selectedPage, dataPerPage);
         });
+      }
+      function displayData(currentPage, dataPerPage) {
+        let chartHtml = '';
+        currentPage = parseInt(currentPage);
+        dataPerPage = parseInt(dataPerPage);
+        $.ajax({
+          url: '/questions-list',
+          method: 'GET',
+          dataType: 'json',
+          success: function (response) {
+            const question = response.question;
+            for (let i = (currentPage - 1) * dataPerPage; i < Math.min(totalData, (currentPage - 1) * dataPerPage + dataPerPage); i++) {
+              chartHtml +=
+                "<li class='question-content' style=''>" +
+                "<div class='question-li'><p>" +
+                question[i].id +
+                '</p></div>' +
+                "<div class='question-title'>" +
+                question[i].title +
+                '</div></li>' +
+                "<div class='question-answer-wrap' style='display: flex'>" +
+                "<div style='width: 20%'></div>" +
+                "<div class='question-answer' id='answer_" +
+                question[i].id +
+                "'>" +
+                question[i].content +
+                '</div></div>';
+            }
+            $('.notice-content').css('display', 'none');
+            prevChartHtml = $('.schedule-list').html();
+            $('.schedule-list').html(prevChartHtml + chartHtml);
+            $('.question-content').click(function (e) {
+              index = $(this).children('div')[0].innerText;
+              if ($('#answer_' + index + '').css('display') === 'none') {
+                $('#answer_' + index + '').css('display', 'inline-block');
+              } else {
+                $('#answer_' + index + '').css('display', 'none');
+              }
+            });
+
+            $('.question-answer').click(function (e) {
+              $(this).css('display', 'none');
+            });
+          },
+        });
+      }
+      $(function () {
+        displayData(1, dataPerPage);
+        paging(totalData, dataPerPage, pageCount, 1);
       });
     </script>
   </body>

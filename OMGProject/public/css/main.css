@@ -22,6 +22,13 @@ body {
   margin: 0;
 }
 
+.warning {
+  width: 100%;
+  text-align: center;
+  font-size: 40px;
+  font-weight: bold;
+}
+
 .body-content-wrap {
   margin-top: 20px;
   background-color: white;
@@ -220,7 +227,7 @@ body {
   }
 }
 
-@media screen and (max-width: 1400px) {
+@media screen and (max-width: 1450px) {
   .header-top {
     height: 70px;
   }
@@ -258,6 +265,26 @@ body {
   }
 }
 
+@media screen and (max-width: 1140px) {
+  .content-aside {
+    display: none;
+  }
+  .content-title .mp {
+    display: none;
+    text-align: center !important;
+    font-size: 35px !important;
+  }
+  .content-wrapper {
+    display: inline-block;
+  }
+  .contents {
+    text-align: center;
+  }
+  .content-aside {
+    margin-right: 0 !important;
+  }
+}
+
 @media screen and (max-width: 970px) {
   .right-body-wrap {
     display: none !important;
@@ -285,6 +312,17 @@ body {
     background: url(https://s3.ap-northeast-2.amazonaws.com/img.castlejun-2.shop/m-botton.png) no-repeat center;
     color: black;
     margin: 10px 15px;
+  }
+  .content-main {
+    display: none;
+  }
+  .content-aside {
+    display: block !important;
+  }
+  .content-title .mp {
+    display: block;
+    text-align: center !important;
+    font-size: 35px !important;
   }
 }
 
@@ -748,7 +786,9 @@ button {
   right: 0;
 }
 
-.writing-btn {
+.writing-btn,
+.delete-btn,
+.status-btn {
   min-width: 60px;
   height: 36px;
   padding: 0 12px;
@@ -1179,7 +1219,7 @@ button {
   background-color: #eeeeee;
   color: #a5a5a5;
   font-size: 18px;
-  max-width: 800px;
+  width: 800px;
 }
 
 .meeting-history .header > *:first-child {
@@ -1197,9 +1237,9 @@ button {
 
 .meeting-history .header .title {
   max-width: 650px;
-  max-height: 25px;
+  max-height: 22px;
   overflow: hidden;
-  width: 55%;
+  width: 45%;
   float: left;
   font-size: 17px;
   font-weight: bold;

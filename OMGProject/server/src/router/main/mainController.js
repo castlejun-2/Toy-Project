@@ -16,14 +16,31 @@ class Controller {
       if (req.user) res.render('main.ejs', { event: eventResult, meeting: meetingResult, user: req.user });
       else res.redirect('/users/login');
     },
+    getMainSchedule: async (req, res) => {
+      const diff_date = req.query.diff_date ? req.query.diff_date : 0;
+      const params = [diff_date, false, false];
+      const meeting = new Meeting(params);
+      const meetingResult = await meeting.getScheduleInfo();
+      res.send({ meeting: meetingResult });
+    },
     getCompetition: async (req, res) => {
       const competitionResult = await MainStorage.getCompetitionInfo();
       if (req.user) res.render('competitions.ejs', { competition: competitionResult, user: req.user });
       else res.redirect('/users/login');
     },
+    getCompetitionJson: async (req, res) => {
+      const competitionResult = await MainStorage.getCompetitionInfo();
+      if (req.user) res.send({ competition: competitionResult });
+      else res.redirect('/users/login');
+    },
     getNotice: async (req, res) => {
       const noticeResult = await MainStorage.getNoticeInfo();
       if (req.user) res.render('notice.ejs', { notice: noticeResult, user: req.user });
+      else res.redirect('/users/login');
+    },
+    getNoticeJson: async (req, res) => {
+      const noticeResult = await MainStorage.getNoticeInfo();
+      if (req.user) res.send({ notice: noticeResult });
       else res.redirect('/users/login');
     },
     getInquiry: async (req, res) => {
@@ -33,6 +50,11 @@ class Controller {
     getQuestion: async (req, res) => {
       const questionResult = await MainStorage.getQuestionInfo();
       if (req.user) res.render('question.ejs', { question: questionResult, user: req.user });
+      else res.redirect('/users/login');
+    },
+    getQuestionJson: async (req, res) => {
+      const questionResult = await MainStorage.getQuestionInfo();
+      if (req.user) res.send({ question: questionResult });
       else res.redirect('/users/login');
     },
   };

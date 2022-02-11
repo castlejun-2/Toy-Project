@@ -21,6 +21,7 @@ class response {
   PLACEADDRESS_EMPTY = { success: false, message: '만나는 장소의 주소를 입력해주세요.' };
   PEOPLE_EMPTY = { success: false, message: '모집인원을 입력해주세요.' };
 
+  WRONG_APPROACH = { success: false, message: 'Wrong Approach Error' };
   IS_NOT_CONNECTED = { success: false, message: 'IS_NOT_CONNECTED' };
   DB_ERROR = { success: false, message: 'Database Server Connect Error' };
 }

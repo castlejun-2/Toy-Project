@@ -160,37 +160,13 @@
                     <div style="font-weight: bold; text-align: center; margin-left: 20px" class="notice-title">제목</div>
                     <div style="width: 10%; font-weight: bold; text-align: center" class="notice-status">상태</div>
                   </li>
-                  <ul class="schedule-list">
-                    <% for (let i = 0; i < meeting.length; i++) { %>
-                    <li class="meeting-content" style="">
-                      <a href="/meetings/<%= meeting[i].mainName %>/<%= meeting[i].id %>">
-                        <div class="meeting-time"><p><%= meeting[i].time %></p></div>
-                        <div class="meeting-type"><p><%= meeting[i].subject %></p></div>
-                        <div class="meeting-info">
-                          <div class=""><%= meeting[i].title %></div>
-                          <div class="meeting-place"><%= meeting[i].place %></div>
-                        </div>
-                        <div style="width: 10%">
-                          <div class="meeting-status <%= meeting[i].status_c %>"><%= meeting[i].status %></div>
-                        </div>
-                      </a>
-                    </li>
-                    <% } %>
-                  </ul>
+                  <ul class="schedule-list"></ul>
                 </div>
               </div>
             </div>
             <div class="paging-wrap">
               <div class="paging-box">
-                <div class="paging-list">
-                  <a href="" class="paging-btn prev"></a>
-                  <a href="" class="paging-btn active">1</a>
-                  <a href="" class="paging-btn">2</a>
-                  <a href="" class="paging-btn">3</a>
-                  <a href="" class="paging-btn">4</a>
-                  <a href="" class="paging-btn">5</a>
-                  <a href="" class="paging-btn next"></a>
-                </div>
+                <div class="paging-list"></div>
               </div>
             </div>
           </div>
@@ -201,7 +177,144 @@
       <p>© 2022. OMG ALL RIGHTS RESERVED.</p>
     </div>
     <script type="text/javascript">
+      const totalData = parseInt('<%= meeting.length %>');
+      let diffTotalData;
+      const dataPerPage = parseInt(5);
+      const pageCount = 5;
+      let currentPage = 1;
+      let index;
+
+      function paging(totalData, dataPerPage, pageCount, currentPage, type) {
+        totalPage = Math.ceil(totalData / dataPerPage);
+        if (totalPage < pageCount) pageCount = totalPage;
+        let pageGroup = Math.ceil(currentPage / pageCount);
+        let last = pageGroup * pageCount;
+        if (last > totalPage) last = totalPage;
+        let first = last - (pageCount - 1);
+        let next = last + 1;
+        let prev = first - 1;
+        let pageHtml = '';
+        if (prev > 0) pageHtml += "<a href='#' class='paging-btn prev' id='prev'>이전</a>";
+        for (let i = first; i <= last; i++) {
+          if (currentPage == i) pageHtml += "<a href='#' class='paging-btn active' id = " + i + '>' + i + '</a>';
+          else pageHtml += "<a href='#' class='paging-btn' id=" + i + '>' + i + '</a>';
+        }
+        if (last < totalPage) pageHtml += "<a href='#' class='paging-btn next' id='next'>다음</a>";
+        $('.paging-list').html(pageHtml);
+        $('.paging-btn').click(function () {
+          $('.paging-btn').removeClass('active');
+          $(this).addClass('active');
+          const $id = $(this).attr('id');
+          selectedPage = $(this).text();
+
+          if ($id == 'next') selectedPage = next;
+          if ($id == 'prev') selectedPage = prev;
+
+          currentPage = selectedPage;
+          paging(totalData, dataPerPage, pageCount, selectedPage);
+          if (type) displayDiffData(selectedPage, dataPerPage);
+          else displayData(selectedPage, dataPerPage);
+        });
+      }
+      function displayData(currentPage, dataPerPage) {
+        let chartHtml = '';
+        currentPage = parseInt(currentPage);
+        dataPerPage = parseInt(dataPerPage);
+        $.ajax({
+          url: '/meetings',
+          method: 'GET',
+          data: { diff_date: index, type: 'hobby' },
+          dataType: 'json',
+          success: function (response) {
+            const meeting = response.meeting;
+            for (let i = (currentPage - 1) * dataPerPage; i < Math.min(totalData, (currentPage - 1) * dataPerPage + dataPerPage); i++) {
+              chartHtml +=
+                "<li class='meeting-content' style=''>" +
+                "<a href='/meetings/" +
+                meeting[i].mainName +
+                '/' +
+                meeting[i].id +
+                "'>" +
+                "<div class='meeting-time'><p>" +
+                meeting[i].time +
+                '</p></div>' +
+                "<div class='meeting-type'><p>" +
+                meeting[i].subject +
+                '</p></div>' +
+                "<div class='meeting-info'>" +
+                "<div class=''>" +
+                meeting[i].title +
+                '</div>' +
+                "<div class='meeting-place'>" +
+                meeting[i].place +
+                '</div>' +
+                '</div>' +
+                "<div style='width: 10%'>" +
+                "<div class='meeting-status '" +
+                meeting[i].status_c +
+                '>' +
+                meeting[i].status +
+                '</div>' +
+                '</div>' +
+                '</a>' +
+                '</li>';
+            }
+            $('.meeting-content').css('display', 'none');
+            $('.schedule-list').html(chartHtml);
+          },
+        });
+      }
+      function displayDiffData(currentPage, dataPerPage) {
+        let chartHtml = '';
+        currentPage = parseInt(currentPage);
+        dataPerPage = parseInt(dataPerPage);
+        $.ajax({
+          url: '/meetings',
+          method: 'GET',
+          data: { diff_date: index, type: 'hobby' },
+          dataType: 'json',
+          success: function (response) {
+            const meeting = response.meeting;
+            for (let i = (currentPage - 1) * dataPerPage; i < Math.min(diffTotalData, (currentPage - 1) * dataPerPage + dataPerPage); i++) {
+              chartHtml +=
+                "<li class='meeting-content' style=''>" +
+                "<a href='/meetings/" +
+                meeting[i].mainName +
+                '/' +
+                meeting[i].id +
+                "'>" +
+                "<div class='meeting-time'><p>" +
+                meeting[i].time +
+                '</p></div>' +
+                "<div class='meeting-type'><p>" +
+                meeting[i].subject +
+                '</p></div>' +
+                "<div class='meeting-info'>" +
+                "<div class=''>" +
+                meeting[i].title +
+                '</div>' +
+                "<div class='meeting-place'>" +
+                meeting[i].place +
+                '</div>' +
+                '</div>' +
+                "<div style='width: 10%'>" +
+                "<div class='meeting-status '" +
+                meeting[i].status_c +
+                '>' +
+                meeting[i].status +
+                '</div>' +
+                '</div>' +
+                '</a>' +
+                '</li>';
+            }
+            $('.meeting-content').css('display', 'none');
+            $('.schedule-list').html(chartHtml);
+          },
+        });
+      }
       $(function () {
+        displayData(1, dataPerPage);
+        paging(totalData, dataPerPage, pageCount, 1, 0);
         $('.slick-track').ready(function () {
           const date = new Date();
           const week = ['일', '월', '화', '수', '목', '금', '토'];
@@ -277,7 +390,7 @@
           $('li[data-slick-index=0]').addClass('isActive');
           $('.dateWrap').click(function () {
             $('li[class*=isActive]').removeClass('isActive');
-            const index = $(this).attr('data-slick-index');
+            index = $(this).attr('data-slick-index');
             $('li[data-slick-index=' + index + ']').addClass('isActive');
             $('.meeting-content').css('display', 'none');
             $.ajax({
@@ -286,41 +399,9 @@
               data: { diff_date: index, type: 'hobby' },
               dataType: 'json',
               success: function (response) {
-                let meeting = response.meeting;
-                let html = ``;
-                for (let i = 0; i < meeting.length; i++) {
-                  html +=
-                    `
-                    <li class="meeting-content">
-                      <a>
-                        <div class="meeting-time" style="display:none"><p>` +
-                    meeting[i].mainName +
-                    `</p></div>
-                        <div class="meeting-time"><p>` +
-                    meeting[i].time +
-                    `</p></div>
-                        <div class="meeting-type"><p>` +
-                    meeting[i].subject +
-                    `</p></div>
-                        <div class="meeting-info">
-                          <div class="">` +
-                    meeting[i].title +
-                    `</div>
-                          <div class="meeting-place">` +
-                    meeting[i].place +
-                    `</div>
-                        </div>
-                        <div style="width: 10%">
-                          <div class="meeting-status ` +
-                    meeting[i].status_c +
-                    `">` +
-                    meeting[i].status +
-                    `</div>
-                        </div>
-                      </a>
-                    </li>`;
-                }
-                $('.schedule-list').html(html);
+                diffTotalData = response.meeting.length;
+                paging(diffTotalData, dataPerPage, pageCount, 1, 1);
+                displayDiffData(1, dataPerPage);
               },
             });
           });

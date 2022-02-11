@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!--모바일 브라우저 뷰 포인트-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0" />
+    <meta http-equiv="imagetoolbar" content="no" />
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="pragma" content="no-cache" />
+    <title>Offline Meeting Gathering(OMG) | 오마이갓</title>
+    <link rel="icon" type="image/png" href="https://s3.ap-northeast-2.amazonaws.com/img.castlejun-2.shop/UOMG_LOGO.png" />
+    <link rel="stylesheet" href="/css/main.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css" />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+  </head>
+  <body>
+    <header id="header">
+      <div class="header-top">
+        <nav id="header-wrap" class="header-box">
+          <div id="header-logo">
+            <img
+              src="https://s3.ap-northeast-2.amazonaws.com/img.castlejun-2.shop/UOMG_LOGO.png"
+              id="header-logo-img"
+              onclick="window.location.href='/';"
+            />
+            <img
+              src="https://s3.ap-northeast-2.amazonaws.com/img.castlejun-2.shop/UOMG_LOGO.png"
+              id="header-logo-m-img"
+              onclick="window.location.href='/';"
+            />
+          </div>
+          <div id="header-show-btn"></div>
+          <div id="nav-list-btn"></div>
+          <ul id="header-nav">
+            <li>
+              <a class="header-nav-btn" href="/"><span>홈</span></a>
+            </li>
+            <li>
+              <a class="header-nav-btn" href="/meetings/game"><span>게임</span></a>
+            </li>
+            <li>
+              <a class="header-nav-btn" href="/meetings/dating"><span>소개팅</span></a>
+            </li>
+            <li>
+              <a class="header-nav-btn" href="/meetings/sports"><span>스포츠</span></a>
+            </li>
+            <li>
+              <a class="header-nav-btn" href="/meetings/study"><span>스터디</span></a>
+            </li>
+            <li>
+              <a class="header-nav-btn" href="/meetings/hobby"><span>취미</span></a>
+            </li>
+          </ul>
+          <ul id="header-user-box">
+            <li>
+              <a class="header-nav-btn" href="/users/logout"><span>로그아웃</span></a>
+            </li>
+            <li>
+              <a class="header-nav-btn" href="/users/my-page"><span>마이 페이지</span></a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <div id="side-mask" style="display: none">
+      <div id="side-menuBar" style="right: -300px">
+        <div id="side-top">
+          <div class="side-top-user-box">
+            <span id="side-user-name" onclick="window.location.href='/users/my-page'" style="cursor: pointer">
+              <b style="font-weight: 700"><%= user.email %></b>
+            </span>
+          </div>
+        </div>
+        <ul id="side-nav">
+          <li>
+            <a class="side-nav-btn" href="/"><span>홈</span></a>
+          </li>
+          <li>
+            <a class="side-nav-btn" href="/meetings/game"><span>게임</span></a>
+          </li>
+          <li>
+            <a class="side-nav-btn" href="/meetings/dating"><span>소개팅</span></a>
+          </li>
+          <li>
+            <a class="side-nav-btn" href="/meetings/sports"><span>스포츠</span></a>
+          </li>
+          <li>
+            <a class="side-nav-btn" href="/meetings/study"><span>스터디</span></a>
+          </li>
+          <li>
+            <a class="side-nav-btn" href="/meetings/hobby"><span>취미</span></a>
+          </li>
+          <li>
+            <a class="side-nav-btn" href="/users/my-page"><span>마이 페이지</span></a>
+          </li>
+          <li>
+            <a class="side-nav-btn" href="/users/logout"><span>로그아웃</span></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="body-container">
+      <div class="main-container">
+        <div role="main">
+          <div class="board" id="content">
+            <div class="main-content">
+              <div class="body-content">
+                <div class="writing-wrap">
+                  <div class="writing-header">
+                    <h2>글쓰기</h2>
+                    <div class="writing-post-btn">
+                      <input class="status-btn" style="background-color: rgb(5, 8, 196)" type="submit" value="모집 완료" />
+                      <input class="delete-btn" style="background-color: rgb(202, 4, 4)" type="submit" value="삭제" />
+                      <input class="writing-btn" type="submit" value="등록" />
+                    </div>
+                  </div>
+                  <div class="writing-content">
+                    <div class="row">
+                      <div class="title-area">
+                        <textarea id="writing-title" style="min-width: 670px" placeholder="제목을 입력해 주세요.">
+<%= meeting[0].title %>
+                        </textarea>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="type-area" style="width: 100%">
+                        <div class="type-hidden" style="display: none"><%= meeting[0].mainName %></div>
+                        <select id="writing-type" style="display: inline-block; min-width: 230px; width: 34%">
+                          <option value="sports">스포츠</option>
+                          <option value="study">스터디</option>
+                          <option value="game">게임</option>
+                          <option value="hobby">취미</option>
+                          <option value="dating">소개팅</option>
+                        </select>
+                        <input
+                          id="writing-subtype"
+                          style="min-width: 440px; width: 65%; display: inline-block"
+                          placeholder="ex) 풋살, 농구, 수영, 독서 스터디, 프로그래밍 스터디"
+                          type="text"
+                          value="<%= meeting[0].subName %>"
+                          required
+                        />
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="writing-datetime" style="display: inline-block; width: 48%">
+                        <input id="writing-date" style="min-width: 240px; display: inline-block; width: 40%" type="date" required />
+                        <input id="writing-time" style="min-width: 240px; display: inline-block; width: 40%" type="time" required />
+                      </div>
+                      <div class="writing-feePerHour" style="display: inline-block; width: 48%">
+                        <input
+                          id="writing-fee"
+                          style="min-width: 240px; display: inline-block; width: 40%"
+                          placeholder="요금"
+                          type="number"
+                          value="<%= meeting[0].fee %>"
+                          required
+                        />
+                        <input
+                          id="writing-hour"
+                          style="min-width: 240px; display: inline-block; width: 40%"
+                          placeholder="만남 시간"
+                          type="number"
+                          value="<%= meeting[0].perHour %>"
+                          required
+                        />
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="writing-address" style="width: 100%">
+                        <div id="hidden-id" style="display: none"><%= meeting[0].id %></div>
+                        <input
+                          id="writing-place"
+                          type="text"
+                          style="min-width: 240px; display: inline-block; width: 35%"
+                          placeholder="만남 장소"
+                          value="<%= meeting[0].place %>"
+                          required
+                        />
+                        <input
+                          id="writing-people"
+                          type="text"
+                          style="min-width: 240px; display: inline-block; width: 15%"
+                          value="<%= meeting[0].people %>"
+                          placeholder="모집 인원"
+                          required
+                        />
+                        <input
+                          id="writing-kakao-address"
+                          type="text"
+                          style="min-width: 240px; display: inline-block; width: 44%"
+                          placeholder="만남 주소"
+                          required
+                          readonly
+                        />
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div>
+                        <textarea id="writing-content" style="height: 500px" placeholder="내용"><%= meeting[0].content %></textarea>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div>
+                        <textarea id="writing-notice" style="height: 150px" placeholder="주의사항"><%= meeting[0].notice %></textarea>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer omg-footer">
+      <p>© 2022. OMG ALL RIGHTS RESERVED.</p>
+    </div>
+    <script type="text/javascript">
+      $(function () {
+        type = $('.type-hidden').text();
+        $('#writing-type option[value=' + type + ']').attr('selected', true);
+
+        $('#writing-kakao-address').click(function (e) {
+          new daum.Postcode({
+            oncomplete: function (data) {
+              $('#writing-kakao-address').val(data.address);
+            },
+          }).open();
+        });
+
+        $('.writing-btn').click(function (e) {
+          meetingId = $('#hidden-id').val();
+          title = $('#writing-title').val();
+          mainType = $('#writing-type').val();
+          subType = $('#writing-subtype').val();
+          date = $('#writing-date').val();
+          time = $('#writing-time').val();
+          fee = $('#writing-fee').val();
+          hour = $('#writing-hour').val();
+          placeName = $('#writing-place').val();
+          people = $('#writing-people').val();
+          placeAddress = $('#writing-kakao-address').val();
+          content = $('#writing-content').val();
+          notice = $('#writing-notice').val();
+          $.ajax({
+            url: '/meetings/update',
+            method: 'POST',
+            data: {
+              meetingId: meetingId,
+              title: title,
+              mainType: mainType,
+              subType: subType,
+              dateTime: date + ' ' + time,
+              fee: fee,
+              hour: hour,
+              placeName: placeName,
+              people: people,
+              placeAddress: placeAddress,
+              content: content,
+              notice: notice,
+            },
+            dataType: 'json',
+            success: function (response) {
+              if (response.success) {
+                alert('수정이 완료되었습니다.');
+                window.location.href = '/';
+              } else {
+                message = response.message;
+                alert(message);
+              }
+            },
+          });
+        });
+        $('.delete-btn').click(function (e) {
+          meetingId = $('#hidden-id').val();
+          if (confirm('[확인] 해당 게시글을 삭제하시겠습니까?')) {
+            $.ajax({
+              url: '/meetings/delete',
+              method: 'POST',
+              data: {
+                meetingId: meetingId,
+              },
+              dataType: 'json',
+              success: function (response) {
+                if (response.success) {
+                  alert('삭제가 완료되었습니다.');
+                  window.location.href = '/';
+                } else {
+                  alert('실패하였습니다.');
+                  message = response.message;
+                  if ((message = 'Wrong Approach Error')) window.location.href = '/meetings/wrong-approach';
+                  else window.location.href = '/users/login';
+                }
+              },
+            });
+          }
+        });
+        $('.status-btn').click(function (e) {
+          meetingId = $('#hidden-id').val();
+          if (confirm('[확인] 해당 게시글의 모집을 완료하시겠습니까?')) {
+            $.ajax({
+              url: '/meetings/complete',
+              method: 'POST',
+              data: {
+                meetingId: meetingId,
+              },
+              dataType: 'json',
+              success: function (response) {
+                if (response.success) {
+                  alert('모집 완료되었습니다.');
+                  window.location.href = '/';
+                } else {
+                  alert('실패하였습니다.');
+                  message = response.message;
+                  if ((message = 'Wrong Approach Error')) window.location.href = '/meetings/wrong-approach';
+                  else window.location.href = '/users/login';
+                }
+              },
+            });
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

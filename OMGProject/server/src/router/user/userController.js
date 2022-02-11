@@ -28,11 +28,8 @@ class Controller {
     myPage: async (req, res) => {
       if (req.user) {
         const userId = req.user.id;
-        const curpage = 1;
-        const pageSize = 3;
-        const params = [userId, (curpage - 1) * pageSize, curpage * pageSize];
-        const meeting = new Meeting(params);
-        const meetingResult = await meeting.getMyMeetingInfo();
+        const meeting = new Meeting(userId);
+        const meetingResult = await meeting.getMyPageMeetingInfo();
         res.render('myPage.ejs', { user: req.user, meeting: meetingResult });
       } else res.redirect('login');
     },

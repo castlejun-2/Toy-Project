@@ -126,31 +126,13 @@
                       <div style="font-weight: bold; text-align: center" class="notice-title">제목</div>
                       <div style="width: 15%; font-weight: bold; text-align: center" class="notice-status">작성일</div>
                     </li>
-                    <% for (let i = 0; i < competition.length; i++) { %>
-                    <li class="notice-content" style="">
-                      <a href="/competition/<%= competition[i].id %>">
-                        <div class="notice-li"><p><%= competition[i].id %></p></div>
-                        <div class="notice-type"><p><%= competition[i].organizer %></p></div>
-                        <div class="notice-title"><%= competition[i].title %></div>
-                        <div style="width: 15%" class="notice-status"><%= competition[i].createdAt %></div>
-                      </a>
-                    </li>
-                    <% } %>
                   </ul>
                 </div>
               </div>
             </div>
             <div class="paging-wrap">
               <div class="paging-box">
-                <div class="paging-list">
-                  <a href="" class="paging-btn prev"></a>
-                  <a href="" class="paging-btn active">1</a>
-                  <a href="" class="paging-btn">2</a>
-                  <a href="" class="paging-btn">3</a>
-                  <a href="" class="paging-btn">4</a>
-                  <a href="" class="paging-btn">5</a>
-                  <a href="" class="paging-btn next"></a>
-                </div>
+                <div class="paging-list"></div>
               </div>
             </div>
           </div>
@@ -161,7 +143,85 @@
       <p>© 2022. OMG ALL RIGHTS RESERVED.</p>
     </div>
     <script type="text/javascript">
-      $(function () {});
+      const totalData = parseInt('<%= competition.length %>');
+      let diffTotalData;
+      const dataPerPage = parseInt(5);
+      const pageCount = 5;
+      let currentPage = 1;
+      let index;
+
+      function paging(totalData, dataPerPage, pageCount, currentPage) {
+        totalPage = Math.ceil(totalData / dataPerPage);
+        if (totalPage < pageCount) pageCount = totalPage;
+        let pageGroup = Math.ceil(currentPage / pageCount);
+        let last = pageGroup * pageCount;
+        if (last > totalPage) last = totalPage;
+        let first = last - (pageCount - 1);
+        let next = last + 1;
+        let prev = first - 1;
+        let pageHtml = '';
+        if (prev > 0) pageHtml += "<a href='#' class='paging-btn prev' id='prev'>이전</a>";
+        for (let i = first; i <= last; i++) {
+          if (currentPage == i) pageHtml += "<a href='#' class='paging-btn active' id = " + i + '>' + i + '</a>';
+          else pageHtml += "<a href='#' class='paging-btn' id=" + i + '>' + i + '</a>';
+        }
+        if (last < totalPage) pageHtml += "<a href='#' class='paging-btn next' id='next'>다음</a>";
+        $('.paging-list').html(pageHtml);
+        $('.paging-btn').click(function () {
+          $('.paging-btn').removeClass('active');
+          $(this).addClass('active');
+          const $id = $(this).attr('id');
+          selectedPage = $(this).text();
+
+          if ($id == 'next') selectedPage = next;
+          if ($id == 'prev') selectedPage = prev;
+
+          currentPage = selectedPage;
+          paging(totalData, dataPerPage, pageCount, selectedPage);
+          displayData(selectedPage, dataPerPage);
+        });
+      }
+      function displayData(currentPage, dataPerPage) {
+        let chartHtml = '';
+        currentPage = parseInt(currentPage);
+        dataPerPage = parseInt(dataPerPage);
+        $.ajax({
+          url: '/competitions-list',
+          method: 'GET',
+          dataType: 'json',
+          success: function (response) {
+            const competiton = response.competition;
+            for (let i = (currentPage - 1) * dataPerPage; i < Math.min(totalData, (currentPage - 1) * dataPerPage + dataPerPage); i++) {
+              chartHtml +=
+                "<li class='notice-content' style=''>" +
+                "<a href='/competition/" +
+                competiton[i].id +
+                "'>" +
+                "<div class='notice-li'><p>" +
+                competiton[i].id +
+                '</p></div>' +
+                "<div class='notice-type'><p>" +
+                competiton[i].organizer +
+                '</p></div>' +
+                "<div class='notice-title'>" +
+                competiton[i].title +
+                '</div>' +
+                "<div style='width: 15%' class='notice-status'>" +
+                competiton[i].createdAt +
+                '</div>' +
+                '</a>' +
+                '</li>';
+            }
+            $('.notice-content').css('display', 'none');
+            prevChartHtml = $('.schedule-list').html();
+            $('.schedule-list').html(prevChartHtml + chartHtml);
+          },
+        });
+      }
+      $(function () {
+        displayData(1, dataPerPage);
+        paging(totalData, dataPerPage, pageCount, 1);
+      });
     </script>
   </body>
 </html>
