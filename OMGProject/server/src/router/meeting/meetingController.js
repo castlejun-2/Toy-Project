@@ -85,13 +85,13 @@ class Controller {
   process = {
     createMeetingSchedule: async (req, res) => {
       if (req.user) {
-        if (!req.body.title) res.send(baseResponse.TITLE_EMPTY);
-        else if (!req.body.dateTime) res.send(baseResponse.DATETIME_EMPTY);
-        else if (!req.body.fee) res.send(baseResponse.FEE_EMPTY);
-        else if (!req.body.hour) res.send(baseResponse.MEETINGTIME_EMPTY);
-        else if (!req.body.placeName) res.send(baseResponse.PLACENAME_EMPTY);
-        else if (!req.body.placeAddress) res.send(baseResponse.PLACEADDRESS_EMPTY);
-        else if (!req.body.people) res.send(baseResponse.PEOPLE_EMPTY);
+        if (!req.body.title) return res.send(baseResponse.TITLE_EMPTY);
+        else if (!req.body.dateTime) return res.send(baseResponse.DATETIME_EMPTY);
+        else if (!req.body.fee) return res.send(baseResponse.FEE_EMPTY);
+        else if (!req.body.hour) return res.send(baseResponse.MEETINGTIME_EMPTY);
+        else if (!req.body.placeName) return res.send(baseResponse.PLACENAME_EMPTY);
+        else if (!req.body.placeAddress) return res.send(baseResponse.PLACEADDRESS_EMPTY);
+        else if (!req.body.people) return res.send(baseResponse.PEOPLE_EMPTY);
         else {
           const title = req.body.title;
           const mainType = req.body.mainType;
@@ -133,19 +133,19 @@ class Controller {
           ];
           const meeting = new Meeting(params);
           const createMeetingResult = await meeting.createMeeting();
-          res.send(createMeetingResult);
+          return res.send(createMeetingResult);
         }
-      } else res.render('login.ejs');
+      } else return res.render('login.ejs');
     },
     updateMeetingSchedule: async (req, res) => {
       if (req.user) {
-        if (!req.body.title) res.send(baseResponse.TITLE_EMPTY);
-        else if (!req.body.dateTime) res.send(baseResponse.DATETIME_EMPTY);
-        else if (!req.body.fee) res.send(baseResponse.FEE_EMPTY);
-        else if (!req.body.hour) res.send(baseResponse.MEETINGTIME_EMPTY);
-        else if (!req.body.placeName) res.send(baseResponse.PLACENAME_EMPTY);
-        else if (!req.body.placeAddress) res.send(baseResponse.PLACEADDRESS_EMPTY);
-        else if (!req.body.people) res.send(baseResponse.PEOPLE_EMPTY);
+        if (!req.body.title) return res.send(baseResponse.TITLE_EMPTY);
+        else if (!req.body.dateTime) return res.send(baseResponse.DATETIME_EMPTY);
+        else if (!req.body.fee) return res.send(baseResponse.FEE_EMPTY);
+        else if (!req.body.hour) return res.send(baseResponse.MEETINGTIME_EMPTY);
+        else if (!req.body.placeName) return res.send(baseResponse.PLACENAME_EMPTY);
+        else if (!req.body.placeAddress) return res.send(baseResponse.PLACEADDRESS_EMPTY);
+        else if (!req.body.people) return res.send(baseResponse.PEOPLE_EMPTY);
         else {
           const meetingId = req.body.meetingId;
           const title = req.body.title;
@@ -189,9 +189,9 @@ class Controller {
           ];
           const meeting = new Meeting(params);
           const updateMeetingResult = await meeting.updateMeeting();
-          res.send(updateMeetingResult);
+          return res.send(updateMeetingResult);
         }
-      } else res.render('login.ejs');
+      } else return res.render('login.ejs');
     },
     completeMeetingSchedule: async (req, res) => {
       if (req.user) {
@@ -202,9 +202,9 @@ class Controller {
         const certResult = await meeting.certificationMeetingByUserId();
         if (certResult.success) {
           const completeMeeting = await meeting.completeMeeting();
-          res.send(completeMeeting);
-        } else res.send(certResult);
-      } else res.send(baseResponse.IS_NOT_CONNECTED);
+          return res.send(completeMeeting);
+        } else return res.send(certResult);
+      } else return res.send(baseResponse.IS_NOT_CONNECTED);
     },
     deleteMeetingSchedule: async (req, res) => {
       if (req.user) {
@@ -215,9 +215,9 @@ class Controller {
         const certResult = await meeting.certificationMeetingByUserId();
         if (certResult.success) {
           const deleteMeeting = await meeting.deleteMeeting();
-          res.send(deleteMeeting);
-        } else res.send(certResult);
-      } else res.send(baseResponse.IS_NOT_CONNECTED);
+          return res.send(deleteMeeting);
+        } else return res.send(certResult);
+      } else return res.send(baseResponse.IS_NOT_CONNECTED);
     },
   };
 }

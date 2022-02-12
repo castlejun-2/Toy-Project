@@ -62,7 +62,7 @@ class Controller {
   process = {
     createInquiry: async (req, res) => {
       if (req.user) {
-        if (!req.body.title) res.send(baseResponse.TITLE_EMPTY);
+        if (!req.body.title) return res.send(baseResponse.TITLE_EMPTY);
         else {
           const title = req.body.title;
           const content = req.body.content;
@@ -70,9 +70,9 @@ class Controller {
           const params = [userId, title, content];
           const main = new Main(params);
           const inquiryResult = await main.createInquiry();
-          res.send(inquiryResult);
+          return res.send(inquiryResult);
         }
-      } else res.send(baseResponse.IS_NOT_CONNECTED);
+      } else return res.send(baseResponse.IS_NOT_CONNECTED);
     },
   };
 }

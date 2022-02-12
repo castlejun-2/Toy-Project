@@ -32,7 +32,6 @@ class User {
   }
   async passwdReset() {
     try {
-      const now = new Date();
       const hashedPassword = crypto.createHash('sha512').update(this.body[0]).digest('hex');
       const userInfoByToken = await UserStorage.getUserIdByToken(this.body[1]);
       const params = [hashedPassword, userInfoByToken[0].userId];
@@ -47,10 +46,11 @@ class User {
   async passwdSendEmail() {
     try {
       const emailId = await UserStorage.verfiedEmail(this.body);
-      if (emailId) {
+      if (emailId[0]) {
         const token = crypto.randomBytes(20).toString('hex');
         const data = [emailId[0].id, token, 300]; //token, email의 userId, TTL 값
-        const createAuthToken = await UserStorage.createAuthToken(data);
+        await UserStorage.createAuthToken(data);
+
         const transporter = nodemailer.createTransport({
           service: 'gmail',
           port: 465,
@@ -70,8 +70,11 @@ class User {
         };
         transporter.sendMail(emailOptions);
         return baseResponse.SUCCESS;
+      } else {
+        return baseResponse.EMAIL_NOT_EXIST;
       }
     } catch (err) {
+      console.log(err);
       return baseResponse.DB_ERROR;
     }
   }
