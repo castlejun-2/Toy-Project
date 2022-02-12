@@ -2,6 +2,7 @@
 import UserStorage from './userStorage.js';
 import crypto from 'crypto';
 import baseResponse from '../../config/responseStatus.js';
+import nodemailer from 'nodemailer';
 
 class User {
   constructor(body) {
@@ -27,6 +28,51 @@ class User {
       const joinResult = await UserStorage.createAccount(account);
       if (joinResult.insertId) return baseResponse.SUCCESS;
       else return baseResponse.DB_ERROR;
+    }
+  }
+  async passwdReset() {
+    try {
+      const now = new Date();
+      const hashedPassword = crypto.createHash('sha512').update(this.body[0]).digest('hex');
+      const userInfoByToken = await UserStorage.getUserIdByToken(this.body[1]);
+      const params = [hashedPassword, userInfoByToken[0].userId];
+      if (userInfoByToken[0].valid) {
+        const passwdResetResult = await UserStorage.settingPasswd(params);
+        return baseResponse.SUCCESS;
+      } else return baseResponse.TOKEN_TIMEOUT;
+    } catch (err) {
+      return baseResponse.DB_ERROR;
+    }
+  }
+  async passwdSendEmail() {
+    try {
+      const emailId = await UserStorage.verfiedEmail(this.body);
+      if (emailId) {
+        const token = crypto.randomBytes(20).toString('hex');
+        const data = [emailId[0].id, token, 300]; //token, email의 userId, TTL 값
+        const createAuthToken = await UserStorage.createAuthToken(data);
+        const transporter = nodemailer.createTransport({
+          service: 'gmail',
+          port: 465,
+          secure: true,
+          auth: {
+            user: process.env.GMAIL_ID,
+            pass: process.env.GMAIL_PASSWORD,
+          },
+        });
+        const emailOptions = {
+          from: process.env.GMAIL_ID,
+          to: this.body,
+          subject: 'OMG 비밀번호 초기화 메일',
+          html:
+            '<p>비밀번호 초기화를 위해 아래의 URL을 클릭하여 주세요.</p>' +
+            `<a href="http://localhost:3000/users/reset/${token}">비밀번호 재설정 링크</a>`,
+        };
+        transporter.sendMail(emailOptions);
+        return baseResponse.SUCCESS;
+      }
+    } catch (err) {
+      return baseResponse.DB_ERROR;
     }
   }
 }

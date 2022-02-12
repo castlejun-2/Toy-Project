@@ -66,5 +66,56 @@ class UserStorage {
       });
     });
   }
+  static createAuthToken(params) {
+    return new Promise((resolve, reject) => {
+      pool.getConnection(async function (err, conn) {
+        if (err) reject(`${err}`);
+        else {
+          const query = `
+            Insert into AuthUser(userId, token, ttl)
+            VALUES(?,?,?)`;
+          conn.query(query, params, function (err, rows) {
+            if (err) reject(`${err}`);
+            else resolve(rows);
+          });
+        }
+        conn.release();
+      });
+    });
+  }
+  static getUserIdByToken(token) {
+    return new Promise((resolve, reject) => {
+      pool.getConnection(async function (err, conn) {
+        if (err) reject(`${err}`);
+        else {
+          const query = `
+            Select id, userId, case when DATE_SUB(NOW(),INTERVAL ttl SECOND) > createdAt then 0 else 1 end as valid
+            From AuthUser
+            Where token = ?`;
+          conn.query(query, token, function (err, rows) {
+            if (err) reject(`${err}`);
+            else resolve(rows);
+          });
+        }
+        conn.release();
+      });
+    });
+  }
+  static settingPasswd(params) {
+    return new Promise((resolve, reject) => {
+      pool.getConnection(async function (err, conn) {
+        if (err) reject(`${err}`);
+        else {
+          const query = `
+          Update User Set passwd=? Where id=?`;
+          conn.query(query, params, function (err, rows) {
+            if (err) reject(`${err}`);
+            else resolve(rows);
+          });
+        }
+        conn.release();
+      });
+    });
+  }
 }
 export default UserStorage;

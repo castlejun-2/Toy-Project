@@ -2,6 +2,8 @@ import passport from 'passport';
 import baseResponse from '../../config/responseStatus.js';
 import User from '../../models/user/user.js';
 import Meeting from '../../models/meeting/meeting.js';
+import dotenv from 'dotenv';
+dotenv.config();
 
 class Controller {
   output = {
@@ -33,6 +35,8 @@ class Controller {
         res.render('myPage.ejs', { user: req.user, meeting: meetingResult });
       } else res.redirect('login');
     },
+    passwordReset: async (req, res) => res.render('passwordFind.ejs'),
+    reset: async (req, res) => res.render('passwordReset.ejs', { token: req.params.token }),
   };
 
   process = {
@@ -54,7 +58,6 @@ class Controller {
     },
     join: async (req, res) => {
       const regexEmail = /^([\w_\.\-\+])+\@([\w\-]+\.)+([\w]{2,10})+$/;
-      console.log(req.body);
       if (!req.body.email) res.send(baseResponse.EMAIL_EMPTY);
       else if (!regexEmail.test(req.body.email)) res.send(baseResponse.EMAIL_FORM_IS_WRONG);
       else if (!req.body.name) res.send(baseResponse.NAME_EMPTY);
@@ -72,6 +75,29 @@ class Controller {
           const joinResult = await user.registerAccount();
           res.send(joinResult);
         }
+      }
+    },
+    passwordReset: async (req, res) => {
+      if (!req.body.email) res.send(baseResponse.EMAIL_EMPTY);
+      else {
+        const email = req.body.email;
+        const user = new User(email);
+        const passwdResetResult = await user.passwdSendEmail();
+        res.send(passwdResetResult);
+      }
+    },
+    passwordSetting: async (req, res) => {
+      const passwd = req.body.passwd;
+      const passwdConfirm = req.body.passwdConfirm;
+      const token = req.body.token;
+      const params = [passwd, token];
+      if (!passwd) res.send(baseResponse.PASSWD_EMPTY);
+      else if (!passwdConfirm) res.send(baseResponse.PASSWDCONFIRM_EMPTY);
+      else if (passwd != passwdConfirm) res.send(baseResponse.PASSWORD_IS_WRONG);
+      else {
+        const user = new User(params);
+        const resetResult = await user.passwdReset();
+        res.send(resetResult);
       }
     },
   };

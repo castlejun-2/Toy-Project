@@ -35,7 +35,7 @@
               <label class="user-form"> 학교 <input class="input-box" type="text" name="school" required /></label>
               <label class="user-form">
                 핸드폰 번호
-                <input class="input-box" type="text" onKeyup="hypenNumber(this);" name="phonenumber" maxlength="13" required
+                <input class="input-box" type="text" onKeyUp="hypenNumber(this);" name="phonenumber" maxlength="13" required
               /></label>
               <div class="divider"></div>
               <label style="margin-left: 5px; margin-bottom: 10px">
@@ -93,32 +93,31 @@
             }
           });
         }
-
-        function hypenNumber(obj) {
-          let number = obj.value.replace(/[^0-9]/g, '');
-          let phone = '';
-          if (number.length < 4) {
-            return number;
-          } else if (number.length < 7) {
-            phone += number.substr(0, 3);
-            phone += '-';
-            phone += number.substr(3);
-          } else if (number.length < 11) {
-            phone += number.substr(0, 3);
-            phone += '-';
-            phone += number.substr(3, 3);
-            phone += '-';
-            phone += number.substr(6);
-          } else {
-            phone += number.substr(0, 3);
-            phone += '-';
-            phone += number.substr(3, 4);
-            phone += '-';
-            phone += number.substr(7);
-          }
-          obj.value = phone;
-        }
       });
+      function hypenNumber(obj) {
+        let number = obj.value.replace(/[^0-9]/g, '');
+        let phone = '';
+        if (number.length < 4) {
+          return number;
+        } else if (number.length < 7) {
+          phone += number.substr(0, 3);
+          phone += '-';
+          phone += number.substr(3);
+        } else if (number.length < 11) {
+          phone += number.substr(0, 3);
+          phone += '-';
+          phone += number.substr(3, 3);
+          phone += '-';
+          phone += number.substr(6);
+        } else {
+          phone += number.substr(0, 3);
+          phone += '-';
+          phone += number.substr(3, 4);
+          phone += '-';
+          phone += number.substr(7);
+        }
+        obj.value = phone;
+      }
     </script>
   </body>
 </html>

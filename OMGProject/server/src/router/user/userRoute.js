@@ -13,10 +13,14 @@ class Router {
     this.router.get('/join/welcome', userController.output.welcome);
     this.router.get('/logout', userController.output.logout);
     this.router.get('/my-page', userController.output.myPage);
+    this.router.get('/password-reset', userController.output.passwordReset);
+    this.router.get('/reset/:token', userController.output.reset);
 
     //Processing Router
     this.router.post('/login', userController.process.login);
     this.router.post('/join', userController.process.join);
+    this.router.post('/password-reset', userController.process.passwordReset);
+    this.router.post('/password-setting', userController.process.passwordSetting);
   }
 }
 
