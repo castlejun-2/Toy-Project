@@ -6,7 +6,7 @@ class UserStorage {
       pool.getConnection(async function (err, conn) {
         if (err) reject(`${err}`);
         else {
-          const query = 'Select id From User Where email = ?';
+          const query = 'Select id, status From User Where email = ?';
           conn.query(query, email, function (err, rows) {
             if (err) reject(`${err}`);
             else resolve(rows);
@@ -126,6 +126,22 @@ class UserStorage {
           const query = `
           Update User Set passwd=? Where id=?`;
           conn.query(query, params, function (err, rows) {
+            if (err) reject(`${err}`);
+            else resolve(rows);
+          });
+        }
+        conn.release();
+      });
+    });
+  }
+  static withdrawalUserAccount(userId) {
+    return new Promise((resolve, reject) => {
+      pool.getConnection(async function (err, conn) {
+        if (err) reject(`${err}`);
+        else {
+          const query = `
+          Update User Set status=2 Where id=?`;
+          conn.query(query, userId, function (err, rows) {
             if (err) reject(`${err}`);
             else resolve(rows);
           });

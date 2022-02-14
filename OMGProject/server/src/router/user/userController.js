@@ -25,8 +25,16 @@ class Controller {
         req.session.destroy(() => {
           req.session;
         });
-        res.redirect('login');
-      } else res.redirect('login');
+        res.render('account/login');
+      } else res.render('account/login');
+    },
+    withdrawal: async (req, res) => {
+      if (req.user) {
+        const userId = req.user.id;
+        const user = new User(userId);
+        const userInfoResult = await user.userInfo();
+        res.render('user/accountWithDrawal', { user: userInfoResult });
+      } else res.render('account/login');
     },
     myPage: async (req, res) => {
       if (req.user) {
@@ -34,7 +42,7 @@ class Controller {
         const user = new User(userId);
         const userInfoResult = await user.userInfo();
         res.render('user/mypage.ejs', { user: userInfoResult });
-      } else res.redirect('login');
+      } else res.render('account/login');
     },
     myPageProfile: async (req, res) => {
       if (req.user) {
@@ -42,7 +50,7 @@ class Controller {
         const user = new User(userId);
         const userInfoResult = await user.userInfo();
         res.render('user/mypageProfile.ejs', { user: userInfoResult });
-      } else res.redirect('login');
+      } else res.render('account/login');
     },
     myPageMeetMng: async (req, res) => {
       if (req.user) {
@@ -50,7 +58,7 @@ class Controller {
         const meeting = new Meeting(userId);
         const meetingResult = await meeting.getMyPageMeetingInfo();
         res.render('user/mypageMeetMng.ejs', { user: req.user, meeting: meetingResult });
-      } else res.redirect('/users/login');
+      } else res.render('account/login');
     },
     passwordReset: async (req, res) => res.render('account/passwordFind.ejs'),
     reset: async (req, res) => res.render('account/passwordReset.ejs', { token: req.params.token }),
@@ -115,6 +123,16 @@ class Controller {
           return res.send(joinResult);
         }
       }
+    },
+    withdrawal: async (req, res) => {
+      const userId = req.user.id;
+      req.logout();
+      req.session.destroy(() => {
+        req.session;
+      });
+      const user = new User(userId);
+      const deleteResult = await user.deleteUserAccount(userId);
+      return res.send(deleteResult);
     },
     myPage: async (req, res) => {
       const userId = req.user.id;

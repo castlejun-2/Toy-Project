@@ -25,7 +25,7 @@ class Passport {
           const account = { email: email, passwd: passwd };
           const user = new User(account);
           const userLogin = await user.checkLogin();
-          if (userLogin.length) return done(null, { email: email, id: userLogin[0].id });
+          if (userLogin.success) return done(null, { email: email, id: userLogin.data[0].id });
           return done(null, false, userLogin);
         },
       ),

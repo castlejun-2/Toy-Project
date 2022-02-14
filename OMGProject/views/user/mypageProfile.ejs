@@ -135,7 +135,7 @@
                       <div class="cal">
                         <h2 class="cal-title">나의정보</h2>
                         <a href="/users/my-page/profile-management" class="cal-btn home">프로필 관리</a>
-                        <a class="cal-btn">회원탈퇴</a>
+                        <a href="/users/delete" class="cal-btn">회원탈퇴</a>
                       </div>
                       <div class="cal" style="border-bottom: 1px solid #e1e1e1">
                         <h2 class="cal-title">문의정보</h2>
@@ -334,7 +334,6 @@
         $('#newPasswd').focusout(function (e) {
           const value = $(this).val();
           const verified = value.replace(/[^a-zA-z^!^@^_^0-9]/g, '');
-          console.log(verified, value)
           if (verified != value) {
             $('#new-passwd-invalid').text("특수문자는 ('!','@','_'만 사용 가능합니다.");
             $('#new-passwd-valid').css('display','none');

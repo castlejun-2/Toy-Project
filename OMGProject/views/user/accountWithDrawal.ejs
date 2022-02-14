@@ -134,7 +134,7 @@
                       <div class="cal">
                         <h2 class="cal-title">나의정보</h2>
                         <a href="/users/my-page/profile-management" class="cal-btn">프로필 관리</a>
-                        <a href="/users/delete" class="cal-btn">회원탈퇴</a>
+                        <a href="/users/delete" class="cal-btn home">회원탈퇴</a>
                       </div>
                       <div class="cal" style="border-bottom: 1px solid #e1e1e1">
                         <h2 class="cal-title">문의정보</h2>
@@ -145,59 +145,15 @@
                     <div class="content-main mypage min-height-large show">
                       <div class="user-meeting">
                         <h2 class="cal-title">
-                          <span class="userInfo-label">기본 회원 정보</span>
+                          <span class="userInfo-label">회원 탈퇴</span>
                         </h2>
-                        <section class="mypage-content">
-                          <table class="n-table table-row myInfo">
-                            <colgroup>
-                              <col style="width: 190px" />
-                              <col style="width: 480px" />
-                              <col style="width: 70%" />
-                            </colgroup>
-                            <tbody>
-                              <tr class="myInfo-img" id="profile-img">
-                                <th style="border-top: none" scope="row">사진</th>
-                                <td style="border-top: none">
-                                  <div>
-                                    <img src="<%= user.imageUrl %>" />
-                                  </div>
-                                </td>
-                              </tr>
-                              <tr>
-                                <th scope="row">이메일</th>
-                                <td>
-                                  <strong><%= user.email %></strong>
-                                </td>
-                              </tr>
-                              <tr>
-                                <th scope="row">이름</th>
-                                <td>
-                                  <strong><%= user.name %></strong>
-                                  <span class="certify"><%= user.certification %></span>
-                                </td>
-                              </tr>
-                              <tr>
-                                <th scope="row">주소</th>
-                                <td>
-                                  <strong><%= user.address %></strong>
-                                </td>
-                              </tr>
-                              <tr>
-                                <th scope="row">학교</th>
-                                <td>
-                                  <strong><%= user.school %></strong>
-                                </td>
-                              </tr>
-                              <tr>
-                                <th style="border-bottom: 1px solid #f1f1f1" scope="row">휴대전화</th>
-                                <td style="border-bottom: 1px solid #f1f1f1">
-                                  <strong><%= user.phonenumber %></strong>
-                                </td>
-                              </tr>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </section>
+                        <div class="withdrawal-wrap">
+                          <input type="button" class="n-btn btn-sm btn-accent" id="withdrawal-btn" value="회원탈퇴" />
+                          <div style="margin-top: 10px; font-size: 17px;">
+                            <span><strong>[주의] 회원을 탈퇴하시면 추후에 같은 계정으로 가입 하실 수 없습니다.</strong></span></br>
+                            <span><strong>[알림] 회원님의 개인정보는 사기방지를 위해 6개월간 보관된 후 폐기됩니다.</strong></span>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -213,6 +169,17 @@
     </div>
     <script type="text/javascript">
       $(function () {
+          $('#withdrawal-btn').click(function (){
+              $.ajax({
+                url: '/users/delete',
+                method: 'POST',
+                dataType: 'json',
+                success: function(){
+                    alert('회원이 탈퇴되었습니다.')
+                    window.location.href='/users/login'
+                }
+              })
+          })
         $('#header-show-btn').click(function () {
           $('#side-mask').css('display', 'block');
           $('#side-menuBar').css('right', '0px');

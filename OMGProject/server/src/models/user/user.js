@@ -11,12 +11,15 @@ class User {
   async checkLogin() {
     try {
       const emailResult = await UserStorage.verfiedEmail(this.body.email);
-      if (!emailResult.length) return baseResponse.EMAIL_NOT_EXIST;
-      else {
+      if (!emailResult.length || emailResult[0].status != 0) {
+        if (emailResult[0].status == 1) return baseResponse.SUSPENSION_ACCOUNT;
+        else if (emailResult[0].status == 2) return baseResponse.WITHDRAWAL_ACCOUNT;
+        else return baseResponse.EMAIL_NOT_EXIST;
+      } else {
         const hashedPassword = crypto.createHash('sha512').update(this.body.passwd).digest('hex');
         const account = [emailResult[0].id, hashedPassword];
         const passwdResult = await UserStorage.verifiedLogIn(account);
-        if (passwdResult.length) return passwdResult;
+        if (passwdResult.length) return { success: true, data: passwdResult };
         else return baseResponse.PASSWORD_IS_WRONG;
       }
     } catch (err) {
@@ -115,6 +118,14 @@ class User {
       const hashedPassword = crypto.createHash('sha512').update(this.body.passwd).digest('hex');
       const account = [hashedPassword, this.body.userId];
       await UserStorage.updatePassword(account);
+      return baseResponse.SUCCESS;
+    } catch (err) {
+      return baseResponse.DB_ERROR;
+    }
+  }
+  async deleteUserAccount() {
+    try {
+      await UserStorage.withdrawalUserAccount(this.body);
       return baseResponse.SUCCESS;
     } catch (err) {
       return baseResponse.DB_ERROR;

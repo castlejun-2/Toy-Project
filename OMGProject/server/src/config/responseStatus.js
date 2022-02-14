@@ -15,6 +15,9 @@ class response {
   EMAIL_IS_EXIST = { success: false, message: '이미 존재하는 이메일 입니다.' };
   AGREE_IS_EMPTY = { success: false, message: '<b>이용약관</b>에 동의해 주세요.' };
 
+  SUSPENSION_ACCOUNT = { success: false, message: '정지당한 계정입니다. [문의] 010-5530-0651' };
+  WITHDRAWAL_ACCOUNT = { success: false, message: '탈퇴한 계정입니다.' };
+
   TITLE_EMPTY = { success: false, message: '제목을 입력해주세요.' };
   DATETIME_EMPTY = { success: false, message: '만나는 날짜를 입력해주세요.' };
   FEE_EMPTY = { success: false, message: '요금을 입력해주세요.' };
