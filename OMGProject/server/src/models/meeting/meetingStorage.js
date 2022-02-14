@@ -9,7 +9,7 @@ class MeetingStorage {
           const query = `
             Select id, title, mainName as mainName, subName as subject, date_format(startTime,"%H:%i") as time, place, case when status=0 then "신청가능" else "모집완료" end as status, case when status=0 then 'isPossible' else 'isDone' end as status_c
             From Meeting
-            Where DATE(Meeting.startTime) = (DATE(NOW()) + ?) and if (?, mainName=?, mainName is not null)
+            Where DATE(Meeting.startTime) = (DATE(NOW()) + ?) and if (?, mainName=?, mainName is not null) and status != 2
             Order By time ASC`;
           conn.query(query, diff_date, function (err, rows) {
             if (err) reject(`${err}`);

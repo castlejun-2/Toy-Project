@@ -12,6 +12,7 @@
     <link rel="icon" type="image/png" href="https://s3.ap-northeast-2.amazonaws.com/img.castlejun-2.shop/UOMG_LOGO.png" />
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&amp;lang=en" />
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
   </head>
   <body>
     <div class="content">
@@ -28,14 +29,17 @@
         <div class="email-box">
           <div class="login-box">
             <form name="user-box" method="post" onsubmit="">
-              <label class="user-form"> 이메일 <input class="input-box" type="email" name="email" required autofocus /></label>
-              <label class="user-form"> 이름 <input class="input-box" type="text" name="name" required /></label>
-              <label class="user-form"> 비밀번호 <input class="input-box" type="password" name="passwd" required /> </label>
-              <label class="user-form"> 비밀번호 확인 <input class="input-box" type="password" name="passwdConfirm" required /> </label>
-              <label class="user-form"> 학교 <input class="input-box" type="text" name="school" required /></label>
+              <label class="user-form"> 이메일 <input class="input-box" type="email" id="email" required autofocus /></label>
+              <label class="user-form"> 이름 <input class="input-box" type="text" id="name" required /></label>
+              <label class="user-form"> 비밀번호 <input class="input-box" type="password" id="passwd" required /> </label>
+              <label class="user-form"> 비밀번호 확인 <input class="input-box" type="password" id="passwdConfirm" required /> </label>
+              <label class="user-form"> 주소 <input class="input-box" type="text" id="address" readonly required /> </label>
+              <label class="user-form">
+                학교 <input class="input-box" type="text" id="school" placeholder="ex) 오마이갓대학교" required
+              /></label>
               <label class="user-form">
                 핸드폰 번호
-                <input class="input-box" type="text" onKeyUp="hypenNumber(this);" name="phonenumber" maxlength="13" required
+                <input class="input-box" type="text" onKeyUp="hypenNumber(this);" id="phonenumber" maxlength="13" required
               /></label>
               <div class="divider"></div>
               <label style="margin-left: 5px; margin-bottom: 10px">
@@ -56,20 +60,29 @@
 
     <script>
       $(function () {
+        $('#address').click(function (e) {
+          new daum.Postcode({
+            oncomplete: function (data) {
+              $('#address').val(data.address);
+            },
+          }).open();
+        });
         $('.send-btn').click(function (e) {
-          const email = document.getElementsByName('email')[0].value;
-          const name = document.getElementsByName('name')[0].value;
-          const passwd = document.getElementsByName('passwd')[0].value;
-          const passwdConfirm = document.getElementsByName('passwdConfirm')[0].value;
-          const school = document.getElementsByName('school')[0].value;
-          const phonenumber = document.getElementsByName('phonenumber')[0].value;
-          const agree = document.getElementById('agree_cbx').checked;
+          const email = $('#email').val();
+          const name = $('#name').val();
+          const passwd = $('#passwd').val();
+          const passwdConfirm = $('#passwdConfirm').val();
+          const address = $('#address').val();
+          const school = $('#school').val();
+          const phonenumber = $('#phonenumber').val();
+          const agree = $('#agree_cbx').val();
           const url = '/users/join';
           sendSubmitAjax(url, {
             email: email,
             name: name,
             passwd: passwd,
             passwdConfirm: passwdConfirm,
+            address: address,
             school: school,
             phonenumber: phonenumber,
             agree: agree,

@@ -1197,10 +1197,21 @@ button {
   margin-bottom: 40px;
 }
 
-.content-main .cal-title > .meeting-label {
+.user-meeting > .cal-title {
+  padding-bottom: 10px;
+  border-bottom: 3px solid black;
+}
+
+.content-main .cal-title > .meeting-label,
+.content-main .cal-title > .userInfo-label {
   font-size: 23px;
   color: #111111;
   font-weight: bold;
+}
+
+.cal-btn.home {
+  font-weight: bold !important;
+  color: rgb(30, 32, 168) !important;
 }
 
 .meeting-history:first-child {
@@ -1307,6 +1318,36 @@ button {
   padding-top: 8px;
   line-height: 18px;
   font-size: 15px;
+}
+
+table.table-row td > div > img {
+  display: block;
+  width: 80px;
+  height: 80px;
+  margin: 10px 0 0 -6px;
+  border-radius: 100%;
+}
+
+table.table-row td {
+  height: auto;
+  padding: 15px 0;
+  box-sizing: border-box;
+  border-top: 1px solid #f1f1f1;
+  border-bottom: none;
+  font-size: 14px;
+  text-align: left;
+}
+
+.mypage-content {
+  max-width: 800px;
+}
+
+.mypage-content .n-table.table-row td {
+  vertical-align: inherit;
+}
+
+td {
+  display: table-cell;
 }
 
 *,

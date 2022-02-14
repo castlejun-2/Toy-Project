@@ -5,6 +5,7 @@ class response {
   PASSWDCONFIRM_EMPTY = { success: false, message: '비밀번호 확인을 입력해주세요.' };
   NAME_EMPTY = { success: false, message: '이름을 입력해주세요.' };
   SCHOOL_EMPTY = { success: false, message: '학교를 입력해주세요.' };
+  ADDRESS_EMPTY = { success: false, message: '주소를 입력해주세요.' };
   PHONENUMBER_EMPTY = { success: false, message: '핸드폰 번호를 입력해주세요.' };
   PASSWORD_IS_WRONG = { success: false, message: '비밀번호가 일치하지 않습니다.' };
   EMAIL_FORM_IS_WRONG = { success: false, message: '이메일 형식이 옳바르지 않습니다.' };

@@ -71,7 +71,6 @@ class Controller {
         const meeting = new Meeting(params);
         const certResult = await meeting.certificationMeetingByUserId();
         if (certResult.success) {
-          console.log('hi');
           const meetingDetail = await meeting.getMeetingDetail();
           res.render('reWriting.ejs', { meeting: meetingDetail, user: req.user });
         } else res.render('wrongApproach.ejs');

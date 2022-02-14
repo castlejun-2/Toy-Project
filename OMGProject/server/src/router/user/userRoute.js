@@ -13,6 +13,8 @@ class Router {
     this.router.get('/join/welcome', userController.output.welcome);
     this.router.get('/logout', userController.output.logout);
     this.router.get('/my-page', userController.output.myPage);
+    this.router.get('/my-page/profile-management', userController.output.myPageProfile);
+    this.router.get('/my-page/meet-management', userController.output.myPageMeetMng);
     this.router.get('/password-reset', userController.output.passwordReset);
     this.router.get('/reset/:token', userController.output.reset);
 
