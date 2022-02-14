@@ -16,6 +16,7 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <script type="text/javascript" src="http://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
   </head>
   <body>
     <header id="header">
@@ -119,7 +120,7 @@
                     <div class="content-aside mypage">
                       <div class="user-name">
                         <div class="" style="display: inline-block; margin: 0 auto; vertical-align: middle">
-                          <span class="user-profile"><img src="<%= user.profile_img %>" /></span>
+                          <span class="user-profile"><img src="<%= user.imageUrl %>" /></span>
                         </div>
                         <div class="" style="display: inline-block; margin: 0 auto">
                           <span><%= user.name %></span>
@@ -145,14 +146,167 @@
                     <div class="content-main mypage min-height-large show">
                       <div class="user-meeting">
                         <h2 class="cal-title">
-                          <span class="userInfo-label">기본 회원 정보</span>
+                          <span class="userInfo-label">프로필 관리</span>
                         </h2>
-                        <div class="registed-meeting"></div>
-                      </div>
-                      <div class="paging-wrap">
-                        <div class="paging-box">
-                          <div class="paging-list"></div>
-                        </div>
+                        <section class="mypage-content">
+                          <table class="n-table table-row myInfo">
+                            <colgroup>
+                              <col style="width: 190px" />
+                              <col style="width: 460px" />
+                              <col style="width: 70%" />
+                            </colgroup>
+                            <tbody>
+                              <tr class="myInfo-img" id="profile-img">
+                                <th style="border-top: none" scope="row">사진</th>
+                                <td style="border-top: none">
+                                  <div>
+                                    <img src="<%= user.imageUrl %>" />
+                                  </div>
+                                </td>
+                                <td style="border-top: none">
+                                  <button type="button" class="n-btn w120 btn-sm btn-default cert-hidden" id="change-profile-img-btn">사진 변경</button>
+                                </td>
+                              </tr>
+                              <tr class="myInfo-img" style="display: none" id="change-profile-img">
+                                <th style="border-top: none" scope="row">사진</th>
+                                <td style="border-top: none">
+                                  <div>
+                                    <img class="change-img" src="<%= user.imageUrl %>" />
+                                    <div class="btn-group">
+                                      <label for="input-profile-img" class="n-btn btn-sm btn-default">사진 선택</label>
+                                      <input type="file" id="input-profile-img" class="n-hidden">
+                                      <button type="button" class="n-btn btn-sm btn-default" id="change-default-img-btn">기본 이미지로 변경</button>
+                                    </div>
+                                  </div>
+                                </td>
+                                <td class="va-b" style="border-top: none">
+                                  <button type="button" class="n-btn btn-sm btn-lighter" id="change-profile-img-cancle-btn">취소</button>
+                                  <button type="button" class="n-btn btn-sm btn-accent" id="change-profile-img-finish-btn">완료</button>
+                                </td>
+                              </tr>
+                              <tr>
+                                <th scope="row">이메일</th>
+                                <td colspan="2">
+                                  <strong><%= user.email %></strong>
+                                </td>
+                              </tr>
+                              <tr id="passwd-area">
+                                <th scope="row">비밀번호</th>
+                                <td>
+                                  <strong>*******</strong>
+                                </td>
+                                <td>
+                                  <button type="button" class="n-btn w120 btn-sm btn-default cert-hidden" id="change-password-btn">비밀번호 변경</button>
+                                </td>
+                              </tr>
+                              <tr style="display: none" id="change-passwd">
+                                <th scope="row">비밀번호</th>
+                                <td colspan="2">
+                                  <div class="passwd-modify">
+                                    <input type="hidden" id="encryptPasswd">
+                                    <input type="hidden" id="encryptnewPasswd">
+                                    <input type="hidden" id="encryptConfirmNewPasswd">
+                                    <div class="input" style="margin-top: 0">
+                                      <label for="passwd">현재 비밀번호</label>
+                                      <div class="input-passwd-wrap" id="passwd-div">
+                                        <input type="password" class="n-input" id="passwd">
+                                      </div>
+                                      <span class="validate danger" id="passwd-invalid"></span>
+                                    </div>
+                                    <div class="input">
+                                      <label for="newPasswd">신규 비밀번호</label>
+                                      <div class="input-passwd-wrap" id="new-passwd-div">
+                                        <input type="password" class="n-input" id="newPasswd">
+                                      </div>
+                                      <span class="validate danger" id="new-passwd-invalid"></span>
+                                      <span class="validate" id="new-passwd-valid" style="display: none">사용 가능한 비밀번호입니다.</span>
+                                    </div>
+                                    <div class="input">
+                                      <label for="confirmPasswd">비밀번호 확인</label>
+                                      <div class="input-passwd-wrap" id="confirmPasswd-div">
+                                        <input type="password" class="n-input" id="confirmPasswd" maxlength="30">
+                                      </div>
+                                      <span class="validate danger" id="confirm-passwd-invalid"></span>
+                                      <span class="validate" id="new-passwd-valid" style="display: none">사용 가능한 비밀번호입니다.</span>
+                                    </div>
+                                    <div class="btn-group">
+                                      <button type="button" class="n-btn btn-sm btn-lighter" id="change-passwd-cancle-btn">취소</button>
+                                      <button type="button" class="n-btn btn-sm btn-accent" id="change-passwd-finish-btn">완료</button>
+                                    </div>
+                                  </div>
+                              </tr>
+                              <tr>
+                                <th scope="row">이름</th>
+                                <td colspan="2">
+                                  <strong><%= user.name %></strong>
+                                  <span class="certify"><%= user.certification %></span>
+                                </td>
+                              </tr>
+                              <tr id="address-area">
+                                <th scope="row">주소</th>
+                                <td>
+                                  <strong><%= user.address %></strong>
+                                </td>
+                                <td>
+                                  <button type="button" class="n-btn w120 btn-sm btn-default cert-hidden" id="change-address-btn">주소 변경</button>
+                                </td>
+                              </tr>
+                              <tr style="display: none" id="change-address">
+                                <th scope="row">주소</th>
+                                <td>
+                                  <div class="address-modify">
+                                    <div class="input" style="margin-top: 0">
+                                      <label for="newAddress">신규 주소</label>
+                                      <div class="input-address-wrap" id="address-div">
+                                        <input type="text" class="n-input" id="newAddress">
+                                      </div>
+                                    </div>
+                                  </div>
+                                </td>
+                                <td class="va-b" style="border-top: none">
+                                  <button type="button" class="n-btn btn-sm btn-lighter" id="change-address-cancle-btn">취소</button>
+                                  <button type="button" class="n-btn btn-sm btn-accent" id="change-address-finish-btn">완료</button>
+                                </td>
+                              </tr>
+                              <tr id="school-area">
+                                <th scope="row">학교</th>
+                                <td>
+                                  <strong><%= user.school %></strong>
+                                </td>
+                                <td>
+                                  <button type="button" class="n-btn w120 btn-sm btn-default cert-hidden" id="change-school-btn">학교 변경</button>
+                                </td>
+                              </tr>
+                              <tr style="display: none" id="change-school">
+                                <th scope="row">학교</th>
+                                <td>
+                                  <div class="school-modify">
+                                    <div class="input" style="margin-top: 0">
+                                      <label>신규 학교</label>
+                                      <div class="input-school-wrap" id="school-div">
+                                        <input type="text" class="n-input" id="newSchool">
+                                      </div>
+                                    </div>
+                                  </div>
+                                </td>
+                                <td class="va-b" style="border-top: none">
+                                  <button type="button" class="n-btn btn-sm btn-lighter" id="change-school-cancle-btn">취소</button>
+                                  <button type="button" class="n-btn btn-sm btn-accent" id="change-school-finish-btn">완료</button>
+                                </td>
+                              </tr>
+                              <tr>
+                                <th style="border-bottom: 1px solid #f1f1f1" scope="row">휴대전화</th>
+                                <td style="border-bottom: 1px solid #f1f1f1">
+                                  <strong><%= user.phonenumber %></strong>
+                                </td>
+                                <td style="border-bottom: 1px solid #f1f1f1">
+                                  <button type="button" class="n-btn w120 btn-sm btn-default cert-hidden" id="change-phonenumber-btn">휴대전화 변경</button>
+                                </td>
+                              </tr>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </section>
                       </div>
                     </div>
                   </div>
@@ -166,8 +320,155 @@
     <div class="footer omg-footer">
       <p>© 2022. OMG ALL RIGHTS RESERVED.</p>
     </div>
-    <script type="text/javascript">
+    <script>
+      function setImageThumbnail(input, idTag){
+        if (input.files && input.files[0]){
+          let reader = new FileReader();
+          reader.onload = function (e) {
+            $(idTag).attr('src',e.target.result);
+          }
+          reader.readAsDataURL(input.files[0]);
+        }
+      }
       $(function () {
+        $('#newPasswd').focusout(function (e) {
+          const value = $(this).val();
+          const verified = value.replace(/[^a-zA-z^!^@^_^0-9]/g, '');
+          console.log(verified, value)
+          if (verified != value) {
+            $('#new-passwd-invalid').text("특수문자는 ('!','@','_'만 사용 가능합니다.");
+            $('#new-passwd-valid').css('display','none');
+          } else {
+            $('#confirm-passwd-invalid').css('display','none');
+            $('#new-passwd-invalid').css('display','none');
+            $('#new-passwd-valid').css('display','block');
+          }
+        });
+        $('#newAddress').click(function (e) {
+          new daum.Postcode({
+            oncomplete: function (data) {
+              $('#newAddress').val(data.address);
+            },
+          }).open();
+        });
+        $('#input-profile-img').change(function(e) {
+          setImageThumbnail(this, '.change-img');
+        });
+        $('#change-profile-img-btn').click(function() {
+          $('#profile-img').css('display','none');
+          $('#change-profile-img').css('display','table-row');
+        });
+        $('#change-profile-img-cancle-btn').click(function() {
+          $('#profile-img').css('display','table-row');
+          $('#change-profile-img').css('display','none');
+        });
+        $('#change-password-btn').click(function() {
+          $('#passwd-area').css('display','none');
+          $('#change-passwd').css('display','table-row');
+        });
+        $('#change-passwd-cancle-btn').click(function() {
+          $('#passwd-area').css('display','table-row');
+          $('#change-passwd').css('display','none');
+        });
+        $('#change-address-btn').click(function() {
+          $('#address-area').css('display','none');
+          $('#change-address').css('display','table-row');
+        });
+        $('#change-address-cancle-btn').click(function() {
+          $('#address-area').css('display','table-row');
+          $('#change-address').css('display','none');
+        });
+        $('#change-school-btn').click(function() {
+          $('#school-area').css('display','none');
+          $('#change-school').css('display','table-row');
+        });
+        $('#change-school-cancle-btn').click(function() {
+          $('#school-area').css('display','table-row');
+          $('#change-school').css('display','none');
+        });
+        $('#change-passwd-finish-btn').click(function(){
+          const passwd = $('#passwd').val();
+          const newPasswd = $('#newPasswd').val();
+          const confirmPasswd = $('#confirmPasswd').val();
+          if (passwd == "") {
+            $('#new-passwd-invalid').css('display','none');
+            $('#confirm-passwd-invalid').css('display','none');
+            $('#passwd-invalid').css('display','inline-block');
+            $('#passwd-invalid').text('비밀번호를 입력해주세요.');
+            $('#passwd-invalid').focus();
+          } else if (newPasswd == "") {
+            $('passwd-invalid').css('display','none');
+            $('#confirm-passwd-invalid').css('display','none');
+            $('#new-passwd-invalid').css('display','inline-block');
+            $('#new-passwd-invalid').text("새로운 비밀번호를 입력해주세요.");
+            $('#new-passwd-invalid').focus();
+          } else if (confirmPasswd == "") {
+            $('passwd-invalid').css('display','none');
+            $('#new-passwd-valid').css('display','none');
+            $('#new-passwd-invalid').css('display','none');
+            $('#confirm-passwd-invalid').css('display','inline-block');
+            $('#confirm-passwd-invalid').text("비밀번호 확인을 입력해주세요.");
+            $('#confirm-passwd-invalid').focus();
+          } else if (newPasswd != confirmPasswd) {
+            $('passwd-invalid').css('display','none');
+            $('#new-passwd-valid').css('display','none');
+            $('#new-passwd-invalid').css('display','none');
+            $('#confirm-passwd-invalid').css('display','inline-block');
+            $('#confirm-passwd-invalid').text("비밀번호가 일치하지 않습니다.");
+            $('#confirm-passwd-invalid').focus();
+          } else {
+          $.ajax({
+            url: '/users/my-page/profile/passwd',
+            method: 'POST',
+            data: {
+              passwd: passwd,
+              newPasswd: newPasswd,
+              confirmPasswd: confirmPasswd
+            },
+            dataType: 'json',
+            success: function (response) {
+              if (response.success) {
+              alert("비밀번호가 변경되었습니다.");
+              window.location.href ='/users/my-page/profile-management'
+            } else {
+              const message = response.message;
+              console.log(message)
+              if (message == '비밀번호가 일치하지 않습니다.') {
+                $('#new-passwd-invalid').css('display','none');
+                $('#new-passwd-valid').css('display','none');
+                $('#confirm-passwd-invalid').css('display','none');
+                $('#passwd-invalid').css('display','inline-block');
+                $('#passwd-invalid').text(message);
+                $('#passwd-invalid').focus();
+                }
+              }
+            }
+          });
+          }   
+        });
+        $('#change-address-finish-btn').click(function(){
+          const address = $('#newAddress').val();
+          $.ajax({
+            url: '/users/my-page/profile/address',
+            method: 'POST',
+            data: {
+              address: address
+            },
+            dataType: 'json',
+            success: function (response) {
+              if (response.success) {
+              alert("주소가 변경되었습니다.");
+              $('#address-area').css('display','table-row');
+              $('#change-address').css('display','none');
+              } else alert("수정에 실패하였습니다.")
+            }
+          })
+        });
+        $('.n-btn').hover(function () {
+          $(this).css('border','1px solid #000000');
+        }, function() {
+          $(this).css('border','1px solid #e5e5e5')
+        });
         $('#header-show-btn').click(function () {
           $('#side-mask').css('display', 'block');
           $('#side-menuBar').css('right', '0px');

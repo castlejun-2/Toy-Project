@@ -40,8 +40,8 @@ class UserStorage {
         if (err) reject(`${err}`);
         else {
           const query = `
-            Insert into User(email, name, passwd, placeLA, placeLO, school, phonenumber)
-            VALUES(?,?,?,?,?,?,?)`;
+            Insert into User(email, name, passwd, address, placeLA, placeLO, school, phonenumber)
+            VALUES(?,?,?,?,?,?,?,?)`;
           conn.query(query, accountInfo, function (err, rows) {
             if (err) reject(`${err}`);
             else resolve(rows);
@@ -56,7 +56,8 @@ class UserStorage {
       pool.getConnection(async function (err, conn) {
         if (err) reject(`${err}`);
         else {
-          const query = 'Select id, email, name, imageUrl, placeLA, placeLO, school, phonenumber, createdAt From User Where id = ?';
+          const query =
+            'Select id, email, name, imageUrl, address, placeLA, placeLO, school, phonenumber, createdAt, case when certification=0 then null else "인증완료" end as certification From User Where id = ?';
           conn.query(query, id, function (err, rows) {
             if (err) reject(`${err}`);
             else resolve(rows);
@@ -102,6 +103,22 @@ class UserStorage {
     });
   }
   static settingPasswd(params) {
+    return new Promise((resolve, reject) => {
+      pool.getConnection(async function (err, conn) {
+        if (err) reject(`${err}`);
+        else {
+          const query = `
+          Update User Set passwd=? Where id=?`;
+          conn.query(query, params, function (err, rows) {
+            if (err) reject(`${err}`);
+            else resolve(rows);
+          });
+        }
+        conn.release();
+      });
+    });
+  }
+  static updatePassword(params) {
     return new Promise((resolve, reject) => {
       pool.getConnection(async function (err, conn) {
         if (err) reject(`${err}`);

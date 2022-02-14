@@ -1324,22 +1324,176 @@ table.table-row td > div > img {
   display: block;
   width: 80px;
   height: 80px;
-  margin: 10px 0 0 -6px;
   border-radius: 100%;
 }
 
-table.table-row td {
+.n-btn {
+  display: inline-block;
+  box-sizing: border-box;
+  padding: 2px 8px 0px 8px;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  transition: border 0.2s, background 0.2s ease-in-out;
+}
+
+.n-btn.btn-lighter {
+  border: 1px solid #f1f1f1;
+  background-color: #f1f1f1;
+  color: #000000;
+}
+
+.va-b {
+  vertical-align: middle;
+  display: table-cell;
+}
+
+.n-btn.btn-accent {
+  border: 1px solid #000000;
+  background-color: #000000;
+  color: #f1f1f1;
+}
+
+.n-table.table-row .validate-danger {
+  color: #ff0000;
+}
+
+.n-table.table-row .validate {
+  margin-top: 3px !important;
+  display: inline-block;
+  line-height: 32px;
+  color: #14aaff;
+  margin: -5px 5px;
+}
+
+.btn-group {
+  margin-top: 20px;
+}
+
+.n-btn.w120 {
+  min-width: 120px !important;
+}
+
+.n-table.table-row .n-btn {
+  margin: -5px 0;
+}
+
+.n-hidden {
+  display: block;
+  position: absolute;
+  overflow: hidden;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  clip: rect(0 0 0 0);
+}
+
+.n-btn.btn-default {
+  border: 1px solid #e5e5e5;
+  background-color: #ffffff;
+  color: #000000;
+}
+
+.n-btn.btn-sm {
+  min-width: 70px;
+  height: 32px;
+  line-height: 30px;
+  padding-top: 0;
+}
+
+.n-table button {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.n-table {
+  width: 100%;
+  line-height: 1.5;
+  font-size: 14px;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.n-table.table-row td,
+.n-table.table-row th {
   height: auto;
   padding: 15px 0;
   box-sizing: border-box;
   border-top: 1px solid #f1f1f1;
   border-bottom: none;
-  font-size: 14px;
+  font-size: 17px;
   text-align: left;
+}
+
+.n-table .passwd-modify .input,
+.n-table .address-modify .input,
+.n-table .school-modify .input {
+  margin-top: 13px;
+}
+
+.n-table .passwd-modify .input > label,
+.n-table .address-modify .input > label,
+.n-table .school-modify .input > label {
+  display: inline-block;
+  min-width: 135px;
+  line-height: 32px;
+}
+
+.n-table .passwd-modify .input .input-passwd-wrap.input-danger {
+  border-color: #ff0000;
+}
+
+.n-table .passwd-modify .input .input-passwd-wrap,
+.n-table .address-modify .input .input-address-wrap,
+.n-table .school-modify .input .input-school-wrap {
+  display: inline-flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 240px;
+  border: 1px solid #e5e5e5;
+  box-sizing: border-box;
+}
+
+.n-table .passwd-modify .input .n-input,
+.n-table .address-modify .input .n-input,
+.n-table .school-modify .input .n-input {
+  width: 240px;
+  margin: 0;
+}
+
+.n-input {
+  height: 32px;
+  padding: 5px 6px;
+  border: 1px solid #e5e5e5;
+  background-color: #ffffff;
+  box-sizing: border-box;
+  font-size: 17px;
+  line-height: 20px;
+  transition: border 0.2s ease-in-out;
 }
 
 .mypage-content {
   max-width: 800px;
+}
+
+.n-table.table-row th {
+  text-align: left;
+  font-weight: bold;
+}
+
+.n-table strong {
+  vertical-align: middle;
+}
+
+.n-table.table-row .certify {
+  display: inline-block;
+  font-size: 15px;
+  font-weight: bold;
+  color: rgb(75, 193, 240);
+  margin-left: 10px;
+  vertical-align: middle;
 }
 
 .mypage-content .n-table.table-row td {

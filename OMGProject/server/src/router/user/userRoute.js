@@ -21,6 +21,7 @@ class Router {
     //Processing Router
     this.router.post('/login', userController.process.login);
     this.router.post('/join', userController.process.join);
+    this.router.post('/my-page/profile/:content', userController.process.myPage);
     this.router.post('/password-reset', userController.process.passwordReset);
     this.router.post('/password-setting', userController.process.passwordSetting);
   }

@@ -9,33 +9,41 @@ class User {
     this.body = body;
   }
   async checkLogin() {
-    const emailResult = await UserStorage.verfiedEmail(this.body.email);
-    if (!emailResult.length) return baseResponse.EMAIL_NOT_EXIST;
-    else {
-      const hashedPassword = crypto.createHash('sha512').update(this.body.passwd).digest('hex');
-      const account = [emailResult[0].id, hashedPassword];
-      const passwdResult = await UserStorage.verifiedLogIn(account);
-      if (passwdResult.length) return passwdResult;
-      else return baseResponse.PASSWORD_IS_WRONG;
+    try {
+      const emailResult = await UserStorage.verfiedEmail(this.body.email);
+      if (!emailResult.length) return baseResponse.EMAIL_NOT_EXIST;
+      else {
+        const hashedPassword = crypto.createHash('sha512').update(this.body.passwd).digest('hex');
+        const account = [emailResult[0].id, hashedPassword];
+        const passwdResult = await UserStorage.verifiedLogIn(account);
+        if (passwdResult.length) return passwdResult;
+        else return baseResponse.PASSWORD_IS_WRONG;
+      }
+    } catch (err) {
+      return baseResponse.DB_ERROR;
     }
   }
   async registerAccount() {
-    const duplcationEmail = await UserStorage.verfiedEmail(this.body.email);
-    if (duplcationEmail.length) return baseResponse.EMAIL_IS_EXIST;
-    else {
-      const hashedPassword = crypto.createHash('sha512').update(this.body.passwd).digest('hex');
-      const account = [
-        this.body.email,
-        this.body.name,
-        hashedPassword,
-        this.body.placeLA,
-        this.body.placeLO,
-        this.body.school,
-        this.body.phonenumber,
-      ];
-      const joinResult = await UserStorage.createAccount(account);
-      if (joinResult.insertId) return baseResponse.SUCCESS;
-      else return baseResponse.DB_ERROR;
+    try {
+      const duplcationEmail = await UserStorage.verfiedEmail(this.body.email);
+      if (duplcationEmail.length) return baseResponse.EMAIL_IS_EXIST;
+      else {
+        const hashedPassword = crypto.createHash('sha512').update(this.body.passwd).digest('hex');
+        const account = [
+          this.body.email,
+          this.body.name,
+          hashedPassword,
+          this.body.address,
+          this.body.placeLA,
+          this.body.placeLO,
+          this.body.school,
+          this.body.phonenumber,
+        ];
+        const joinResult = await UserStorage.createAccount(account);
+        if (joinResult.insertId) return baseResponse.SUCCESS;
+      }
+    } catch (err) {
+      return baseResponse.DB_ERROR;
     }
   }
   async passwdReset() {
@@ -90,6 +98,27 @@ class User {
     const userId = this.body;
     const userInfoResult = await UserStorage.getUserInfo(userId);
     return userInfoResult[0];
+  }
+  async checkPasswd() {
+    try {
+      const hashedPassword = crypto.createHash('sha512').update(this.body.passwd).digest('hex');
+      const account = [this.body.userId, hashedPassword];
+      const passwdResult = await UserStorage.verifiedLogIn(account);
+      if (passwdResult.length) return baseResponse.SUCCESS;
+      else return baseResponse.PASSWORD_IS_WRONG;
+    } catch (err) {
+      return baseResponse.DB_ERROR;
+    }
+  }
+  async updatePasswd() {
+    try {
+      const hashedPassword = crypto.createHash('sha512').update(this.body.passwd).digest('hex');
+      const account = [hashedPassword, this.body.userId];
+      await UserStorage.updatePassword(account);
+      return baseResponse.SUCCESS;
+    } catch (err) {
+      return baseResponse.DB_ERROR;
+    }
   }
 }
 export default User;

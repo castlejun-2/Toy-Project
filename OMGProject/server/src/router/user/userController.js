@@ -33,13 +33,15 @@ class Controller {
         const userId = req.user.id;
         const user = new User(userId);
         const userInfoResult = await user.userInfo();
-        console.log(userInfoResult);
         res.render('mypage.ejs', { user: userInfoResult });
       } else res.redirect('login');
     },
     myPageProfile: async (req, res) => {
       if (req.user) {
-        res.render('mypageProfile.ejs', { user: req.user });
+        const userId = req.user.id;
+        const user = new User(userId);
+        const userInfoResult = await user.userInfo();
+        res.render('mypageProfile.ejs', { user: userInfoResult });
       } else res.redirect('login');
     },
     myPageMeetMng: async (req, res) => {
@@ -111,6 +113,25 @@ class Controller {
           const user = new User(params);
           const joinResult = await user.registerAccount();
           return res.send(joinResult);
+        }
+      }
+    },
+    myPage: async (req, res) => {
+      const userId = req.user.id;
+      const subject = req.params.content;
+      if (subject == 'passwd') {
+        if (!req.body.passwd) return res.send(baseResponse.PASSWD_EMPTY);
+        else if (!req.body.newPasswd) return res.send(baseResponse.NEW_PASSWD_EMPTY);
+        else if (!req.body.confirmPasswd) return res.send(baseResponse.PASSWDCONFIRM_EMPTY);
+        else if (req.body.newPasswd != req.body.confirmPasswd) return res.send(baseResponse.PASSWORD_IS_WRONG);
+        else {
+          const params = { userId: userId, passwd: req.body.passwd };
+          const user = new User(params);
+          const verifiedPasswd = await user.checkPasswd();
+          if (verifiedPasswd.success) {
+            const passwdUpdateResult = await user.updatePasswd();
+            return res.send(passwdUpdateResult);
+          } else return res.send(verifiedPasswd);
         }
       }
     },
