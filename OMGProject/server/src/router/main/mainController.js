@@ -13,7 +13,7 @@ class Controller {
       const meeting = new Meeting(params);
       const meetingResult = await meeting.getScheduleInfo();
       const eventResult = await MainStorage.getEventInfo();
-      if (req.user) res.render('main.ejs', { event: eventResult, meeting: meetingResult, user: req.user });
+      if (req.user) res.render('main/main.ejs', { event: eventResult, meeting: meetingResult, user: req.user });
       else res.redirect('/users/login');
     },
     getMainSchedule: async (req, res) => {
@@ -25,7 +25,7 @@ class Controller {
     },
     getCompetition: async (req, res) => {
       const competitionResult = await MainStorage.getCompetitionInfo();
-      if (req.user) res.render('competitions.ejs', { competition: competitionResult, user: req.user });
+      if (req.user) res.render('main/competitions.ejs', { competition: competitionResult, user: req.user });
       else res.redirect('/users/login');
     },
     getCompetitionJson: async (req, res) => {
@@ -35,7 +35,7 @@ class Controller {
     },
     getNotice: async (req, res) => {
       const noticeResult = await MainStorage.getNoticeInfo();
-      if (req.user) res.render('notice.ejs', { notice: noticeResult, user: req.user });
+      if (req.user) res.render('main/notice.ejs', { notice: noticeResult, user: req.user });
       else res.redirect('/users/login');
     },
     getNoticeJson: async (req, res) => {
@@ -44,12 +44,12 @@ class Controller {
       else res.redirect('/users/login');
     },
     getInquiry: async (req, res) => {
-      if (req.user) res.render('inquiry.ejs', { user: req.user });
+      if (req.user) res.render('main/inquiry.ejs', { user: req.user });
       else res.redirect('/users/login');
     },
     getQuestion: async (req, res) => {
       const questionResult = await MainStorage.getQuestionInfo();
-      if (req.user) res.render('question.ejs', { question: questionResult, user: req.user });
+      if (req.user) res.render('main/question.ejs', { question: questionResult, user: req.user });
       else res.redirect('/users/login');
     },
     getQuestionJson: async (req, res) => {

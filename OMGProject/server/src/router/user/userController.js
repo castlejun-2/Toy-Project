@@ -15,10 +15,10 @@ class Controller {
           req.session;
         });
         res.redirect('/users/login');
-      } else res.render('login.ejs');
+      } else res.render('account/login.ejs');
     },
-    join: async (req, res) => res.render('join.ejs'),
-    welcome: async (req, res) => res.render('welcome.ejs'),
+    join: async (req, res) => res.render('account/join.ejs'),
+    welcome: async (req, res) => res.render('account/welcome.ejs'),
     logout: async (req, res) => {
       if (req.user) {
         req.logout();
@@ -33,7 +33,7 @@ class Controller {
         const userId = req.user.id;
         const user = new User(userId);
         const userInfoResult = await user.userInfo();
-        res.render('mypage.ejs', { user: userInfoResult });
+        res.render('user/mypage.ejs', { user: userInfoResult });
       } else res.redirect('login');
     },
     myPageProfile: async (req, res) => {
@@ -41,7 +41,7 @@ class Controller {
         const userId = req.user.id;
         const user = new User(userId);
         const userInfoResult = await user.userInfo();
-        res.render('mypageProfile.ejs', { user: userInfoResult });
+        res.render('user/mypageProfile.ejs', { user: userInfoResult });
       } else res.redirect('login');
     },
     myPageMeetMng: async (req, res) => {
@@ -49,11 +49,11 @@ class Controller {
         const userId = req.user.id;
         const meeting = new Meeting(userId);
         const meetingResult = await meeting.getMyPageMeetingInfo();
-        res.render('mypageMeetMng.ejs', { user: req.user, meeting: meetingResult });
+        res.render('user/mypageMeetMng.ejs', { user: req.user, meeting: meetingResult });
       } else res.redirect('/users/login');
     },
-    passwordReset: async (req, res) => res.render('passwordFind.ejs'),
-    reset: async (req, res) => res.render('passwordReset.ejs', { token: req.params.token }),
+    passwordReset: async (req, res) => res.render('account/passwordFind.ejs'),
+    reset: async (req, res) => res.render('account/passwordReset.ejs', { token: req.params.token }),
   };
 
   process = {
