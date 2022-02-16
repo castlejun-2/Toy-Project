@@ -9,7 +9,7 @@ class Router {
   setRouter() {
     //Response JSON Data
     this.router.get('/', meetingController.output.getDateSchedule);
-    this.router.get('/my-page/:currentPage', meetingController.output.getMySchedule);
+    this.router.get('/my-page/meeting', meetingController.output.getMySchedule);
 
     //Paging Router
     this.router.get('/game', meetingController.output.getGameSchedule);

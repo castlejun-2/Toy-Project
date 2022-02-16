@@ -138,14 +138,14 @@
                       </div>
                       <div class="cal" style="border-bottom: 1px solid #e1e1e1">
                         <h2 class="cal-title">문의정보</h2>
-                        <a href="/users/my-page/inquiry-management" class="cal-btn">등록한 문의</a>
+                        <a href="/users/my-page/inquiry-management" class="cal-btn home">등록한 문의</a>
                         <a href="/inquirys" class="cal-btn">1:1 문의</a>
                       </div>
                     </div>
                     <div class="content-main mypage min-height-large show">
                       <div class="user-meeting">
                         <h2 class="cal-title">
-                          <span class="meeting-label">만남 관리</span>
+                          <span class="meeting-label">등록한 문의</span>
                         </h2>
                         <div class="registed-meeting"></div>
                       </div>
@@ -167,7 +167,7 @@
       <p>© 2022. OMG ALL RIGHTS RESERVED.</p>
     </div>
     <script type="text/javascript">
-      const totalData = parseInt('<%= meeting.length %>');
+      const totalData = parseInt('<%= inquiry.length %>');
       const dataPerPage = parseInt(3);
       const pageCount = 5;
       let currentPage = 1;
@@ -208,10 +208,11 @@
         currentPage = parseInt(currentPage);
         dataPerPage = parseInt(dataPerPage);
         $.ajax({
-          url: '/meetings/my-page/meeting',
+          url: '/inquirys/my-page/inquiry',
           method: 'GET',
           success: function (response) {
-            response = response.meeting;
+            console.log(response);
+            response = response.inquiry;
             for (let i = (currentPage - 1) * dataPerPage; i < Math.min(totalData, (currentPage - 1) * dataPerPage + dataPerPage); i++) {
               chartHtml +=
                 "<div class='meeting-history'><div class='header'><span class='title'>" +
@@ -220,38 +221,12 @@
                 "<span class='date' style='width: 15%'>" +
                 response[i].createdAt +
                 '</span>' +
-                "<a href='/meetings/" +
-                response[i].mainName +
-                '/' +
+                "<a href='/inquirys/detail/" +
                 response[i].id +
-                "' class='history-detail-btn'>상세 보기</a>" +
-                "<a href='/meetings/writing/update/" +
-                response[i].id +
-                "' style='width: 6%' class='history-update-btn'>수정</a>" +
-                "<span class='status_" +
+                "' class='history-detail-btn'>내용 보기</a>" +
+                "<span class='status' style='font-weight: bold; width: 10%; float: right; font-size: 15px'>" +
                 response[i].status +
-                "' style='font-weight: bold; width: 10%; float: right; font-size: 15px'></span></div>" +
-                "<div class='history-body'><div class='subject-info'><span class='subject' style='font-weight: bold; font-size: 17px'>CATEGORY</span>" +
-                "<span class='subject' style='text-transform: uppercase'>" +
-                response[i].mainName +
-                '</span>' +
-                "<span class='subject'>" +
-                response[i].subName +
-                '</span></div>' +
-                "<div class='place-info'><span class='place' style='font-weight: bold; font-size: 17px'>PLACE/MEETTIME</span>" +
-                "<span class='place'>" +
-                response[i].place +
-                '</span>' +
-                "<span class='place'>" +
-                response[i].startTime +
-                '</span></div>' +
-                "<div class='people-info'><span class='place' style='font-weight: bold; font-size: 17px'>PEOPLE/RUNTIME</span>" +
-                "<span class='people'>" +
-                response[i].people +
-                '</span>' +
-                "<span class='people'>" +
-                response[i].perHour +
-                '시간</span></div></div></div>';
+                '</span></div>';
             }
             $('.meeting-history').css('display', 'none');
             $('.registed-meeting').html(chartHtml);
@@ -268,6 +243,7 @@
         });
       }
       $(function () {
+        console.log(totalData);
         displayData(1, dataPerPage);
         paging(totalData, dataPerPage, pageCount, 1);
 

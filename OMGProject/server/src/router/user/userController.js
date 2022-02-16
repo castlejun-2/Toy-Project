@@ -3,6 +3,7 @@ import baseResponse from '../../config/responseStatus.js';
 import User from '../../models/user/user.js';
 import Meeting from '../../models/meeting/meeting.js';
 import axios from 'axios';
+import multer from 'multer';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -58,6 +59,14 @@ class Controller {
         const meeting = new Meeting(userId);
         const meetingResult = await meeting.getMyPageMeetingInfo();
         res.render('user/mypageMeetMng.ejs', { user: req.user, meeting: meetingResult });
+      } else res.render('account/login');
+    },
+    myPageInquiryMng: async (req, res) => {
+      if (req.user) {
+        const userId = req.user.id;
+        const user = new User(userId);
+        const myInquiryResult = await user.getMyPageInquiryInfo();
+        res.render('user/mypageInquiryMng', { user: req.user, inquiry: myInquiryResult });
       } else res.render('account/login');
     },
     passwordReset: async (req, res) => res.render('account/passwordFind.ejs'),
@@ -137,7 +146,16 @@ class Controller {
     myPage: async (req, res) => {
       const userId = req.user.id;
       const subject = req.params.content;
-      if (subject == 'passwd') {
+
+      if (subject == 'profileImage') {
+        console.log(req.files, req.file);
+        if (!req.file) return res.send(baseResponse.PROFILE_IMAGE_EMPTY);
+        const imageUrl = req.file ? req.file.location : req.body.defaultImgaeUrl;
+        const params = { userId: userId, imageUrl: imageUrl };
+        const user = new User(params);
+        const profileUpdateResult = await user.updateProfileImage();
+        return res.send(profileUpdateResult);
+      } else if (subject == 'passwd') {
         if (!req.body.passwd) return res.send(baseResponse.PASSWD_EMPTY);
         else if (!req.body.newPasswd) return res.send(baseResponse.NEW_PASSWD_EMPTY);
         else if (!req.body.confirmPasswd) return res.send(baseResponse.PASSWDCONFIRM_EMPTY);
@@ -150,6 +168,34 @@ class Controller {
             const passwdUpdateResult = await user.updatePasswd();
             return res.send(passwdUpdateResult);
           } else return res.send(verifiedPasswd);
+        }
+      } else if (subject == 'address') {
+        if (!req.body.address) return res.send(baseResponse.NEW_ADDRESS_EMPTY);
+        else {
+          const address = req.body.address;
+          const url = 'https://dapi.kakao.com/v2/local/search/address.json?query=' + encodeURI(address);
+          const axiosResult = await axios({
+            url: url,
+            method: 'get',
+            headers: {
+              Authorization: 'KakaoAK ' + process.env.KAKAO_RESTAPIKEY,
+            },
+          });
+          const placeLA = axiosResult.data.documents[0].address.y;
+          const placeLO = axiosResult.data.documents[0].address.x;
+          const params = { address: address, placeLA: placeLA, placeLO: placeLO, userId: userId };
+          const user = new User(params);
+          const updateUserAddressResult = await user.updateAddress();
+          return res.send(updateUserAddressResult);
+        }
+      } else if (subject == 'school') {
+        if (!req.body.school) return res.send(baseResponse.NEW_SCHOOL_EMPTY);
+        else {
+          const school = req.body.school;
+          const params = { userId: userId, school: school };
+          const user = new User(params);
+          const updateSchoolResult = await user.updateSchool();
+          return res.send(updateSchoolResult);
         }
       }
     },

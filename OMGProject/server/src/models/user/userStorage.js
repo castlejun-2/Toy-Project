@@ -67,6 +67,25 @@ class UserStorage {
       });
     });
   }
+  static getInquiryInfo(userId) {
+    return new Promise((resolve, reject) => {
+      pool.getConnection(async function (err, conn) {
+        if (err) reject(`${err}`);
+        else {
+          const query = `
+            Select id, title, date_format(createdAt,"%Y-%m-%d") as createdAt, case when status=0 then '답변대기' else '답변완료' end as status
+            From Inquiry
+            Where userId = ?
+            `;
+          conn.query(query, userId, function (err, rows) {
+            if (err) reject(`${err}`);
+            else resolve(rows);
+          });
+        }
+        conn.release();
+      });
+    });
+  }
   static createAuthToken(params) {
     return new Promise((resolve, reject) => {
       pool.getConnection(async function (err, conn) {
@@ -118,13 +137,61 @@ class UserStorage {
       });
     });
   }
-  static updatePassword(params) {
+  static updateUserProfileImage(params) {
+    return new Promise((resolve, reject) => {
+      pool.getConnection(async function (err, conn) {
+        if (err) reject(`${err}`);
+        else {
+          const query = `
+          Update User Set imageUrl=? Where id=?`;
+          conn.query(query, params, function (err, rows) {
+            if (err) reject(`${err}`);
+            else resolve(rows);
+          });
+        }
+        conn.release();
+      });
+    });
+  }
+  static updateUserPassword(params) {
     return new Promise((resolve, reject) => {
       pool.getConnection(async function (err, conn) {
         if (err) reject(`${err}`);
         else {
           const query = `
           Update User Set passwd=? Where id=?`;
+          conn.query(query, params, function (err, rows) {
+            if (err) reject(`${err}`);
+            else resolve(rows);
+          });
+        }
+        conn.release();
+      });
+    });
+  }
+  static updateUserAddress(params) {
+    return new Promise((resolve, reject) => {
+      pool.getConnection(async function (err, conn) {
+        if (err) reject(`${err}`);
+        else {
+          const query = `
+          Update User Set address=?, placeLA=?, placeLO=? Where id=?`;
+          conn.query(query, params, function (err, rows) {
+            if (err) reject(`${err}`);
+            else resolve(rows);
+          });
+        }
+        conn.release();
+      });
+    });
+  }
+  static updateUserSchool(params) {
+    return new Promise((resolve, reject) => {
+      pool.getConnection(async function (err, conn) {
+        if (err) reject(`${err}`);
+        else {
+          const query = `
+          Update User Set school=? Where id=?`;
           conn.query(query, params, function (err, rows) {
             if (err) reject(`${err}`);
             else resolve(rows);

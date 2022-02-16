@@ -139,8 +139,8 @@
                       </div>
                       <div class="cal" style="border-bottom: 1px solid #e1e1e1">
                         <h2 class="cal-title">문의정보</h2>
-                        <a class="cal-btn">등록한 문의</a>
-                        <a class="cal-btn">1:1 문의</a>
+                        <a href="/users/my-page/inquiry-management" class="cal-btn">등록한 문의</a>
+                        <a href="/inquirys" class="cal-btn">1:1 문의</a>
                       </div>
                     </div>
                     <div class="content-main mypage min-height-large show">
@@ -173,9 +173,9 @@
                                   <div>
                                     <img class="change-img" src="<%= user.imageUrl %>" />
                                     <div class="btn-group">
-                                      <label for="input-profile-img" class="n-btn btn-sm btn-default">사진 선택</label>
-                                      <input type="file" id="input-profile-img" class="n-hidden">
-                                      <button type="button" class="n-btn btn-sm btn-default" id="change-default-img-btn">기본 이미지로 변경</button>
+                                        <label for="input-profile-img" class="n-btn btn-sm btn-default">사진 선택</label>
+                                        <input type="file" id="input-profile-img" name="profileImage" class="n-hidden">
+                                        <button type="button" class="n-btn btn-sm btn-default" id="change-default-img-btn">기본 이미지로 변경</button>
                                     </div>
                                   </div>
                                 </td>
@@ -357,6 +357,9 @@
           $('#profile-img').css('display','none');
           $('#change-profile-img').css('display','table-row');
         });
+        $('#change-default-img-btn').click(function() {
+          $('.change-img').attr('src','https://s3.ap-northeast-2.amazonaws.com/img.castlejun-2.shop/default-profile.png');
+        })
         $('#change-profile-img-cancle-btn').click(function() {
           $('#profile-img').css('display','table-row');
           $('#change-profile-img').css('display','none');
@@ -385,6 +388,37 @@
           $('#school-area').css('display','table-row');
           $('#change-school').css('display','none');
         });
+        $('#change-profile-img-finish-btn').click(function(){
+          const image = $('#input-profile-img')[0];
+          let dataform = new FormData();
+          dataform.append( "profileImage", $('#input-profile-img').prop('files')[0] );
+          console.log($('#input-profile-img').prop('files')[0])
+          console.log(dataform[0])
+          const changeImage = $('.change-img').attr('src');
+          
+          if (!image.files.length && changeImage != 'https://s3.ap-northeast-2.amazonaws.com/img.castlejun-2.shop/default-profile.png') {
+            alert('프로필 사진을 선택해주세요.');
+          }
+          else {
+            $.ajax({
+            url: '/users/my-page/profile/profileImage',
+            method: 'POST',
+            data: {
+              profileImage: dataform,
+              defaultImage: changeImage,
+            },
+            contentType: false,
+            processData: false,
+            dataType: 'json',
+            success: function (response) {
+              if (response.success) {
+              alert("프로필 사진이 변경되었습니다.");
+              window.location.href ='/users/my-page/profile-management'
+              } else alert(response.message);
+            }
+            });
+          }
+        })
         $('#change-passwd-finish-btn').click(function(){
           const passwd = $('#passwd').val();
           const newPasswd = $('#newPasswd').val();
@@ -431,7 +465,6 @@
               window.location.href ='/users/my-page/profile-management'
             } else {
               const message = response.message;
-              console.log(message)
               if (message == '비밀번호가 일치하지 않습니다.') {
                 $('#new-passwd-invalid').css('display','none');
                 $('#new-passwd-valid').css('display','none');
@@ -447,6 +480,8 @@
         });
         $('#change-address-finish-btn').click(function(){
           const address = $('#newAddress').val();
+          if (address == "") alert('주소를 입력해주세요.');
+          else {
           $.ajax({
             url: '/users/my-page/profile/address',
             method: 'POST',
@@ -457,12 +492,30 @@
             success: function (response) {
               if (response.success) {
               alert("주소가 변경되었습니다.");
-              $('#address-area').css('display','table-row');
-              $('#change-address').css('display','none');
-              } else alert("수정에 실패하였습니다.")
+              window.location.href ='/users/my-page/profile-management'
+              } else alert(response.message);
             }
-          })
+          })}
         });
+        $('#change-school-finish-btn').click(function(){
+          const school = $('#newSchool').val();
+          if (school == "") alert('학교를 입력해주세요.');
+          else {
+          $.ajax({
+            url: '/users/my-page/profile/school',
+            method: 'POST',
+            data: {
+              school: school
+            },
+            dataType: 'json',
+            success: function (response) {
+              if (response.success) {
+              alert("학교가 변경되었습니다.");
+              window.location.href ='/users/my-page/profile-management'
+              } else alert(response.message);
+            }
+          })}
+        })
         $('.n-btn').hover(function () {
           $(this).css('border','1px solid #000000');
         }, function() {

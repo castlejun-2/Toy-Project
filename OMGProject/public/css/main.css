@@ -814,7 +814,8 @@ button {
 #writing-type,
 #writing-subtype,
 #writing-content,
-#writing-notice {
+#writing-notice,
+#writing-answer {
   height: 50px;
   width: 100%;
   display: block;

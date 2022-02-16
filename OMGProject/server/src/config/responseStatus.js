@@ -1,8 +1,10 @@
 class response {
   SUCCESS = { success: true };
   EMAIL_EMPTY = { success: false, message: '이메일을 입력해주세요.' };
+  PROFILE_IMAGE_EMPTY = { success: false, message: '프로필 사진을 선택해주세요.' };
   PASSWD_EMPTY = { success: false, message: '비밀번호를 입력해주세요.' };
   NEW_PASSWD_EMPTY = { success: false, message: '새로운 비밀번호를 입력해주세요.' };
+  NEW_ADDRESS_EMPTY = { success: false, message: '새로운 주소를 입력해주세요.' };
   PASSWDCONFIRM_EMPTY = { success: false, message: '비밀번호 확인을 입력해주세요.' };
   NAME_EMPTY = { success: false, message: '이름을 입력해주세요.' };
   SCHOOL_EMPTY = { success: false, message: '학교를 입력해주세요.' };

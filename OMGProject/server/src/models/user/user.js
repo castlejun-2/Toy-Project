@@ -102,6 +102,14 @@ class User {
     const userInfoResult = await UserStorage.getUserInfo(userId);
     return userInfoResult[0];
   }
+  async getMyPageInquiryInfo() {
+    try {
+      const myInquiryResult = await UserStorage.getInquiryInfo(this.body);
+      return myInquiryResult;
+    } catch (err) {
+      return baseResponse.DB_ERROR;
+    }
+  }
   async checkPasswd() {
     try {
       const hashedPassword = crypto.createHash('sha512').update(this.body.passwd).digest('hex');
@@ -113,11 +121,38 @@ class User {
       return baseResponse.DB_ERROR;
     }
   }
+  async updateProfileImage() {
+    try {
+      const params = [this.body.imageUrl, this.body.userId];
+      await UserStorage.updateUserProfileImage(params);
+      return baseResponse.SUCCESS;
+    } catch (err) {
+      return baseResponse.DB_ERROR;
+    }
+  }
   async updatePasswd() {
     try {
       const hashedPassword = crypto.createHash('sha512').update(this.body.passwd).digest('hex');
       const account = [hashedPassword, this.body.userId];
-      await UserStorage.updatePassword(account);
+      await UserStorage.updateUserPassword(account);
+      return baseResponse.SUCCESS;
+    } catch (err) {
+      return baseResponse.DB_ERROR;
+    }
+  }
+  async updateAddress() {
+    try {
+      const params = [this.body.address, this.body.placeLA, this.body.placeLO, this.body.userId];
+      await UserStorage.updateUserAddress(params);
+      return baseResponse.SUCCESS;
+    } catch (err) {
+      return baseResponse.DB_ERROR;
+    }
+  }
+  async updateSchool() {
+    try {
+      const params = [this.body.school, this.body.userId];
+      await UserStorage.updateUserSchool(params);
       return baseResponse.SUCCESS;
     } catch (err) {
       return baseResponse.DB_ERROR;

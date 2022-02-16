@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css" />
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-    <script type="text/javascript" src="http://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
   </head>
   <body>
@@ -60,7 +60,7 @@
               <a class="header-nav-btn" href="/users/logout"><span>로그아웃</span></a>
             </li>
             <li>
-              <a class="header-nav-btn home" href="/users/my-page"><span>마이 페이지</span></a>
+              <a class="header-nav-btn" href="/users/my-page"><span>마이 페이지</span></a>
             </li>
           </ul>
         </nav>
@@ -95,7 +95,7 @@
             <a class="side-nav-btn" href="/meetings/hobby"><span>취미</span></a>
           </li>
           <li>
-            <a class="side-nav-btn home" href="/users/my-page"><span>마이 페이지</span></a>
+            <a class="side-nav-btn" href="/users/my-page"><span>마이 페이지</span></a>
           </li>
           <li>
             <a class="side-nav-btn" href="/users/logout"><span>로그아웃</span></a>
@@ -109,55 +109,45 @@
           <div class="board" id="content">
             <div class="main-content">
               <div class="body-content">
-                <article class="contents width-max">
-                  <div class="content-title">
-                    <h2 class="mp">MY PAGE</h2>
+                <div class="writing-wrap">
+                  <div class="writing-header">
+                    <h2>문의 답변</h2>
+                    <div
+                      class="writing-post-btn"
+                      style="
+                        background-color: rgb(127, 132, 136);
+                        font-weight: bold;
+                        color: white;
+                        width: 80px;
+                        padding: 5px;
+                        text-align: center;
+                      "
+                    >
+                      <span><%= inquiry.status %></span>
+                    </div>
                   </div>
-                </article>
-                <article class="contents width-xl">
-                  <div class="content-wrapper min-height-large">
-                    <div class="content-aside mypage">
-                      <div class="user-name">
-                        <div class="" style="display: inline-block; margin: 0 auto; vertical-align: middle">
-                          <span class="user-profile"><img src="<%= user.imageUrl %>" /></span>
-                        </div>
-                        <div class="" style="display: inline-block; margin: 0 auto">
-                          <span><%= user.name %></span>
-                        </div>
-                      </div>
-                      <div class="cal">
-                        <h2 class="cal-title">만남정보</h2>
-                        <a href="/users/my-page/meet-management" class="cal-btn">만남 관리</a>
-                        <a class="cal-btn">만남 문의</a>
-                        <a class="cal-btn">만남 요청</a>
-                      </div>
-                      <div class="cal">
-                        <h2 class="cal-title">나의정보</h2>
-                        <a href="/users/my-page/profile-management" class="cal-btn">프로필 관리</a>
-                        <a href="/users/delete" class="cal-btn home">회원탈퇴</a>
-                      </div>
-                      <div class="cal" style="border-bottom: 1px solid #e1e1e1">
-                        <h2 class="cal-title">문의정보</h2>
-                        <a href="/users/my-page/inquiry-management" class="cal-btn">등록한 문의</a>
-                        <a href="/inquirys" class="cal-btn">1:1 문의</a>
+                  <div class="writing-content">
+                    <div class="row">
+                      <div class="title-area">
+                        <h3>제목</h3>
+                        <textarea id="writing-title" style="min-width: 670px" readonly><%= inquiry.title %></textarea>
                       </div>
                     </div>
-                    <div class="content-main mypage min-height-large show">
-                      <div class="user-meeting">
-                        <h2 class="cal-title">
-                          <span class="userInfo-label">회원 탈퇴</span>
-                        </h2>
-                        <div class="withdrawal-wrap">
-                          <input type="button" class="n-btn btn-sm btn-accent" id="withdrawal-btn" value="회원탈퇴" />
-                          <div style="margin-top: 10px; font-size: 17px;">
-                            <span><strong>[주의] 회원을 탈퇴하시면 추후에 같은 계정으로 가입 하실 수 없습니다.</strong></span></br>
-                            <span><strong>[알림] 회원님의 개인정보는 사기방지를 위해 6개월간 보관된 후 폐기됩니다.</strong></span>
-                          </div>
-                        </div>
+                    <div class="row">
+                      <div>
+                        <h3>내용</h3>
+                        <textarea id="writing-content" readonly><%= inquiry.content %></textarea>
                       </div>
                     </div>
                   </div>
-                </article>
+                  <div class="writing-header">
+                    <h2>답변</h2>
+                    <div class="writing-post-btn" style="font-weight: bold; bottom: 70px">
+                      <span><%= answer.createdAt %></span>
+                    </div>
+                    <textarea id="writing-answer" readonly><%= answer.answer %></textarea>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -169,29 +159,15 @@
     </div>
     <script type="text/javascript">
       $(function () {
-          $('#withdrawal-btn').click(function (){
-              $.ajax({
-                url: '/users/delete',
-                method: 'POST',
-                dataType: 'json',
-                success: function(){
-                    alert('회원이 탈퇴되었습니다.')
-                    window.location.href='/users/login'
-                }
-              })
-          })
-        $('#header-show-btn').click(function () {
-          $('#side-mask').css('display', 'block');
-          $('#side-menuBar').css('right', '0px');
-          $('#side-menuBar').addClass('visible');
-          $('#header').css('right', '16px');
-        });
-        $('#side-mask').click(function () {
-          $('#side-mask').css('display', 'none');
-          $('#side-menuBar').css('right', '-300px');
-          $('#side-menuBar').removeClass('visible');
-          $('#header').css('right', '0');
-        });
+        let textcontent = $('#writing-content');
+        textcontent[0].style.height = 'auto';
+        let textcontentHeight = textcontent.prop('scrollHeight');
+        textcontent.css('height', textcontentHeight);
+
+        let textcontent = $('#writing-answer');
+        textcontent[0].style.height = 'auto';
+        let textcontentHeight = textcontent.prop('scrollHeight');
+        textcontent.css('height', textcontentHeight);
       });
     </script>
   </body>
