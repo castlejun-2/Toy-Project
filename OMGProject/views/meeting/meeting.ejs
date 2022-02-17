@@ -247,7 +247,10 @@
                         <img src="<%= meeting[0].imageUrl %>" />
                       </div>
                       <div class="profile-id">
-                        <p><%= meeting[0].userName %></p>
+                        <div class="meeting-host">
+                          <span style="font-size: 22px"><%= meeting[0].userName %></span>
+                          <span style="vertical-align: top; font-weight: bold" id="user-cert"><%= meeting[0].certification %></span>
+                        </div>
                         <span><%= meeting[0].phone %></span>
                       </div>
                     </div>
@@ -312,6 +315,13 @@
         $('#side-menuBar').css('right', '-300px');
         $('#side-menuBar').removeClass('visible');
         $('#header').css('right', '0');
+      });
+      $(function () {
+        if ($('.meeting-host #user-cert').html() == '인증완료') {
+          $('.meeting-host #user-cert').css('color', 'blue');
+        } else {
+          $('.meeting-host #user-cert').css('color', 'red');
+        }
       });
     </script>
   </body>

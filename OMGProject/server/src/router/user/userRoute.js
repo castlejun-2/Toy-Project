@@ -20,6 +20,8 @@ class Router {
     this.router.get('/my-page/inquiry-management', userController.output.myPageInquiryMng);
     this.router.get('/password-reset', userController.output.passwordReset);
     this.router.get('/reset/:token', userController.output.reset);
+    this.router.get('/sns-auth', userController.output.phoneNumberAuth);
+    this.router.get('/sns-verifi', userController.output.phoneNumberVeri);
 
     //Processing Router
     this.router.post('/login', userController.process.login);
@@ -28,6 +30,8 @@ class Router {
     this.router.post('/my-page/profile/:content', upload.single('profileImage'), userController.process.myPage);
     this.router.post('/password-reset', userController.process.passwordReset);
     this.router.post('/password-setting', userController.process.passwordSetting);
+    this.router.post('/sns-certification', userController.process.snsCertification);
+    this.router.post('/sns-verification', userController.process.snsVerification);
   }
 }
 

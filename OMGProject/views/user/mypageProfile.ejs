@@ -238,9 +238,12 @@
                               </tr>
                               <tr>
                                 <th scope="row">이름</th>
-                                <td colspan="2">
+                                <td>
                                   <strong><%= user.name %></strong>
                                   <span class="certify"><%= user.certification %></span>
+                                </td>
+                                <td>
+                                  <button type="button" class="n-btn w120 btn-sm btn-default cert-hidden" id="auth-btn"><a href='/users/sns-auth'>휴대전화 인증</a></button>
                                 </td>
                               </tr>
                               <tr id="address-area">
@@ -354,6 +357,12 @@
         $('#input-profile-img').change(function(e) {
           setImageThumbnail(this, '.change-img');
         });
+        const cert = "<%= user.certification %>";
+        if (cert) {
+          $('#auth-btn').attr('disabled',true);
+          $('#auth-btn').text('인증 완료');
+          $('#auth-btn').css('cursor','text')
+        }
         $('#change-profile-img-btn').click(function() {
           $('#profile-img').css('display','none');
           $('#change-profile-img').css('display','table-row');

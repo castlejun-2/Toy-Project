@@ -166,5 +166,22 @@ class User {
       return baseResponse.DB_ERROR;
     }
   }
+  async checkVerifiedUser() {
+    try {
+      const verifiedUserResult = await UserStorage.checkVerifiedUser(this.body.userId);
+      if (verifiedUserResult.length) return baseResponse.SUCCESS;
+      else return baseResponse.IS_NOT_VERIFICATION_PHONENUMBER;
+    } catch (err) {
+      return baseResponse.DB_ERROR;
+    }
+  }
+  async updateUserPhoneAuth() {
+    try {
+      await UserStorage.updateUserPhoneAuth(this.body.userId);
+      return baseResponse.SUCCESS;
+    } catch (err) {
+      return baseResponse.DB_ERROR;
+    }
+  }
 }
 export default User;

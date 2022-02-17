@@ -3,7 +3,8 @@ import baseResponse from '../../config/responseStatus.js';
 import User from '../../models/user/user.js';
 import Meeting from '../../models/meeting/meeting.js';
 import axios from 'axios';
-import multer from 'multer';
+import cache from 'memory-cache';
+import cryptoJs from 'crypto-js';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -71,6 +72,19 @@ class Controller {
     },
     passwordReset: async (req, res) => res.render('account/passwordFind.ejs'),
     reset: async (req, res) => res.render('account/passwordReset.ejs', { token: req.params.token }),
+    phoneNumberAuth: async (req, res) => {
+      if (req.user) res.render('user/phoneAuth');
+      else res.render('account/login.ejs');
+    },
+    phoneNumberVeri: async (req, res) => {
+      if (req.user) {
+        const userId = req.user.id;
+        const user = new User(userId);
+        const userInfo = await user.userInfo();
+        const phonenumber = userInfo.phonenumber;
+        res.render('user/phoneVeri', { phonenumber: phonenumber });
+      } else res.render('account/login.ejs');
+    },
   };
 
   process = {
@@ -218,6 +232,81 @@ class Controller {
         const user = new User(params);
         const resetResult = await user.passwdReset();
         return res.send(resetResult);
+      }
+    },
+    snsCertification: async (req, res) => {
+      if (req.user) {
+        let phonenumber = req.body.phonenumber;
+        const space = ' ';
+        const newLine = '\n';
+        phonenumber = phonenumber.replace(/[^0-9]/g, '');
+        const date = Date.now().toString();
+        const serviceId = process.env.NC_SERVICE_ID;
+        const secretKey = process.env.NC_SECRET_KEY;
+        const accessKey = process.env.NC_ACCESS_KEY;
+        const serviceNumber = process.env.SERVICE_NUMBER;
+        const url = `https://sens.apigw.ntruss.com/sms/v2/services/${serviceId}/messages`;
+        const url_2 = `/sms/v2/services/${serviceId}/messages`;
+        const hmac = cryptoJs.algo.HMAC.create(cryptoJs.algo.SHA256, secretKey);
+        hmac.update('POST');
+        hmac.update(space);
+        hmac.update(url_2);
+        hmac.update(newLine);
+        hmac.update(date);
+        hmac.update(newLine);
+        hmac.update(accessKey);
+        const hash = hmac.finalize();
+        const signature = hash.toString(cryptoJs.enc.Base64);
+        const verifyCode = Math.floor(Math.random() * (999999 - 100000)) + 100000;
+        cache.del(phonenumber);
+        cache.put(phonenumber, verifyCode.toString());
+
+        axios({
+          method: 'POST',
+          json: true,
+          url: url,
+          headers: {
+            'Content-Type': 'application/json',
+            'x-ncp-iam-access-key': accessKey,
+            'x-ncp-apigw-timestamp': date,
+            'x-ncp-apigw-signature-v2': signature,
+          },
+          data: {
+            type: 'SMS',
+            contentType: 'COMM',
+            countryCode: '82',
+            from: serviceNumber,
+            content: `[OMG] 본인확인을 위한 인증번호 [${verifyCode}]를 입력해주세요.`,
+            messages: [
+              {
+                to: `${phonenumber}`,
+              },
+            ],
+          },
+        })
+          .then(function (res) {
+            return res.send(baseResponse.SUCCESS);
+          })
+          .catch(err => {
+            if (err.res == undefined) return res.send(baseResponse.SUCCESS);
+            else return res.send(baseResponse.PHONENUMBER_IS_NOT_VALID);
+          });
+      } else return res.send(baseResponse.IS_NOT_CONNECTED);
+    },
+    snsVerification: async (req, res) => {
+      let phonenumber = req.body.phonenumber;
+      phonenumber = phonenumber.replace(/[^0-9]/g, '');
+      const verifyCode = req.body.verifyCode;
+
+      const cacheData = cache.get(phonenumber);
+      if (!cacheData) return res.send(baseResponse.FAILURE_SMS_AUTHENTICATION);
+      else if (cacheData != verifyCode) return res.send(baseResponse.FAILURE_SMS_AUTHENTICATION);
+      else {
+        const userId = req.user.id;
+        const user = new User({ userId: userId });
+        const updateAuthResult = await user.updateUserPhoneAuth();
+        cache.del(phonenumber);
+        return res.send(updateAuthResult);
       }
     },
   };

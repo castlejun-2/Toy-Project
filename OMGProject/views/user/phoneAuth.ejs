@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0" />
+    <meta http-equiv="imagetoolbar" content="no" />
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="pragma" content="no-cache" />
+    <title>Offline Meeting Gathering(OMG) | 오마이갓</title>
+    <link rel="stylesheet" href="/css/login.css" />
+    <link rel="icon" type="image/png" href="https://s3.ap-northeast-2.amazonaws.com/img.castlejun-2.shop/UOMG_LOGO.png" />
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&amp;lang=en" />
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+  </head>
+  <body>
+    <div class="content">
+      <div class="header">
+        <img
+          class="logo"
+          src="https://s3.ap-northeast-2.amazonaws.com/img.castlejun-2.shop/UOMG_LOGO.png"
+          onclick="window.location.href='/';"
+        />
+      </div>
+      <div class="form-box">
+        <h1 style="width: auto; margin-left: 70px; margin-right: 70px"><b>핸드폰 인증</b></h1>
+        <div class="message-box hidden"></div>
+        <div class="email-box">
+          <div class="login-box">
+            <form method="post">
+              <label class="user-form">
+                핸드폰 번호 <input class="input-box" type="text" onKeyUp="hypenNumber(this);" name="phone" required autofocus
+              /></label>
+              <div style="width: 100%; text-align: center; margin-bottom: 10px">
+                <input style="width: auto" class="send-btn" type="submit" value="인증 문자 전송" />
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer omg-footer">
+      <p>© 2022. OMG ALL RIGHTS RESERVED.</p>
+    </div>
+    <script>
+      function hypenNumber(obj) {
+        let number = obj.value.replace(/[^0-9]/g, '');
+        let phone = '';
+        if (number.length < 4) {
+          return number;
+        } else if (number.length < 7) {
+          phone += number.substr(0, 3);
+          phone += '-';
+          phone += number.substr(3);
+        } else if (number.length < 11) {
+          phone += number.substr(0, 3);
+          phone += '-';
+          phone += number.substr(3, 3);
+          phone += '-';
+          phone += number.substr(6);
+        } else {
+          phone += number.substr(0, 3);
+          phone += '-';
+          phone += number.substr(3, 4);
+          phone += '-';
+          phone += number.substr(7);
+        }
+        obj.value = phone;
+      }
+      $(function () {
+        $('.send-btn').click(function (e) {
+          const phonenumber = document.getElementsByName('phone')[0].value;
+          sendAjax('/users/sns-certification', { phonenumber: phonenumber });
+          e.preventDefault();
+        });
+
+        function sendAjax(url, data) {
+          let jsondata = JSON.stringify(data);
+          const xhr = new XMLHttpRequest();
+          xhr.open('POST', url);
+          xhr.setRequestHeader('Content-Type', 'application/json');
+          xhr.send(jsondata);
+
+          xhr.addEventListener('load', function () {
+            const message = JSON.parse(xhr.responseText);
+            if (message.success) {
+              $('.send-btn').attr('readonly', true);
+              alert('인증문자가 발송되었습니다.');
+              window.location.href = '/users/sns-verifi';
+            } else {
+              const resultDiv = document.querySelector('.message-box');
+              resultDiv.innerHTML = message.message;
+              resultDiv.removeAttribute('hidden');
+            }
+          });
+        }
+      });
+    </script>
+  </body>
+</html>

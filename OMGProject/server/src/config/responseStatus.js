@@ -29,6 +29,9 @@ class response {
   PEOPLE_EMPTY = { success: false, message: '모집인원을 입력해주세요.' };
 
   TOKEN_TIMEOUT = { success: false, message: '비밀번호 초기화 유효시간이 초과되었습니다.' };
+  PHONENUMBER_IS_NOT_VALID = { success: false, message: '유효하지 않은 핸드폰번호입니다.' };
+  IS_NOT_VERIFICATION_PHONENUMBER = { success: false, message: '핸드폰 번호를 인증하지 않은 사용자입니다.' };
+  FAILURE_SMS_AUTHENTICATION = { success: false, message: '인증번호가 일치하지 않습니다.' };
 
   WRONG_APPROACH = { success: false, message: 'Wrong Approach Error' };
   IS_NOT_CONNECTED = { success: false, message: 'IS_NOT_CONNECTED' };

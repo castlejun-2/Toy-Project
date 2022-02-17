@@ -59,8 +59,13 @@ class Controller {
     },
     getWritingPage: async (req, res) => {
       if (req.user) {
-        const type = req.query.type;
-        res.render('meeting/writing.ejs', { type: type, user: req.user });
+        const userId = req.user.id;
+        const user = new User({ userId: userId });
+        const verifiedUserResult = await user.checkVerifiedUser();
+        if (verifiedUserResult.success) {
+          const type = req.query.type;
+          res.render('meeting/writing.ejs', { type: type, user: req.user });
+        } else res.render('user/phoneAuth.ejs');
       } else res.render('account/login.ejs');
     },
     getReWritingPage: async (req, res) => {
@@ -84,56 +89,60 @@ class Controller {
   process = {
     createMeetingSchedule: async (req, res) => {
       if (req.user) {
-        if (!req.body.title) return res.send(baseResponse.TITLE_EMPTY);
-        else if (!req.body.dateTime) return res.send(baseResponse.DATETIME_EMPTY);
-        else if (!req.body.fee) return res.send(baseResponse.FEE_EMPTY);
-        else if (!req.body.hour) return res.send(baseResponse.MEETINGTIME_EMPTY);
-        else if (!req.body.placeName) return res.send(baseResponse.PLACENAME_EMPTY);
-        else if (!req.body.placeAddress) return res.send(baseResponse.PLACEADDRESS_EMPTY);
-        else if (!req.body.people) return res.send(baseResponse.PEOPLE_EMPTY);
-        else {
-          const title = req.body.title;
-          const mainType = req.body.mainType;
-          const subType = req.body.subType;
-          const dateTime = req.body.dateTime;
-          const fee = req.body.fee;
-          const hour = req.body.hour;
-          const placeName = req.body.placeName;
-          const people = req.body.people;
-          const placeAddress = req.body.placeAddress;
-          const content = req.body.content;
-          const notice = req.body.notice;
-          const userId = req.user.id;
-          const url = 'https://dapi.kakao.com/v2/local/search/address.json?query=' + encodeURI(placeAddress);
-          const axiosResult = await axios({
-            url: url,
-            method: 'get',
-            headers: {
-              Authorization: 'KakaoAK 10b8818bed823e037e3d97d80377b236',
-            },
-          });
-          const placeLA = axiosResult.data.documents[0].address.y;
-          const placeLO = axiosResult.data.documents[0].address.x;
-          const params = [
-            userId,
-            title,
-            content,
-            mainType,
-            subType,
-            dateTime,
-            fee,
-            hour,
-            placeName,
-            people,
-            placeAddress,
-            placeLA,
-            placeLO,
-            notice,
-          ];
-          const meeting = new Meeting(params);
-          const createMeetingResult = await meeting.createMeeting();
-          return res.send(createMeetingResult);
-        }
+        const userId = req.user.id;
+        const user = new User({ userId: userId });
+        const verifiedUserResult = await user.checkVerifiedUser();
+        if (verifiedUserResult.success) {
+          if (!req.body.title) return res.send(baseResponse.TITLE_EMPTY);
+          else if (!req.body.dateTime) return res.send(baseResponse.DATETIME_EMPTY);
+          else if (!req.body.fee) return res.send(baseResponse.FEE_EMPTY);
+          else if (!req.body.hour) return res.send(baseResponse.MEETINGTIME_EMPTY);
+          else if (!req.body.placeName) return res.send(baseResponse.PLACENAME_EMPTY);
+          else if (!req.body.placeAddress) return res.send(baseResponse.PLACEADDRESS_EMPTY);
+          else if (!req.body.people) return res.send(baseResponse.PEOPLE_EMPTY);
+          else {
+            const title = req.body.title;
+            const mainType = req.body.mainType;
+            const subType = req.body.subType;
+            const dateTime = req.body.dateTime;
+            const fee = req.body.fee;
+            const hour = req.body.hour;
+            const placeName = req.body.placeName;
+            const people = req.body.people;
+            const placeAddress = req.body.placeAddress;
+            const content = req.body.content;
+            const notice = req.body.notice;
+            const url = 'https://dapi.kakao.com/v2/local/search/address.json?query=' + encodeURI(placeAddress);
+            const axiosResult = await axios({
+              url: url,
+              method: 'get',
+              headers: {
+                Authorization: 'KakaoAK 10b8818bed823e037e3d97d80377b236',
+              },
+            });
+            const placeLA = axiosResult.data.documents[0].address.y;
+            const placeLO = axiosResult.data.documents[0].address.x;
+            const params = [
+              userId,
+              title,
+              content,
+              mainType,
+              subType,
+              dateTime,
+              fee,
+              hour,
+              placeName,
+              people,
+              placeAddress,
+              placeLA,
+              placeLO,
+              notice,
+            ];
+            const meeting = new Meeting(params);
+            const createMeetingResult = await meeting.createMeeting();
+            return res.send(createMeetingResult);
+          }
+        } else return res.send(verifiedUserResult);
       } else return res.render('login.ejs');
     },
     updateMeetingSchedule: async (req, res) => {

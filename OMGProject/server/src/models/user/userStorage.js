@@ -217,5 +217,37 @@ class UserStorage {
       });
     });
   }
+  static checkVerifiedUser(userId) {
+    return new Promise((resolve, reject) => {
+      pool.getConnection(async function (err, conn) {
+        if (err) reject(`${err}`);
+        else {
+          const query = `
+          Select id From User Where id = ? and certification = 1`;
+          conn.query(query, userId, function (err, rows) {
+            if (err) reject(`${err}`);
+            else resolve(rows);
+          });
+        }
+        conn.release();
+      });
+    });
+  }
+  static updateUserPhoneAuth(userId) {
+    return new Promise((resolve, reject) => {
+      pool.getConnection(async function (err, conn) {
+        if (err) reject(`${err}`);
+        else {
+          const query = `
+          Update User Set certification=1 Where id=?`;
+          conn.query(query, userId, function (err, rows) {
+            if (err) reject(`${err}`);
+            else resolve(rows);
+          });
+        }
+        conn.release();
+      });
+    });
+  }
 }
 export default UserStorage;
