@@ -146,11 +146,9 @@ class Controller {
     myPage: async (req, res) => {
       const userId = req.user.id;
       const subject = req.params.content;
-
       if (subject == 'profileImage') {
-        console.log(req.files, req.file);
-        if (!req.file) return res.send(baseResponse.PROFILE_IMAGE_EMPTY);
-        const imageUrl = req.file ? req.file.location : req.body.defaultImgaeUrl;
+        if (!req.file && !req.body.image) return res.send(baseResponse.PROFILE_IMAGE_EMPTY);
+        const imageUrl = req.file ? req.file.location : req.body.image;
         const params = { userId: userId, imageUrl: imageUrl };
         const user = new User(params);
         const profileUpdateResult = await user.updateProfileImage();
