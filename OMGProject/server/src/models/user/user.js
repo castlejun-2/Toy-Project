@@ -93,7 +93,6 @@ class User {
         return baseResponse.EMAIL_NOT_EXIST;
       }
     } catch (err) {
-      console.log(err);
       return baseResponse.DB_ERROR;
     }
   }

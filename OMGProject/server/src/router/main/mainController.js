@@ -23,6 +23,20 @@ class Controller {
       const meetingResult = await meeting.getScheduleInfo();
       res.send({ meeting: meetingResult });
     },
+    getMainScheduleByFilter: async (req, res) => {
+      const diff_date = req.query.diff_date ? parseInt(req.query.diff_date) : parseInt(0);
+      const type = req.query.type;
+      let typeParams;
+      let area = req.query.area;
+      type == 'main' ? (typeParams = 0) : (typeParams = 1);
+      area == '모든 지역' ? (area = '') : (area = req.query.area);
+      const status = req.query.status;
+      const search = req.query.search;
+      const params = { type: type, typeParams: typeParams, diff_date: diff_date, area: area, status: status, search: search };
+      const meeting = new Meeting(params);
+      const meetingResult = await meeting.getScheduleInfoByFilter();
+      res.send({ meeting: meetingResult });
+    },
     getCompetition: async (req, res) => {
       const competitionResult = await MainStorage.getCompetitionInfo();
       if (req.user) res.render('main/competitions.ejs', { competition: competitionResult, user: req.user });

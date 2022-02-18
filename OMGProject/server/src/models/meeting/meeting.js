@@ -10,6 +10,25 @@ class Meeting {
     const scheduleResult = await MeetingStorage.getMeetingInfo(this.body);
     return scheduleResult;
   }
+  async getScheduleInfoByFilter() {
+    let scheduleResult;
+    if (this.body.status) {
+      const params = [
+        this.body.diff_date,
+        this.body.typeParams,
+        this.body.type,
+        this.body.area,
+        this.body.status,
+        this.body.search,
+        this.body.search,
+      ];
+      scheduleResult = await MeetingStorage.getMeetingInfoByFilter(params);
+    } else {
+      const params = [this.body.diff_date, this.body.typeParams, this.body.type, this.body.area, this.body.search, this.body.search];
+      scheduleResult = await MeetingStorage.getMeetingInfoByFilterAll(params);
+    }
+    return scheduleResult;
+  }
   async createMeeting() {
     try {
       await MeetingStorage.createMeetingSchedule(this.body);

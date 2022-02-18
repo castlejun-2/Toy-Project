@@ -9,6 +9,7 @@ class Router {
   setRouter() {
     //Response JSON data
     this.router.get('/main', mainController.output.getMainSchedule);
+    this.router.get('/main/filter', mainController.output.getMainScheduleByFilter);
 
     //Paging Router
     this.router.get('/', mainController.output.getMain);

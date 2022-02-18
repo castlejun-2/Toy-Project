@@ -147,6 +147,44 @@
                       </ul>
                     </div>
                   </div>
+                  <div class="main-filter">
+                    <div class="main-meeting-filter">
+                      <div class="filter-wrap">
+                        <ul>
+                          <li class>
+                            <select class="list area-list">
+                              <option value="area0">모든 지역</option>
+                              <option value="area1">서울</option>
+                              <option value="area2">경기</option>
+                              <option value="area3">강원</option>
+                              <option value="area4">인천</option>
+                              <option value="area5">대전</option>
+                              <option value="area6">충청</option>
+                              <option value="area7">대구</option>
+                              <option value="area8">경상북도</option>
+                              <option value="area9">부산</option>
+                              <option value="area10">울산</option>
+                              <option value="area11">경상남도</option>
+                              <option value="area12">광주</option>
+                              <option value="area13">전라</option>
+                              <option value="area14">제주</option>
+                            </select>
+                          </li>
+                          <li class>
+                            <select class="list status-list">
+                              <option value="">전체</option>
+                              <option value="1">신청가능</option>
+                              <option value="2">마감</option>
+                            </select>
+                          </li>
+                          <li class>
+                            <input type="text" class="search" style="outline: none; color: black" placeholder="search" />
+                          </li>
+                          <button class="search-btn" type="button"></button>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <div class="write-btn-box">
                   <div class="write-btn-wrap">
@@ -179,6 +217,7 @@
     <script type="text/javascript">
       const totalData = parseInt('<%= meeting.length %>');
       let diffTotalData;
+      let diffFilterData;
       const dataPerPage = parseInt(5);
       const pageCount = 5;
       let currentPage = 1;
@@ -250,9 +289,9 @@
                 '</div>' +
                 '</div>' +
                 "<div style='width: 10%'>" +
-                "<div class='meeting-status '" +
+                "<div class='meeting-status " +
                 meeting[i].status_c +
-                '>' +
+                "'>" +
                 meeting[i].status +
                 '</div>' +
                 '</div>' +
@@ -298,9 +337,67 @@
                 '</div>' +
                 '</div>' +
                 "<div style='width: 10%'>" +
-                "<div class='meeting-status '" +
+                "<div class='meeting-status " +
                 meeting[i].status_c +
-                '>' +
+                "'>" +
+                meeting[i].status +
+                '</div>' +
+                '</div>' +
+                '</a>' +
+                '</li>';
+            }
+            $('.meeting-content').css('display', 'none');
+            $('.schedule-list').html(chartHtml);
+          },
+        });
+      }
+      function displayFilterData(currentPage, dataPerPage) {
+        let chartHtml = '';
+        const areaClass = $('.list.area-list').val();
+        const area = $('.list.area-list option[value=' + areaClass + ']').text();
+        const status = $('.list.status-list').val();
+        const search = $('.search').val();
+        const index = $('.dateWrap.isActive').attr('data-slick-index');
+        currentPage = parseInt(currentPage);
+        dataPerPage = parseInt(dataPerPage);
+        $.ajax({
+          url: '/main/filter',
+          method: 'GET',
+          data: { diff_date: index, area: area, status: status, search: search, type: 'game' },
+          dataType: 'json',
+          success: function (response) {
+            console.log(response);
+            const meeting = response.meeting;
+            for (
+              let i = (currentPage - 1) * dataPerPage;
+              i < Math.min(diffFilterData, (currentPage - 1) * dataPerPage + dataPerPage);
+              i++
+            ) {
+              chartHtml +=
+                "<li class='meeting-content' style=''>" +
+                "<a href='/meetings/" +
+                meeting[i].mainName +
+                '/' +
+                meeting[i].id +
+                "'>" +
+                "<div class='meeting-time'><p>" +
+                meeting[i].time +
+                '</p></div>' +
+                "<div class='meeting-type'><p>" +
+                meeting[i].subject +
+                '</p></div>' +
+                "<div class='meeting-info'>" +
+                "<div class=''>" +
+                meeting[i].title +
+                '</div>' +
+                "<div class='meeting-place'>" +
+                meeting[i].place +
+                '</div>' +
+                '</div>' +
+                "<div style='width: 10%'>" +
+                "<div class='meeting-status " +
+                meeting[i].status_c +
+                "'>" +
                 meeting[i].status +
                 '</div>' +
                 '</div>' +
@@ -445,6 +542,28 @@
             $('#side-menuBar').css('right', '-300px');
             $('#side-menuBar').removeClass('visible');
             $('#header').css('right', '0');
+          });
+        });
+        $('.list').change(function () {
+          let parent = $(this).parent();
+          parent.addClass('on');
+        });
+        $('.search-btn').click(function () {
+          const areaClass = $('.list.area-list').val();
+          const area = $('.list.area-list option[value=' + areaClass + ']').text();
+          const status = $('.list.status-list').val();
+          const search = $('.search').val();
+          const index = $('.dateWrap.isActive').attr('data-slick-index');
+          $.ajax({
+            url: '/main/filter',
+            method: 'GET',
+            data: { diff_date: index, area: area, status: status, search: search, type: 'game' },
+            dataType: 'json',
+            success: function (response) {
+              diffFilterData = response.meeting.length;
+              paging(diffFilterData, dataPerPage, pageCount, 1, 1);
+              displayFilterData(1, dataPerPage);
+            },
           });
         });
       });

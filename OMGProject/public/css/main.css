@@ -603,6 +603,92 @@ div.footer > p {
   display: block;
 }
 
+.main-meeting-filter {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 15px 0px 15px;
+  flex-wrap: wrap;
+  max-width: 1024px;
+  margin: 0 auto;
+}
+
+.filter-wrap {
+  width: 100%;
+  position: relative;
+}
+
+.filter-wrap ul {
+  box-sizing: content-box;
+  white-space: nowrap;
+  padding: 0;
+  max-width: 1024px;
+}
+
+.filter-wrap ul li {
+  display: inline-grid;
+  font-size: 17px;
+  margin-left: 5px;
+  padding: 5px 12px;
+  position: relative;
+  cursor: pointer;
+  border: 1px solid #dce3e8;
+  border-radius: 20px;
+  outline: none;
+  -webkit-transition: all 0.3s ease-in-out;
+}
+
+.filter-wrap ul li.on,
+.filter-wrap ul li.on select {
+  outline: none;
+  background-color: skyblue;
+  border: 1px solid skyblue;
+  border-radius: 20px;
+  color: white;
+}
+
+.filter-wrap ul li.on select {
+  color: white;
+}
+
+.filter-wrap select,
+.filter-wrap input {
+  padding: 5px;
+  border: none;
+  color: black;
+  font-size: 15px;
+  line-height: 15px;
+}
+
+.filter-wrap select.list:after {
+  content: '';
+  border: solid #222836;
+  border-width: 0 1px -1px 0;
+  display: inline-block;
+  padding: 3px;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
+.list {
+  padding: 20px;
+  border-bottom: 1px solid #ddd;
+  overflow: auto;
+}
+
+.search-btn {
+  font-weight: bold;
+  height: 25px;
+  width: 50px;
+  margin-left: 5px;
+  vertical-align: middle;
+  color: black;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  cursor: pointer;
+  background: url(https://www.ncloud.com/public/img/icon/search.svg) 50% no-repeat;
+}
+
 p {
   margin: 0;
   padding: 0;
