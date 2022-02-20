@@ -194,7 +194,7 @@ body {
   border-radius: 5px;
   border: 1px solid rgb(238, 238, 238);
   background-color: #fafafa;
-  z-index: 1;
+  z-index: 3;
 }
 
 .side-bar > ul {
@@ -1512,13 +1512,15 @@ table.table-row td > div > img {
 
 .n-table .passwd-modify .input,
 .n-table .address-modify .input,
-.n-table .school-modify .input {
+.n-table .school-modify .input,
+.n-table .phonenumber-modify .input {
   margin-top: 13px;
 }
 
 .n-table .passwd-modify .input > label,
 .n-table .address-modify .input > label,
-.n-table .school-modify .input > label {
+.n-table .school-modify .input > label,
+.n-table .phonenumber-modify .input > label {
   display: inline-block;
   min-width: 135px;
   line-height: 32px;
@@ -1530,7 +1532,8 @@ table.table-row td > div > img {
 
 .n-table .passwd-modify .input .input-passwd-wrap,
 .n-table .address-modify .input .input-address-wrap,
-.n-table .school-modify .input .input-school-wrap {
+.n-table .school-modify .input .input-school-wrap,
+.n-table .phonenumber-modify .input .input-phonenumber-wrap {
   display: inline-flex;
   justify-content: space-between;
   align-items: center;
@@ -1541,7 +1544,8 @@ table.table-row td > div > img {
 
 .n-table .passwd-modify .input .n-input,
 .n-table .address-modify .input .n-input,
-.n-table .school-modify .input .n-input {
+.n-table .school-modify .input .n-input,
+.n-table .phonenumber-modify .input .n-input {
   width: 240px;
   margin: 0;
 }

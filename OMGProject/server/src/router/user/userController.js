@@ -6,6 +6,7 @@ import axios from 'axios';
 import cache from 'memory-cache';
 import cryptoJs from 'crypto-js';
 import dotenv from 'dotenv';
+import { render } from 'ejs';
 dotenv.config();
 
 class Controller {
@@ -76,6 +77,14 @@ class Controller {
         const user = new User(userId);
         const userInfoResult = await user.userInfo();
         res.render('user/mypageMeetCal', { user: userInfoResult });
+      } else render('account/login');
+    },
+    myPageMeetCalData: async (req, res) => {
+      if (req.user) {
+        const userId = req.user.id;
+        const user = new User(userId);
+        const userMeetResult = await user.meetSmryInfo();
+        res.send(userMeetResult);
       } else render('account/login');
     },
     passwordReset: async (req, res) => res.render('account/passwordFind.ejs'),
@@ -216,6 +225,15 @@ class Controller {
           const user = new User(params);
           const updateSchoolResult = await user.updateSchool();
           return res.send(updateSchoolResult);
+        }
+      } else if (subject == 'phonenumber') {
+        if (!req.body.phonenumber) return res.send(baseResponse.PHONENUMBER_EMPTY);
+        else {
+          const phonenumber = req.body.phonenumber;
+          const params = { userId: userId, phonenumber: phonenumber };
+          const user = new User(params);
+          const updatePhonenumberResult = await user.updatePhonenumber();
+          return res.send(updatePhonenumberResult);
         }
       }
     },

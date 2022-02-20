@@ -157,6 +157,15 @@ class User {
       return baseResponse.DB_ERROR;
     }
   }
+  async updatePhonenumber() {
+    try {
+      const params = [this.body.phonenumber, this.body.userId];
+      await UserStorage.updateUserPhonenumber(params);
+      return baseResponse.SUCCESS;
+    } catch (err) {
+      return baseResponse.DB_ERROR;
+    }
+  }
   async deleteUserAccount() {
     try {
       await UserStorage.withdrawalUserAccount(this.body);
@@ -178,6 +187,14 @@ class User {
     try {
       await UserStorage.updateUserPhoneAuth(this.body.userId);
       return baseResponse.SUCCESS;
+    } catch (err) {
+      return baseResponse.DB_ERROR;
+    }
+  }
+  async meetSmryInfo() {
+    try {
+      const scheduleInfo = await UserStorage.getMeetSummaryInfo(this.body);
+      return scheduleInfo;
     } catch (err) {
       return baseResponse.DB_ERROR;
     }

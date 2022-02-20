@@ -201,6 +201,22 @@ class UserStorage {
       });
     });
   }
+  static updateUserPhonenumber(params) {
+    return new Promise((resolve, reject) => {
+      pool.getConnection(async function (err, conn) {
+        if (err) reject(`${err}`);
+        else {
+          const query = `
+          Update User Set phonenumber=?, certification=0 Where id=?`;
+          conn.query(query, params, function (err, rows) {
+            if (err) reject(`${err}`);
+            else resolve(rows);
+          });
+        }
+        conn.release();
+      });
+    });
+  }
   static withdrawalUserAccount(userId) {
     return new Promise((resolve, reject) => {
       pool.getConnection(async function (err, conn) {
@@ -240,6 +256,24 @@ class UserStorage {
         else {
           const query = `
           Update User Set certification=1 Where id=?`;
+          conn.query(query, userId, function (err, rows) {
+            if (err) reject(`${err}`);
+            else resolve(rows);
+          });
+        }
+        conn.release();
+      });
+    });
+  }
+  static getMeetSummaryInfo(userId) {
+    return new Promise((resolve, reject) => {
+      pool.getConnection(async function (err, conn) {
+        if (err) reject(`${err}`);
+        else {
+          const query = `
+            Select id, date_format(startTime,"%Y-%m-%d") as date, date_format(startTime, "%H:%i:%s") as time, status, mainName
+            From Meeting
+            Where userId = ? and status != 0`;
           conn.query(query, userId, function (err, rows) {
             if (err) reject(`${err}`);
             else resolve(rows);

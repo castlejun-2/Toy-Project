@@ -262,9 +262,7 @@
           data: { diff_date: index, type: 'main' },
           dataType: 'json',
           success: function (response) {
-            console.log(response);
             const meeting = response.meeting;
-            console.log(meeting);
             for (let i = (currentPage - 1) * dataPerPage; i < Math.min(totalData, (currentPage - 1) * dataPerPage + dataPerPage); i++) {
               chartHtml +=
                 "<li class='meeting-content' style=''>" +
@@ -365,7 +363,6 @@
           data: { diff_date: index, area: area, status: status, search: search, type: 'main' },
           dataType: 'json',
           success: function (response) {
-            console.log(response);
             const meeting = response.meeting;
             for (
               let i = (currentPage - 1) * dataPerPage;

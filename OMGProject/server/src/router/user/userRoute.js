@@ -19,6 +19,7 @@ class Router {
     this.router.get('/my-page/meet-management', userController.output.myPageMeetMng);
     this.router.get('/my-page/inquiry-management', userController.output.myPageInquiryMng);
     this.router.get('/my-page/meeting-calender', userController.output.myPageMeetCal);
+    this.router.get('/my-page/meeting-calender-data', userController.output.myPageMeetCalData);
     this.router.get('/password-reset', userController.output.passwordReset);
     this.router.get('/reset/:token', userController.output.reset);
     this.router.get('/sns-auth', userController.output.phoneNumberAuth);
