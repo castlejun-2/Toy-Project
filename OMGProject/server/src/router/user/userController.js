@@ -70,6 +70,14 @@ class Controller {
         res.render('user/mypageInquiryMng', { user: req.user, inquiry: myInquiryResult });
       } else res.render('account/login');
     },
+    myPageMeetCal: async (req, res) => {
+      if (req.user) {
+        const userId = req.user.id;
+        const user = new User(userId);
+        const userInfoResult = await user.userInfo();
+        res.render('user/mypageMeetCal', { user: userInfoResult });
+      } else render('account/login');
+    },
     passwordReset: async (req, res) => res.render('account/passwordFind.ejs'),
     reset: async (req, res) => res.render('account/passwordReset.ejs', { token: req.params.token }),
     phoneNumberAuth: async (req, res) => {

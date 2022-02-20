@@ -124,14 +124,13 @@
                           <span class="user-profile"><img src="<%= user.imageUrl %>" /></span>
                         </div>
                         <div class="" style="display: inline-block; margin: 0 auto">
-                          <span><%= user.name %></span>
+                          <a href="/users/my-page"><span><%= user.name %></span></a>
                         </div>
                       </div>
                       <div class="cal">
                         <h2 class="cal-title">만남정보</h2>
                         <a href="/users/my-page/meet-management" class="cal-btn">만남 관리</a>
-                        <a class="cal-btn">만남 문의</a>
-                        <a class="cal-btn">만남 요청</a>
+                        <a href="/users/my-page/meeting-calender" class="cal-btn">만남 일정</a>
                       </div>
                       <div class="cal">
                         <h2 class="cal-title">나의정보</h2>

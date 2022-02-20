@@ -60,26 +60,7 @@ class MeetingStorage {
       });
     });
   }
-  static getGameMeetingInfo(diff_date) {
-    return new Promise((resolve, reject) => {
-      pool.getConnection(async function (err, conn) {
-        if (err) reject(`${err}`);
-        else {
-          const query = `
-            Select id, title, mainName, subName as subject, date_format(startTime,"%H:%i") as time, place, case when status=1 then "신청가능" else "모집완료" end as status
-            From Meeting
-            Where DATE(Meeting.startTime) = (DATE(NOW()) + ?) and mainName = "game"
-            Order By time ASC`;
-          conn.query(query, [diff_date], function (err, rows) {
-            if (err) reject(`${err}`);
-            else resolve(rows);
-          });
-        }
-        conn.release();
-      });
-    });
-  }
-  static getMeedtingDetail(meetingId) {
+  static getMeetingDetail(meetingId) {
     return new Promise((resolve, reject) => {
       pool.getConnection(async function (err, conn) {
         if (err) reject(`${err}`);
@@ -155,7 +136,7 @@ class MeetingStorage {
         if (err) reject(`${err}`);
         else {
           const query = `
-            Update Meeting Set status=2 Where id=?;
+            Update Meeting Set status=0 Where id=?;
           `;
           conn.query(query, meetingId, function (err, rows) {
             if (err) reject(`${err}`);

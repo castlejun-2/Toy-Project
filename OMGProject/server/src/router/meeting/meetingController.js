@@ -10,7 +10,7 @@ class Controller {
   output = {
     getScheduleDetail: async (req, res) => {
       const meetingId = req.params.scheduleId;
-      const scheduleDetailResult = await MeetingStorage.getMeedtingDetail(meetingId);
+      const scheduleDetailResult = await MeetingStorage.getMeettingDetail(meetingId);
       res.render('meeting/meeting.ejs', { meeting: scheduleDetailResult, user: req.user });
     },
     getDateSchedule: async (req, res) => {

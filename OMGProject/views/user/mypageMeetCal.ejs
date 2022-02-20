@@ -128,7 +128,7 @@
                       <div class="cal">
                         <h2 class="cal-title">만남정보</h2>
                         <a href="/users/my-page/meet-management" class="cal-btn">만남 관리</a>
-                        <a href="/users/my-page/meeting-calender" class="cal-btn">만남 일정</a>
+                        <a href="/users/my-page/meeting-calender" class="cal-btn home">만남 일정</a>
                       </div>
                       <div class="cal">
                         <h2 class="cal-title">나의정보</h2>
@@ -144,59 +144,8 @@
                     <div class="content-main mypage min-height-large show">
                       <div class="user-meeting">
                         <h2 class="cal-title">
-                          <span class="userInfo-label">기본 회원 정보</span>
+                          <span class="userInfo-label">만남 일정</span>
                         </h2>
-                        <section class="mypage-content">
-                          <table class="n-table table-row myInfo">
-                            <colgroup>
-                              <col style="width: 190px" />
-                              <col style="width: 480px" />
-                              <col style="width: 70%" />
-                            </colgroup>
-                            <tbody>
-                              <tr class="myInfo-img" id="profile-img">
-                                <th style="border-top: none" scope="row">사진</th>
-                                <td style="border-top: none">
-                                  <div>
-                                    <img src="<%= user.imageUrl %>" />
-                                  </div>
-                                </td>
-                              </tr>
-                              <tr>
-                                <th scope="row">이메일</th>
-                                <td>
-                                  <strong><%= user.email %></strong>
-                                </td>
-                              </tr>
-                              <tr>
-                                <th scope="row">이름</th>
-                                <td>
-                                  <strong><%= user.name %></strong>
-                                  <span class="certify"><%= user.certification %></span>
-                                </td>
-                              </tr>
-                              <tr>
-                                <th scope="row">주소</th>
-                                <td>
-                                  <strong><%= user.address %></strong>
-                                </td>
-                              </tr>
-                              <tr>
-                                <th scope="row">학교</th>
-                                <td>
-                                  <strong><%= user.school %></strong>
-                                </td>
-                              </tr>
-                              <tr>
-                                <th style="border-bottom: 1px solid #f1f1f1" scope="row">휴대전화</th>
-                                <td style="border-bottom: 1px solid #f1f1f1">
-                                  <strong><%= user.phonenumber %></strong>
-                                </td>
-                              </tr>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </section>
                       </div>
                     </div>
                   </div>
