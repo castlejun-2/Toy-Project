@@ -194,10 +194,7 @@
             const notice = response.notice;
             for (let i = (currentPage - 1) * dataPerPage; i < Math.min(totalData, (currentPage - 1) * dataPerPage + dataPerPage); i++) {
               chartHtml +=
-                "<li class='notice-content' style=''>" +
-                "<a href='/notices/" +
-                notice[i].id +
-                "'>" +
+                "<li class='question-content' style=''>" +
                 "<div class='notice-li'><p>" +
                 notice[i].id +
                 '</p></div>' +
@@ -211,11 +208,30 @@
                 notice[i].createdAt +
                 '</div>' +
                 '</a>' +
-                '</li>';
+                '</li>' +
+                "<div class='question-answer-wrap' style='display: flex'>" +
+                "<div style='width: 20%'></div>" +
+                "<div class='question-answer' id='answer_" +
+                notice[i].id +
+                "'>" +
+                notice[i].content +
+                '</div></div>';
             }
-            $('.notice-content').css('display', 'none');
+            $('.question-content').css('display', 'none');
             prevChartHtml = $('.schedule-list').html();
             $('.schedule-list').html(prevChartHtml + chartHtml);
+            $('.question-content').click(function (e) {
+              index = $(this).children('div')[0].innerText;
+              if ($('#answer_' + index + '').css('display') === 'none') {
+                $('#answer_' + index + '').css('display', 'inline-block');
+              } else {
+                $('#answer_' + index + '').css('display', 'none');
+              }
+            });
+
+            $('.question-answer').click(function (e) {
+              $(this).css('display', 'none');
+            });
           },
         });
       }

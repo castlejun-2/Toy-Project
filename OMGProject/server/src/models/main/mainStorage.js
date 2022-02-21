@@ -61,7 +61,7 @@ class MainStorage {
         if (err) reject(`${err}`);
         else {
           const query = `
-            Select id, title, content, date_format(createdAt,"%Y-%m-%d") as createdAt, organizer, case when status=0 then "신청가능" when status=1 then "신청종료" when status=2 then "대회종료" end as status
+            Select id, title, content, posterUrl, date_format(createdAt,"%Y-%m-%d") as createdAt, organizer, case when status=0 then "신청가능" when status=1 then "신청종료" when status=2 then "대회종료" end as status
             From Competition
             Where status = 0`;
           conn.query(query, function (err, rows) {

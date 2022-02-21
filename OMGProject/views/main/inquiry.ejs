@@ -121,9 +121,10 @@
                       <div class="title-area">
                         <textarea id="writing-title" style="min-width: 670px" placeholder="제목을 입력해 주세요."></textarea>
                       </div>
-                    <div class="row">
-                      <div>
-                        <textarea id="writing-content" style="height: 600px" placeholder="내용"></textarea>
+                      <div class="row">
+                        <div>
+                          <textarea id="writing-content" style="height: 600px" placeholder="내용"></textarea>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -156,7 +157,7 @@
                 window.location.href = '/';
               } else {
                 message = response.message;
-                if (message = 'IS_NOT_CONNECTED') window.location.href = '/users/login';
+                if ((message = 'IS_NOT_CONNECTED')) window.location.href = '/users/login';
                 else alert(message);
               }
             },
