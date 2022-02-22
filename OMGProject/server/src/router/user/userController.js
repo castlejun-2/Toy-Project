@@ -122,7 +122,7 @@ class Controller {
       else if (!regexEmail.test(req.body.email)) return res.send(baseResponse.EMAIL_FORM_IS_WRONG);
       else if (!req.body.keepLogIn) {
         passport.authenticate('local-login', (err, user, message) => {
-          if (!user) res.send(message);
+          if (!user) return res.send(message);
           return req.login(user, loginError => {
             if (loginError) next(loginError);
             else {
