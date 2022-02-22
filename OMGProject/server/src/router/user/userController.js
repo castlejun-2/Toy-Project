@@ -129,7 +129,7 @@ class Controller {
               let date = new Date();
               date = date.toISOString().slice(0, 10);
               res.cookie('omg_last_login', date, {
-                expires: new Date(Date.now() + 86400),
+                expires: new Date(Date.now() + 24 * 60 * 60),
                 httpOnly: true,
               });
               res.send(baseResponse.SUCCESS);
