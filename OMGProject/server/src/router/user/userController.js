@@ -12,13 +12,23 @@ dotenv.config();
 class Controller {
   output = {
     login: async (req, res) => {
-      if (req.user) {
-        req.logout();
-        req.session.destroy(() => {
-          req.session;
-        });
-        res.redirect('/users/login');
-      } else res.render('account/login.ejs');
+      if (req.cookies.omg_last_login) {
+        let date = new Date();
+        date = date.toISOString().slice(0, 10);
+        if (date == req.cookies.omg_last_login) {
+          if (req.user) res.redirect('/');
+          else res.render('account/login.ejs');
+        } else {
+          if (req.user) {
+            req.logout();
+            req.session.destroy(() => {
+              req.session;
+            });
+          }
+          res.render('account/login.ejs');
+        }
+      } else if (req.user) res.redirect('/');
+      else res.render('account/login.ejs');
     },
     join: async (req, res) => res.render('account/join.ejs'),
     welcome: async (req, res) => res.render('account/welcome.ejs'),
@@ -28,8 +38,8 @@ class Controller {
         req.session.destroy(() => {
           req.session;
         });
-        res.render('account/login');
-      } else res.render('account/login');
+        res.redirect('/users/login');
+      } else res.redirect('/users/login');
     },
     withdrawal: async (req, res) => {
       if (req.user) {
@@ -110,7 +120,23 @@ class Controller {
       if (!req.body.email) return res.send(baseResponse.EMAIL_EMPTY);
       else if (!req.body.passwd) return res.send(baseResponse.PASSWD_EMPTY);
       else if (!regexEmail.test(req.body.email)) return res.send(baseResponse.EMAIL_FORM_IS_WRONG);
-      else {
+      else if (!req.body.keepLogIn) {
+        passport.authenticate('local-login', (err, user, message) => {
+          if (!user) res.send(message);
+          return req.login(user, loginError => {
+            if (loginError) next(loginError);
+            else {
+              let date = new Date();
+              date = date.toISOString().slice(0, 10);
+              res.cookie('omg_last_login', date, {
+                expires: new Date(Date.now() + 86400),
+                httpOnly: true,
+              });
+              res.send(baseResponse.SUCCESS);
+            }
+          });
+        })(req, res, next);
+      } else {
         passport.authenticate('local-login', (err, user, message) => {
           if (!user) res.send(message);
           return req.login(user, loginError => {
