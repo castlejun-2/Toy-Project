@@ -111,7 +111,6 @@ class Controller {
       else if (!req.body.passwd) return res.send(baseResponse.PASSWD_EMPTY);
       else if (!regexEmail.test(req.body.email)) return res.send(baseResponse.EMAIL_FORM_IS_WRONG);
       else {
-        //To do: req.body.keepLogIn 처리
         passport.authenticate('local-login', (err, user, message) => {
           if (!user) res.send(message);
           return req.login(user, loginError => {

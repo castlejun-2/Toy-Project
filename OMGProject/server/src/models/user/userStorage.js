@@ -271,7 +271,7 @@ class UserStorage {
         if (err) reject(`${err}`);
         else {
           const query = `
-            Select id, date_format(startTime,"%Y-%m-%d") as date, date_format(startTime, "%H:%i:%s") as time, status, mainName
+            Select id, date_format(startTime,"%Y-%m-%d") as date, date_format(startTime, "%H:%i:%s") as time, status, mainName, title
             From Meeting
             Where userId = ? and status != 0`;
           conn.query(query, userId, function (err, rows) {

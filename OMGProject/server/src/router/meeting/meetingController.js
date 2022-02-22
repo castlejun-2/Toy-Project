@@ -1,4 +1,3 @@
-import passport from 'passport';
 import baseResponse from '../../config/responseStatus.js';
 import User from '../../models/user/user.js';
 import Main from '../../models/main/main.js';

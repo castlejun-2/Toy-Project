@@ -304,6 +304,7 @@ When it's NOT activated, the fc-button classes won't even be in the DOM.
 .fc .fc-scroller {
   -webkit-overflow-scrolling: touch;
   position: relative; /* for abs-positioned elements within */
+  overflow: hidden !important;
 }
 .fc .fc-scroller-liquid {
   height: 100%;
@@ -380,7 +381,7 @@ When it's NOT activated, the fc-button classes won't even be in the DOM.
 .fc .fc-scrollgrid-section-body table,
 .fc .fc-scrollgrid-section-footer table {
   border-bottom-style: hidden; /* head keeps its bottom border tho */
-  width: 797px !important;
+  width: 800px !important;
 }
 .fc {
   /* stickiness */
@@ -411,7 +412,7 @@ When it's NOT activated, the fc-button classes won't even be in the DOM.
 .fc .fc-view-harness {
   flex-grow: 1; /* because this harness is WITHIN the .fc's flexbox */
   position: relative;
-  height: 510px !important;
+  height: 502px !important;
 }
 .fc {
   /* when the harness controls the height, make the view liquid */
@@ -762,7 +763,9 @@ A HORIZONTAL event
 }
 .fc .fc-daygrid-body-unbalanced .fc-daygrid-day-events {
   position: relative; /* for containing abs positioned event harnesses */
-  min-height: 4em; /* in addition to being a min-height during natural height, equalizes the heights a little bit */
+  min-height: 3.2em; /* in addition to being a min-height during natural height, equalizes the heights a little bit */
+  max-height: 3.2em;
+  overflow: auto;
 }
 .fc .fc-daygrid-body-natural {
   /* can coexist with -unbalanced */

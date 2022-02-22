@@ -2,6 +2,7 @@ import express from 'express';
 import main from './server/src/router/index.js';
 import bodyParser from 'body-parser';
 import methodOverride from 'method-override';
+import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
 import passport from 'passport';
 import passportConfig from './server/src/config/passport.js';
@@ -21,6 +22,7 @@ class App {
     this.app.use(bodyParser.json());
     this.app.use(bodyParser.urlencoded({ extended: true }));
     this.app.use(methodOverride());
+    this.app.use(cookieParser());
     this.app.use(
       session({
         secret: process.env.SESSEONKEY,

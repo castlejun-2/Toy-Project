@@ -12,9 +12,10 @@ class User {
     try {
       const emailResult = await UserStorage.verfiedEmail(this.body.email);
       if (!emailResult.length || emailResult[0].status != 0) {
-        if (emailResult[0].status == 1) return baseResponse.SUSPENSION_ACCOUNT;
-        else if (emailResult[0].status == 2) return baseResponse.WITHDRAWAL_ACCOUNT;
-        else return baseResponse.EMAIL_NOT_EXIST;
+        if (emailResult.length) {
+          if (emailResult[0].status == 1) return baseResponse.SUSPENSION_ACCOUNT;
+          else if (emailResult[0].status == 2) return baseResponse.WITHDRAWAL_ACCOUNT;
+        } else return baseResponse.EMAIL_NOT_EXIST;
       } else {
         const hashedPassword = crypto.createHash('sha512').update(this.body.passwd).digest('hex');
         const account = [emailResult[0].id, hashedPassword];
