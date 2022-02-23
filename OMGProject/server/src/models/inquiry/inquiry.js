@@ -17,8 +17,10 @@ class Inquiry {
   }
   async getInquiryAnswer() {
     try {
+      let defaultInquiry = { answer: '답변대기', createdAt: '답변대기' };
       const inquiryAnswer = await InquiryStorage.getInquiryAnswer(this.body.inquiryId);
-      return inquiryAnswer[0];
+      if (inquiryAnswer[0]) return inquiryAnswer[0];
+      else return defaultInquiry;
     } catch (err) {
       return baseResponse.DB_ERROR;
     }
