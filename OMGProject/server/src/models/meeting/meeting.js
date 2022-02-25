@@ -7,7 +7,8 @@ class Meeting {
     this.body = body;
   }
   async getScheduleInfo() {
-    const scheduleResult = await MeetingStorage.getMeetingInfo(this.body);
+    const params = [this.body.diff_date, this.body.typeStatus, this.body.type];
+    const scheduleResult = await MeetingStorage.getMeetingInfo(params);
     return scheduleResult;
   }
   async getScheduleInfoByFilter() {
@@ -47,7 +48,8 @@ class Meeting {
   }
   async completeMeeting() {
     try {
-      await MeetingStorage.completeMeetingSchedule(this.body[1]);
+      const meetingId = this.body.meetingId;
+      await MeetingStorage.completeMeetingSchedule(meetingId);
       return baseResponse.SUCCESS;
     } catch (err) {
       return baseResponse.DB_ERROR;
@@ -55,14 +57,16 @@ class Meeting {
   }
   async deleteMeeting() {
     try {
-      await MeetingStorage.deleteMeetingSchedule(this.body[1]);
+      const meetingId = this.body.meetingId;
+      await MeetingStorage.deleteMeetingSchedule(meetingId);
       return baseResponse.SUCCESS;
     } catch (err) {
       return baseResponse.DB_ERROR;
     }
   }
   async getMyPageMeetingInfo() {
-    const myPageMeetingResult = await MeetingStorage.getAllMeetingInfoByUserId(this.body);
+    const userId = this.body.userId;
+    const myPageMeetingResult = await MeetingStorage.getAllMeetingInfoByUserId(userId);
     return myPageMeetingResult;
   }
   async getMyMeetingInfo() {
@@ -70,12 +74,13 @@ class Meeting {
     return myMeetingResult;
   }
   async certificationMeetingByUserId() {
-    const checkResult = await MeetingStorage.verfiedMeeting(this.body);
+    const params = [this.body.userId, this.body.meetingId];
+    const checkResult = await MeetingStorage.verfiedMeeting(params);
     if (checkResult) return baseResponse.SUCCESS;
     else return baseResponse.WRONG_APPROACH;
   }
   async getMeetingDetail() {
-    const meetingId = this.body[1];
+    const meetingId = this.body.meetingId;
     const meetingDetail = await MeetingStorage.getMeetingDetailByMeetingId(meetingId);
     return meetingDetail;
   }

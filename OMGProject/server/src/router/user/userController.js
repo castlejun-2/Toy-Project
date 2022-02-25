@@ -44,73 +44,73 @@ class Controller {
     withdrawal: async (req, res) => {
       if (req.user) {
         const userId = req.user.id;
-        const user = new User(userId);
+        const user = new User({ userId: userId });
         const userInfoResult = await user.userInfo();
         res.render('user/accountWithDrawal', { user: userInfoResult });
-      } else res.render('account/login');
+      } else res.redirect('/users/login');
     },
     myPage: async (req, res) => {
       if (req.user) {
         const userId = req.user.id;
-        const user = new User(userId);
+        const user = new User({ userId: userId });
         const userInfoResult = await user.userInfo();
         res.render('user/mypage.ejs', { user: userInfoResult });
-      } else res.render('account/login');
+      } else res.redirect('/users/login');
     },
     myPageProfile: async (req, res) => {
       if (req.user) {
         const userId = req.user.id;
-        const user = new User(userId);
+        const user = new User({ userId: userId });
         const userInfoResult = await user.userInfo();
         res.render('user/mypageProfile.ejs', { user: userInfoResult });
-      } else res.render('account/login');
+      } else res.redirect('/users/login');
     },
     myPageMeetMng: async (req, res) => {
       if (req.user) {
         const userId = req.user.id;
-        const meeting = new Meeting(userId);
+        const meeting = new Meeting({ userId: userId });
         const meetingResult = await meeting.getMyPageMeetingInfo();
         res.render('user/mypageMeetMng.ejs', { user: req.user, meeting: meetingResult });
-      } else res.render('account/login');
+      } else res.redirect('/users/login');
     },
     myPageInquiryMng: async (req, res) => {
       if (req.user) {
         const userId = req.user.id;
-        const user = new User(userId);
+        const user = new User({ userId: userId });
         const myInquiryResult = await user.getMyPageInquiryInfo();
         res.render('user/mypageInquiryMng', { user: req.user, inquiry: myInquiryResult });
-      } else res.render('account/login');
+      } else res.redirect('/users/login');
     },
     myPageMeetCal: async (req, res) => {
       if (req.user) {
         const userId = req.user.id;
-        const user = new User(userId);
+        const user = new User({ userId: userId });
         const userInfoResult = await user.userInfo();
         res.render('user/mypageMeetCal', { user: userInfoResult });
-      } else render('account/login');
+      } else res.redirect('/users/login');
     },
     myPageMeetCalData: async (req, res) => {
       if (req.user) {
         const userId = req.user.id;
-        const user = new User(userId);
+        const user = new User({ userId: userId });
         const userMeetResult = await user.meetSmryInfo();
         res.send(userMeetResult);
-      } else render('account/login');
+      } else res.redirect('/users/login');
     },
     passwordReset: async (req, res) => res.render('account/passwordFind.ejs'),
     reset: async (req, res) => res.render('account/passwordReset.ejs', { token: req.params.token }),
     phoneNumberAuth: async (req, res) => {
       if (req.user) res.render('user/phoneAuth');
-      else res.render('account/login.ejs');
+      else res.redirect('/users/login');
     },
     phoneNumberVeri: async (req, res) => {
       if (req.user) {
         const userId = req.user.id;
-        const user = new User(userId);
+        const user = new User({ userId: userId });
         const userInfo = await user.userInfo();
         const phonenumber = userInfo.phonenumber;
         res.render('user/phoneVeri', { phonenumber: phonenumber });
-      } else res.render('account/login.ejs');
+      } else res.redirect('/users/login');
     },
   };
 
@@ -195,8 +195,8 @@ class Controller {
       req.session.destroy(() => {
         req.session;
       });
-      const user = new User(userId);
-      const deleteResult = await user.deleteUserAccount(userId);
+      const user = new User({ userId: userId });
+      const deleteResult = await user.deleteUserAccount();
       return res.send(deleteResult);
     },
     myPage: async (req, res) => {
@@ -266,7 +266,7 @@ class Controller {
       if (!req.body.email) res.send(baseResponse.EMAIL_EMPTY);
       else {
         const email = req.body.email;
-        const user = new User(email);
+        const user = new User({ email: email });
         const passwdResetResult = await user.passwdSendEmail();
         return res.send(passwdResetResult);
       }
@@ -275,7 +275,7 @@ class Controller {
       const passwd = req.body.passwd;
       const passwdConfirm = req.body.passwdConfirm;
       const token = req.body.token;
-      const params = [passwd, token];
+      const params = { passwd: passwd, token: token };
       if (!passwd) return res.send(baseResponse.PASSWD_EMPTY);
       else if (!passwdConfirm) return res.send(baseResponse.PASSWDCONFIRM_EMPTY);
       else if (passwd != passwdConfirm) return res.send(baseResponse.PASSWORD_IS_WRONG);

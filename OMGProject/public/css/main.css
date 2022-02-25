@@ -313,11 +313,11 @@ body {
     color: black;
     margin: 10px 15px;
   }
-  .content-main {
-    display: none;
+  .content-aside.mypage {
+    display: none !important;
   }
-  .content-aside {
-    display: block !important;
+  .mp {
+    display: none !important;
   }
   .content-title .mp {
     display: block;
@@ -1586,6 +1586,45 @@ table.table-row td > div > img {
 
 .mypage-content .n-table.table-row td {
   vertical-align: inherit;
+}
+
+.wrong-h1 {
+  font-size: 24px;
+  color: black;
+  font-weight: 500;
+  letter-spacing: -1px;
+  line-height: 1;
+}
+
+.container {
+  width: 800px;
+  height: 390px;
+  padding: 100px 0;
+  background-color: #fff;
+  box-shadow: 9.6px 11.5px 15px 0 rgb(34 34 34 / 7%);
+  text-align: center;
+  margin: 50px auto;
+}
+
+.home-btn {
+  width: 150px;
+  height: 50px;
+  font-size: 20px;
+  text-align: center;
+  line-height: 40px;
+  background-color: #000;
+  color: #ffffff;
+  margin: 0 auto;
+}
+
+.btn-home {
+  vertical-align: sub;
+  color: #ffffff;
+  margin: 0 auto;
+}
+
+.btn-home :hover {
+  color: #ffffff;
 }
 
 td {

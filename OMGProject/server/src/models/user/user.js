@@ -52,11 +52,13 @@ class User {
   }
   async passwdReset() {
     try {
-      const hashedPassword = crypto.createHash('sha512').update(this.body[0]).digest('hex');
-      const userInfoByToken = await UserStorage.getUserIdByToken(this.body[1]);
+      const passwd = this.body.passwd;
+      const token = this.body.token;
+      const hashedPassword = crypto.createHash('sha512').update(passwd).digest('hex');
+      const userInfoByToken = await UserStorage.getUserIdByToken(token);
       const params = [hashedPassword, userInfoByToken[0].userId];
       if (userInfoByToken[0].valid) {
-        const passwdResetResult = await UserStorage.settingPasswd(params);
+        await UserStorage.settingPasswd(params);
         return baseResponse.SUCCESS;
       } else return baseResponse.TOKEN_TIMEOUT;
     } catch (err) {
@@ -65,10 +67,11 @@ class User {
   }
   async passwdSendEmail() {
     try {
-      const emailId = await UserStorage.verfiedEmail(this.body);
+      const email = this.body.email;
+      const emailId = await UserStorage.verfiedEmail(email);
       if (emailId[0]) {
         const token = crypto.randomBytes(20).toString('hex');
-        const data = [emailId[0].id, token, 300]; //token, email의 userId, TTL 값
+        const data = [emailId[0].id, token, 300];
         await UserStorage.createAuthToken(data);
 
         const transporter = nodemailer.createTransport({
@@ -98,13 +101,14 @@ class User {
     }
   }
   async userInfo() {
-    const userId = this.body;
+    const userId = this.body.userId;
     const userInfoResult = await UserStorage.getUserInfo(userId);
     return userInfoResult[0];
   }
   async getMyPageInquiryInfo() {
     try {
-      const myInquiryResult = await UserStorage.getInquiryInfo(this.body);
+      const userId = this.body.userId;
+      const myInquiryResult = await UserStorage.getInquiryInfo(userId);
       return myInquiryResult;
     } catch (err) {
       return baseResponse.DB_ERROR;
@@ -169,7 +173,8 @@ class User {
   }
   async deleteUserAccount() {
     try {
-      await UserStorage.withdrawalUserAccount(this.body);
+      const userId = this.body.userId;
+      await UserStorage.withdrawalUserAccount(userId);
       return baseResponse.SUCCESS;
     } catch (err) {
       return baseResponse.DB_ERROR;
@@ -194,7 +199,8 @@ class User {
   }
   async meetSmryInfo() {
     try {
-      const scheduleInfo = await UserStorage.getMeetSummaryInfo(this.body);
+      const userId = this.body.userId;
+      const scheduleInfo = await UserStorage.getMeetSummaryInfo(userId);
       return scheduleInfo;
     } catch (err) {
       return baseResponse.DB_ERROR;

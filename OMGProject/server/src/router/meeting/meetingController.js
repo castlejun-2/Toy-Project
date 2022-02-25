@@ -8,53 +8,71 @@ import axios from 'axios';
 class Controller {
   output = {
     getScheduleDetail: async (req, res) => {
-      const meetingId = req.params.scheduleId;
-      const scheduleDetailResult = await MeetingStorage.getMeetingDetail(meetingId);
-      res.render('meeting/meeting.ejs', { meeting: scheduleDetailResult, user: req.user });
+      if (req.user) {
+        const meetingId = req.params.scheduleId;
+        const scheduleDetailResult = await MeetingStorage.getMeetingDetail(meetingId);
+        res.render('meeting/meeting.ejs', { meeting: scheduleDetailResult, user: req.user });
+      } else res.redirect('/users/login');
     },
     getDateSchedule: async (req, res) => {
-      let params = [];
-      const diffDate = req.query.diff_date ? req.query.diff_date : 0;
-      req.query.type == 'main' ? (params = [diffDate, 0, parseInt(0)]) : (params = [diffDate, 1, req.query.type]);
-      const meeting = new Meeting(params);
-      const scheduleResult = await meeting.getScheduleInfo();
-      res.send({ meeting: scheduleResult });
+      if (req.user) {
+        let params = [];
+        const diffDate = req.query.diff_date ? req.query.diff_date : 0;
+        req.query.type == 'main'
+          ? (params = { diff_date: diffDate, typeStatus: 0, type: parseInt(0) })
+          : (params = { diff_date: diffDate, typeStatus: 1, type: req.query.type });
+        const meeting = new Meeting(params);
+        const scheduleResult = await meeting.getScheduleInfo();
+        res.send({ meeting: scheduleResult });
+      } else res.redirect('/users/login');
     },
     getMySchedule: async (req, res) => {
-      const userId = req.user.id;
-      const meeting = new Meeting(userId);
-      const scheduleResult = await meeting.getMyPageMeetingInfo();
-      res.send({ meeting: scheduleResult });
+      if (req.user) {
+        const userId = req.user.id;
+        const meeting = new Meeting({ userId: userId });
+        const scheduleResult = await meeting.getMyPageMeetingInfo();
+        res.send({ meeting: scheduleResult });
+      } else res.redirect('/users/login');
     },
     getGameSchedule: async (req, res) => {
-      const params = [0, 1, 'game'];
-      const meeting = new Meeting(params);
-      const scheduleResult = await meeting.getScheduleInfo();
-      res.render('main/game.ejs', { type: 'game', meeting: scheduleResult, user: req.user });
+      if (req.user) {
+        const params = { diff_date: 0, typeStatus: 1, type: 'game' };
+        const meeting = new Meeting(params);
+        const scheduleResult = await meeting.getScheduleInfo();
+        res.render('main/game.ejs', { type: 'game', meeting: scheduleResult, user: req.user });
+      } else res.redirect('/users/login');
     },
     getDatingSchedule: async (req, res) => {
-      const params = [0, 1, 'dating'];
-      const meeting = new Meeting(params);
-      const scheduleResult = await meeting.getScheduleInfo();
-      res.render('main/dating.ejs', { type: 'dating', meeting: scheduleResult, user: req.user });
+      if (req.user) {
+        const params = { diff_date: 0, typeStatus: 1, type: 'dating' };
+        const meeting = new Meeting(params);
+        const scheduleResult = await meeting.getScheduleInfo();
+        res.render('main/dating.ejs', { type: 'dating', meeting: scheduleResult, user: req.user });
+      } else res.redirect('/users/login');
     },
     getSportsSchedule: async (req, res) => {
-      const params = [0, 1, 'sports'];
-      const meeting = new Meeting(params);
-      const scheduleResult = await meeting.getScheduleInfo();
-      res.render('main/sports.ejs', { type: 'sports', meeting: scheduleResult, user: req.user });
+      if (req.user) {
+        const params = { diff_date: 0, typeStatus: 1, type: 'sports' };
+        const meeting = new Meeting(params);
+        const scheduleResult = await meeting.getScheduleInfo();
+        res.render('main/sports.ejs', { type: 'sports', meeting: scheduleResult, user: req.user });
+      } else res.redirect('/users/login');
     },
     getStudySchedule: async (req, res) => {
-      const params = [0, 1, 'study'];
-      const meeting = new Meeting(params);
-      const scheduleResult = await meeting.getScheduleInfo();
-      res.render('main/study.ejs', { type: 'study', meeting: scheduleResult, user: req.user });
+      if (req.user) {
+        const params = { diff_date: 0, typeStatus: 1, type: 'study' };
+        const meeting = new Meeting(params);
+        const scheduleResult = await meeting.getScheduleInfo();
+        res.render('main/study.ejs', { type: 'study', meeting: scheduleResult, user: req.user });
+      } else res.redirect('/users/login');
     },
     getHobbySchedule: async (req, res) => {
-      const params = [0, 1, 'hobby'];
-      const meeting = new Meeting(params);
-      const scheduleResult = await meeting.getScheduleInfo();
-      res.render('main/hobby.ejs', { type: 'hobby', meeting: scheduleResult, user: req.user });
+      if (req.user) {
+        const params = { diff_date: 0, typeStatus: 1, type: 'hobby' };
+        const meeting = new Meeting(params);
+        const scheduleResult = await meeting.getScheduleInfo();
+        res.render('main/hobby.ejs', { type: 'hobby', meeting: scheduleResult, user: req.user });
+      } else res.redirect('/users/login');
     },
     getWritingPage: async (req, res) => {
       if (req.user) {
@@ -64,24 +82,21 @@ class Controller {
         if (verifiedUserResult.success) {
           const type = req.query.type;
           res.render('meeting/writing.ejs', { type: type, user: req.user });
-        } else res.render('user/phoneAuth.ejs');
-      } else res.render('account/login.ejs');
+        } else res.redirect('/users/sns-auth');
+      } else res.redirect('/users/login');
     },
     getReWritingPage: async (req, res) => {
       if (req.user) {
         const userId = req.user.id;
         const meetingId = req.params.scheduleId;
-        const params = [userId, meetingId];
+        const params = { userId: userId, meetingId: meetingId };
         const meeting = new Meeting(params);
         const certResult = await meeting.certificationMeetingByUserId();
         if (certResult.success) {
           const meetingDetail = await meeting.getMeetingDetail();
           res.render('meeting/reWriting.ejs', { meeting: meetingDetail, user: req.user });
-        } else res.render('error/wrongApproach.ejs');
-      } else res.render('account/login.ejs');
-    },
-    getWrongApproach: async (req, res) => {
-      res.render;
+        } else res.redirect('/error/wrong-approach');
+      } else res.redirect('/users/login');
     },
   };
 
@@ -142,7 +157,7 @@ class Controller {
             return res.send(createMeetingResult);
           }
         } else return res.send(verifiedUserResult);
-      } else return res.render('login.ejs');
+      } else return res.send(baseResponse.IS_NOT_CONNECTED);
     },
     updateMeetingSchedule: async (req, res) => {
       if (req.user) {
@@ -178,7 +193,6 @@ class Controller {
           const placeLA = axiosResult.data.documents[0].address.y;
           const placeLO = axiosResult.data.documents[0].address.x;
           const params = [
-            userId,
             title,
             content,
             mainType,
@@ -198,13 +212,13 @@ class Controller {
           const updateMeetingResult = await meeting.updateMeeting();
           return res.send(updateMeetingResult);
         }
-      } else return res.render('login.ejs');
+      } else return res.send(baseResponse.IS_NOT_CONNECTED);
     },
     completeMeetingSchedule: async (req, res) => {
       if (req.user) {
         const userId = req.user.id;
         const meetingId = req.body.meetingId;
-        const params = [userId, meetingId];
+        const params = { userId: userId, meetingId: meetingId };
         const meeting = new Meeting(params);
         const certResult = await meeting.certificationMeetingByUserId();
         if (certResult.success) {
@@ -217,7 +231,7 @@ class Controller {
       if (req.user) {
         const userId = req.user.id;
         const meetingId = req.body.meetingId;
-        const params = [userId, meetingId];
+        const params = { userId: userId, meetingId: meetingId };
         const meeting = new Meeting(params);
         const certResult = await meeting.certificationMeetingByUserId();
         if (certResult.success) {

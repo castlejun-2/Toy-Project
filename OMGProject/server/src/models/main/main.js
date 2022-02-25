@@ -8,7 +8,8 @@ class Main {
   }
   async createInquiry() {
     try {
-      await MainStorage.createInquiry(this.body);
+      const params = [this.body.userId, this.body.title, this.body.content];
+      await MainStorage.createInquiry(params);
       return baseResponse.SUCCESS;
     } catch (err) {
       return baseResponse.DB_ERROR;

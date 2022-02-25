@@ -9,7 +9,7 @@ class MeetingStorage {
           const query = `
             Select id, title, mainName as mainName, subName as subject, date_format(startTime,"%H:%i") as time, place, case when status=1 then "신청가능" else "모집완료" end as status, case when status=1 then 'isPossible' else 'isDone' end as status_c
             From Meeting
-            Where DATE(Meeting.startTime) = (DATE(NOW()) + ?) and if (?, mainName=?, mainName is not null) and status != 0
+            Where DATE(Meeting.startTime) = DATE(DATE_ADD(NOW(), INTERVAL 9 HOUR)) + ? and if (?, mainName=?, mainName is not null) and status != 0
             Order By time ASC`;
           conn.query(query, diff_date, function (err, rows) {
             if (err) reject(`${err}`);
@@ -28,7 +28,7 @@ class MeetingStorage {
           const query = `
             Select id, title, mainName as mainName, subName as subject, date_format(startTime,"%H:%i") as time, place, case when status=1 then "신청가능" else "모집완료" end as status, case when status=1 then 'isPossible' else 'isDone' end as status_c
             From Meeting
-            Where DATE(Meeting.startTime) = (DATE(NOW()) + ?) and if (?, mainName=?, mainName is not null) and (Meeting.placeAddress Like concat(?,"%")) and Meeting.status = ? and ((title like concat("%",?,"%")) or (subName like concat("%",?,"%")))
+            Where DATE(Meeting.startTime) = DATE(DATE_ADD(NOW(), INTERVAL 9 HOUR)) + ? and if (?, mainName=?, mainName is not null) and (Meeting.placeAddress Like concat(?,"%")) and Meeting.status = ? and ((title like concat("%",?,"%")) or (subName like concat("%",?,"%")))
             Order By time ASC
             `;
           conn.query(query, params, function (err, rows) {
@@ -48,7 +48,7 @@ class MeetingStorage {
           const query = `
             Select id, title, mainName as mainName, subName as subject, date_format(startTime,"%H:%i") as time, place, case when status=1 then "신청가능" else "모집완료" end as status, case when status=1 then 'isPossible' else 'isDone' end as status_c
             From Meeting
-            Where DATE(Meeting.startTime) = (DATE(NOW()) + ?) and if (?, mainName=?, mainName is not null) and (Meeting.placeAddress Like concat(?,"%")) and Meeting.status != 0 and ((title like concat("%",?,"%")) or (subName like concat("%",?,"%")))
+            Where DATE(Meeting.startTime) = DATE(DATE_ADD(NOW(), INTERVAL 9 HOUR)) + ? and if (?, mainName=?, mainName is not null) and (Meeting.placeAddress Like concat(?,"%")) and Meeting.status != 0 and ((title like concat("%",?,"%")) or (subName like concat("%",?,"%")))
             Order By time ASC
             `;
           conn.query(query, params, function (err, rows) {
@@ -66,7 +66,7 @@ class MeetingStorage {
         if (err) reject(`${err}`);
         else {
           const query = `
-            Select Meeting.id, User.name as userName, User.phoneNumber as phone, User.imageUrl as imageUrl, title, mainName, content, subName as subject, date_format(startTime,"%Y년 %m월 %d일 %a %H:%i") as time, date_format(date_add(startTime, INTERVAL perHour HOUR),"%H:%i") as finishTime, place, placeAddress, placeUrl as p_url, Meeting.placeLA, Meeting.placeLO, notice, people, concat(format(fee,0),'원') as fee, concat(perHour,'시간') as perHour, case when Meeting.status=1 then "신청가능" else "모집완료" end as status, case when Meeting.status=1 then 'isPossible' else 'isDone' end as status_c, case when User.certification=1 then '인증완료' else '인증미완료' end as certification
+            Select Meeting.id, User.name as userName, User.phoneNumber as phone, User.imageUrl as imageUrl, title, mainName, content, subName as subject, date_format(startTime,"%Y년 %m월 %d일 %a %H:%i") as time, date_format(date_add(startTime, INTERVAL perHour HOUR),"%H:%i") as finishTime, place, placeAddress, Meeting.placeLA, Meeting.placeLO, notice, people, concat(format(fee,0),'원') as fee, concat(perHour,'시간') as perHour, case when Meeting.status=1 then "신청가능" else "모집완료" end as status, case when Meeting.status=1 then 'isPossible' else 'isDone' end as status_c, case when User.certification=1 then '인증완료' else '인증미완료' end as certification
             From Meeting Left Join User On User.id = Meeting.userId
             Where Meeting.id = ?
           `;
@@ -102,7 +102,7 @@ class MeetingStorage {
         if (err) reject(`${err}`);
         else {
           const query = `
-            Update Meeting Set userId=?,title=?,content=?,mainName=?,subName=?,startTime=?,fee=?,perHour=?,place=?,people=?,placeAddress=?,placeLA=?,placeLO=?,notice=?) Where id=?;
+            Update Meeting Set title=?,content=?,mainName=?,subName=?,startTime=?,fee=?,perHour=?,place=?,people=?,placeAddress=?,placeLA=?,placeLO=?,notice=? Where id=?;
           `;
           conn.query(query, meetingParams, function (err, rows) {
             if (err) reject(`${err}`);

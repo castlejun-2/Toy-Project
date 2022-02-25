@@ -9,7 +9,7 @@ class Controller {
     getMyPageInquiry: async (req, res) => {
       if (req.user) {
         const userId = req.user.id;
-        const user = new User(userId);
+        const user = new User({ userId: userId });
         const myInquiryResult = await user.getMyPageInquiryInfo();
         res.send({ inquiry: myInquiryResult });
       } else {

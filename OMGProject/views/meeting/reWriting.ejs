@@ -11,8 +11,6 @@
     <title>Offline Meeting Gathering(OMG) | 오마이갓</title>
     <link rel="icon" type="image/png" href="https://s3.ap-northeast-2.amazonaws.com/img.castlejun-2.shop/UOMG_LOGO.png" />
     <link rel="stylesheet" href="/css/main.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.min.css" />
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
@@ -234,7 +232,7 @@
         });
 
         $('.writing-btn').click(function (e) {
-          meetingId = $('#hidden-id').val();
+          meetingId = $('#hidden-id').text();
           title = $('#writing-title').val();
           mainType = $('#writing-type').val();
           subType = $('#writing-subtype').val();
@@ -277,7 +275,7 @@
           });
         });
         $('.delete-btn').click(function (e) {
-          meetingId = $('#hidden-id').val();
+          meetingId = $('#hidden-id').text();
           if (confirm('[확인] 해당 게시글을 삭제하시겠습니까?')) {
             $.ajax({
               url: '/meetings/delete',

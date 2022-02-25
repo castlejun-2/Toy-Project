@@ -3,6 +3,7 @@ import user from './user/userRoute.js';
 import main from './main/mainRoute.js';
 import meeting from './meeting/meetingRoute.js';
 import inquiry from './inquiry/inquiryRoute.js';
+import error from './error/errorRoute.js';
 
 class Router {
   constructor() {
@@ -14,6 +15,7 @@ class Router {
     this.router.use('/users', user); //User Page Routing
     this.router.use('/meetings', meeting); //Meeting Page Routing
     this.router.use('/inquirys', inquiry); //Meeting Page Routing
+    this.router.use('/errors', error); //Meeting Page Routing
   }
 }
 export default new Router().router;

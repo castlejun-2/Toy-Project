@@ -20,7 +20,6 @@ class Router {
     this.router.get('/:typeName/:scheduleId', meetingController.output.getScheduleDetail);
     this.router.get('/writing', meetingController.output.getWritingPage);
     this.router.get('/writing/update/:scheduleId', meetingController.output.getReWritingPage);
-    this.router.get('/wrong-approach', meetingController.output.getWrongApproach);
 
     //Post Request
     this.router.post('/', meetingController.process.createMeetingSchedule);
