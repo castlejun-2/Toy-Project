@@ -208,7 +208,6 @@
           method: 'GET',
           success: function (response) {
             response = response.meeting;
-	    console.log(totalData);
             for (let i = (currentPage - 1) * dataPerPage; i < Math.min(totalData, (currentPage - 1) * dataPerPage + dataPerPage); i++) {
               chartHtml +=
                 "<div class='meeting-history'><div class='header'><span class='title'>" +
