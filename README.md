@@ -1,4 +1,4 @@
-# :one: OMG(Offline Meeting Gathering) Project
+## :one: OMG(Offline Meeting Gathering) Project
 
 ### :bookmark_tabs: 오프라인에서의 다양한 만남을 장려하기 위한 개인 프로젝트:heavy_exclamation_mark:
 
