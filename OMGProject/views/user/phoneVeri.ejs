@@ -43,9 +43,10 @@
     </div>
     <script>
       $(function () {
-        $('.send-btn').click(function () {
+        $('.send-btn').click(function (e) {
           const phonenumber = '<%= phonenumber %>';
           const verifyCode = $('#snsNum').val();
+          e.preventDefault();
           $.ajax({
             url: '/users/sns-verification',
             method: 'POST',
@@ -55,7 +56,6 @@
               phonenumber: phonenumber,
             },
             success: function (data) {
-              console.log(data.success);
               if (data.success) {
                 alert('인증이 완료되었습니다.');
                 window.location.href = '/users/my-page';

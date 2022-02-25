@@ -311,8 +311,7 @@ class Controller {
         const verifyCode = Math.floor(Math.random() * (999999 - 100000)) + 100000;
         cache.del(phonenumber);
         cache.put(phonenumber, verifyCode.toString());
-
-        axios({
+        await axios({
           method: 'POST',
           json: true,
           url: url,
