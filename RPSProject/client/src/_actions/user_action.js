@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { LOGIN_USER, REGISTER_USER } from './action_type';
+import { LOGIN_USER, REGISTER_USER } from './action_type.js';
 
 export async function loginUser(dataToSubmit) {
   const request = await axios.post('/user/login', dataToSubmit).then(response => response.data);
