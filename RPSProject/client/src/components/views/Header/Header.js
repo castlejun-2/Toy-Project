@@ -11,12 +11,7 @@ export default function Header() {
   };
   return (
     <header>
-      <img
-        className="App-logo"
-        style={header_style}
-        src="https://ufwo.s3.ap-northeast-2.amazonaws.com/RPS_LOGO128.png"
-        href="https://ufwo.s3.ap-northeast-2.amazonaws.com/RPS_LOGO64.png"
-      ></img>
+      <img className="App-logo" style={header_style} src="https://ufwo.s3.ap-northeast-2.amazonaws.com/RPS_LOGO.png" href="/"></img>
     </header>
   );
 }
