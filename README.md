@@ -6,7 +6,7 @@
 
 ---
 
-**https://www.uomg.site**
+**https://www.uomg.site** **(SSL 문제로 인한 일시중단)**
 
 ⏰**TIP**: 화면 배율 75% 맞추시면 보기 편합니다!
 
