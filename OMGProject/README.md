@@ -1,11 +1,5 @@
 # OMGProject (Offline Meeting Gathering Project)
 
-## :computer:홈페이지
-
-**https://www.uomg.site**
-
-:alarm_clock:**TIP**: 화면 배율 75% 맞추시면 보기 편합니다!
-
 ## :date:개발 기간
 **2022.01.20 - 2022.02.25**
 
