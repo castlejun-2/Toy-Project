@@ -15,6 +15,10 @@ export default function LoginPage() {
   const onPasswordHandler = e => {
     setPassword(e.currentTarget.value);
   };
+  const NonmemberLoginHandler = e => {
+    e.preventDefault();
+    navigate('/');
+  };
   const onSubmitHandler = e => {
     e.preventDefault();
     const body = {
@@ -72,6 +76,11 @@ export default function LoginPage() {
           </li>
         </ul>
       </form>
+      <div style={{ marginTop: '10px' }}>
+        <button onClick={NonmemberLoginHandler} type="submit" className="btn_login" id="log.login">
+          <span className="btn_text">비회원 로그인</span>
+        </button>
+      </div>
     </>
   );
 }
