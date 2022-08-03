@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
 import axios from 'axios';
+import GameComponent from './GameList/GameList.js';
 
 export default function LandingPage() {
-  useEffect(() => {
-    axios.get('/hi').then(res => {
-      console.log(res);
-    });
-  }, []);
-  return <div>LandingPage</div>;
+  useEffect(() => {}, []);
+  return (
+    <>
+      <div>{<GameComponent />}</div>
+    </>
+  );
 }
