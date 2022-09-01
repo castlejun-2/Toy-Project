@@ -12,7 +12,7 @@ export default function Game(props) {
       <img src={props.src} className="mx-auto mt-8 h-16 w-16 text-green-400" viewBox="0 0 20 20" fill="currentColor" alt="" />
       <h1 className="mt-2 text-center text-2xl font-bold text-gray-500">{props.title}</h1>
       <p className="my-4 text-center text-sm text-gray-500">{props.subs}</p>
-      <div className="space-x-4 bg-gray-100 py-4 text-center sm: py-2">
+      <div className="space-x-4 bg-gray-100 py-4 text-center sm:py-2">
         <button
           onClick={e => {
             onClickhandler(props.start, e);
