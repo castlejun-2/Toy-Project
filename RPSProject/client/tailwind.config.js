@@ -4,11 +4,15 @@ module.exports = {
   theme: {
     screens: {
       sm: '850px',
-      md: '800px',
+      md: '900px',
       lg: '976px',
       xl: '1440px',
     },
-    extend: {},
+    extend: {
+      lineHeight: {
+        extra: '20rem',
+      },
+    },
   },
   plugins: [],
 };
