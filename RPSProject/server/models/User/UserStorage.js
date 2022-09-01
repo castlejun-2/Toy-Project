@@ -9,7 +9,7 @@ class User {
     const hashedPassword = crypto.createHash('sha512').update(this.body.password).digest('hex');
     const userInfo = { nickname: this.body.nickname, password: hashedPassword };
     Users.findOne(userInfo, (err, user) => {
-      if (err) return { success: false, message: 'Error' };
+      if (err) return { success: false, message: '로그인 실패' };
       else if (user) return { success: true, message: '로그인 성공', data: user };
       else return { success: false, message: '로그인 실패' };
     });
